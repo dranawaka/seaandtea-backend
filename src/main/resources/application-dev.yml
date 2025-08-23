@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+  
+  flyway:
+    enabled: false
+  
+  datasource:
+    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:seaandtea_dev}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:password}
+
+logging:
+  level:
+    com.seaandtea: DEBUG
+    org.springframework.security: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
