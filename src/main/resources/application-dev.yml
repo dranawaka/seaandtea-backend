@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/seaandtea_dev}
+    url: ${DATABASE_URL:jdbc:postgresql://${DB_HOST:hopper.proxy.rlwy.net}:${DB_PORT:23545}/${DB_NAME:railway}}
     username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:password}
+    password: ${DB_PASSWORD:SIBfwvrqlFipfkvaqRkIZzvARpfEIoti}
     driver-class-name: org.postgresql.Driver
   
   jpa:
