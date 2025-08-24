@@ -1,0 +1,13 @@
+[phases.setup]
+nixPkgs = ["maven", "openjdk17"]
+
+[phases.install]
+cmds = ["mvn clean package -DskipTests"]
+
+[phases.build]
+cmds = ["echo 'Build completed'"]
+
+[start]
+cmd = "java -jar target/*.jar"
+
+
