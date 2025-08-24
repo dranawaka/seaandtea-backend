@@ -8,9 +8,9 @@ spring:
     enabled: false
   
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME:seaandtea_dev}
+    url: ${DATABASE_URL:jdbc:postgresql://${DB_HOST:caboose.proxy.rlwy.net}:${DB_PORT:44379}/${DB_NAME:railway}}
     username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:password}
+    password: ${DB_PASSWORD:HcPmFIHVFYAFihKKPBSNOPieOMuAcwwj}
 
 logging:
   level:

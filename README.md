@@ -33,11 +33,11 @@ A comprehensive Spring Boot backend for the Sea & Tea Tours platform - "The Upwo
 - Maven 3.6+
 - PostgreSQL 15+
 - Redis 7+
-- Docker & Docker Compose (optional)
+- Java 17 & Maven 3.6+
 
 ## 🚀 Quick Start
 
-### Option 1: Using Docker Compose (Recommended)
+### Option 1: Using Maven (Recommended)
 
 1. **Clone the repository**
    ```bash
@@ -45,16 +45,15 @@ A comprehensive Spring Boot backend for the Sea & Tea Tours platform - "The Upwo
    cd seaandtea-backend
    ```
 
-2. **Start the services**
+2. **Start the application**
    ```bash
-   docker-compose up -d
+   mvn spring-boot:run
    ```
 
 3. **Access the application**
    - API: http://localhost:8080/api/v1
    - Swagger UI: http://localhost:8080/swagger-ui/index.html
-   - PostgreSQL: localhost:5432
-   - Redis: localhost:6379
+   - Health Check: http://localhost:8080/actuator/health
 
 ### Option 2: Local Development
 
@@ -150,21 +149,23 @@ mvn verify
 # Build the application
 mvn clean package
 
-# Build Docker image
-docker build -t seaandtea-backend .
+# Build the application
+mvn clean package
 ```
 
 ## 🚀 Deployment
 
-### Docker Deployment
+### Railway Deployment
 
 ```bash
-# Build and push to registry
-docker build -t your-registry/seaandtea-backend:latest .
-docker push your-registry/seaandtea-backend:latest
+# Deploy to Railway
+railway up
 
-# Deploy with docker-compose
-docker-compose -f docker-compose.prod.yml up -d
+# Monitor deployment
+railway logs
+
+# Open the application
+railway open
 ```
 
 ### Traditional Deployment

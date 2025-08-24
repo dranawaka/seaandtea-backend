@@ -120,8 +120,7 @@ Thumbs.db
 *.swo
 *~
 
-# Docker
-.dockerignore
+# Docker (removed - using Railway deployment)
 
 # SSL certificates
 ssl/

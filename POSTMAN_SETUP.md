@@ -5,7 +5,7 @@ This guide will help you set up and use the complete Postman collection for test
 ## 📋 Prerequisites
 
 - **Postman Desktop App** (Download from [postman.com](https://www.postman.com/downloads/))
-- **Sea & Tea Tours Backend** running locally on Docker
+- **Sea & Tea Tours Backend** running locally or on Railway
 - **Git** (to clone the repository)
 
 ## 🎯 Quick Start
@@ -31,10 +31,10 @@ git clone https://github.com/dranawaka/seaandtea-backend.git
 cd seaandtea-backend
 
 # Start the application
-docker-compose up -d
+mvn spring-boot:run
 ```
 
-Wait for the application to start (check logs with `docker-compose logs app`)
+Wait for the application to start (check logs in the terminal)
 
 ## 🔧 Environment Variables
 
@@ -193,14 +193,14 @@ Each request includes common test scripts:
 ### Issue: Connection Refused
 **Cause**: Backend application not running
 **Solution**:
-1. Check if Docker containers are running: `docker-compose ps`
-2. Start the application: `docker-compose up -d`
-3. Wait for startup and check logs: `docker-compose logs app`
+1. Check if the application is running: `netstat -an | findstr :8080`
+2. Start the application: `mvn spring-boot:run`
+3. Wait for startup and check logs in the terminal
 
 ### Issue: 500 Internal Server Error
 **Cause**: Backend application error
 **Solution**:
-1. Check application logs: `docker-compose logs app`
+1. Check application logs in the terminal
 2. Verify database connection
 3. Check if all required services are running
 
@@ -224,14 +224,14 @@ When new endpoints are added to the API:
 
 - **API Documentation**: Available at `http://localhost:8080/api/v1/swagger-ui/` when the app is running
 - **Backend Repository**: [GitHub Repository](https://github.com/dranawaka/seaandtea-backend)
-- **Docker Setup**: See `README.md` in the main repository
+- **Local Setup**: See `README.md` in the main repository
 - **Postman Learning Center**: [postman.com/learning](https://learning.postman.com/)
 
 ## 🎉 Getting Help
 
 If you encounter issues:
 
-1. **Check the logs**: `docker-compose logs app`
+1. **Check the logs**: Check the terminal where the application is running
 2. **Verify environment**: Ensure all variables are set correctly
 3. **Test health endpoint**: Start with the basic health check
 4. **Review this guide**: Follow the testing workflow step by step

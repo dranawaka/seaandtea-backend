@@ -60,9 +60,10 @@
 - `WebSocketConfig.java` - WebSocket configuration
 - `OpenApiConfig.java` - OpenAPI/Swagger configuration
 
-### 11. Docker Configuration
-- `Dockerfile` - Application containerization
-- `docker-compose.yml` - Complete stack with PostgreSQL, Redis, and Nginx
+### 11. Railway Deployment Configuration
+- `railway.json` - Railway deployment configuration
+- `railway.toml` - Alternative Railway configuration
+- `nixpacks.toml` - Build system configuration
 
 ### 12. Documentation & Scripts
 - `README.md` - Comprehensive setup and usage guide
@@ -117,7 +118,7 @@ The backend is now ready for:
 
 1. **Development**: Run with `mvn spring-boot:run`
 2. **Testing**: Use H2 in-memory database
-3. **Docker Deployment**: Use `docker-compose up -d`
+3. **Railway Deployment**: Use `railway up`
 4. **Production**: Configure with production profile
 
 ## 📋 Next Steps for Full Implementation
@@ -167,7 +168,7 @@ The backend is now ready for:
 - Database entities are properly defined
 - Security is configured and working
 - Basic authentication endpoints are available
-- Docker setup is ready
+- Railway deployment configuration is ready
 - API documentation is accessible
 
 **What's Ready for Development**:
@@ -184,10 +185,10 @@ The backend is now ready for:
    cd seaandtea-backend
    ```
 
-2. **Run with Docker (Recommended)**
-   ```bash
-   docker-compose up -d
-   ```
+2. **Run with Maven (Recommended)**
+```bash
+mvn spring-boot:run
+```
 
 3. **Or run locally**
    ```bash

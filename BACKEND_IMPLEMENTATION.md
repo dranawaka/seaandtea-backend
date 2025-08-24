@@ -1079,72 +1079,23 @@ class GuideServiceTest {
 
 ## 🚀 Deployment
 
-### Docker Configuration
-```dockerfile
-FROM openjdk:17-jdk-slim
-VOLUME /tmp
-COPY target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
-```
+### Cloud Deployment
+The application is configured for deployment on Railway with the following setup:
 
-### Docker Compose
-```yaml
-version: '3.8'
-services:
-  app:
-    build: .
-    ports:
-      - "8080:8080"
-    environment:
-      - SPRING_PROFILES_ACTIVE=prod
-      - DB_HOST=postgres
-      - REDIS_HOST=redis
-    depends_on:
-      - postgres
-      - redis
-    networks:
-      - seaandtea-network
-  
-  postgres:
-    image: postgres:15
-    environment:
-      POSTGRES_DB: seaandtea
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    ports:
-      - "5432:5432"
-    networks:
-      - seaandtea-network
-  
-  redis:
-    image: redis:7-alpine
-    ports:
-      - "6379:6379"
-    networks:
-      - seaandtea-network
-  
-  nginx:
-    image: nginx:alpine
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
-      - ./ssl:/etc/nginx/ssl
-    depends_on:
-      - app
-    networks:
-      - seaandtea-network
+- **Database**: PostgreSQL on Railway
+- **Build System**: Maven with Nixpacks
+- **Runtime**: Java 17
+- **Configuration**: Environment-based with production profile
 
-volumes:
-  postgres_data:
+### Local Development
+For local development, ensure you have:
+- Java 17 or higher
+- Maven 3.6+
+- PostgreSQL database
+- Redis (optional)
 
-networks:
-  seaandtea-network:
-    driver: bridge
-```
+### Railway Configuration
+The application uses `railway.json`, `railway.toml`, and `nixpacks.toml` for deployment configuration.
 
 ## 📊 Monitoring & Logging
 
