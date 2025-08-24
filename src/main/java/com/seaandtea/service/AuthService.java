@@ -39,7 +39,7 @@ public class AuthService {
         
         User savedUser = userRepository.save(user);
         
-        String jwtToken = jwtService.generateToken(savedUser);
+        String jwtToken = jwtService.generateTokenWithUserId(savedUser, savedUser.getId());
         
         return AuthResponse.builder()
                 .accessToken(jwtToken)
@@ -57,7 +57,7 @@ public class AuthService {
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         
-        String jwtToken = jwtService.generateToken(user);
+        String jwtToken = jwtService.generateTokenWithUserId(user, user.getId());
         
         return AuthResponse.builder()
                 .accessToken(jwtToken)

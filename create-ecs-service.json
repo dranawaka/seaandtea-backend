@@ -1,0 +1,26 @@
+{
+    "cluster": "seaandtea-cluster",
+    "serviceName": "seaandtea-backend-service",
+    "taskDefinition": "seaandtea-backend:1",
+    "desiredCount": 2,
+    "launchType": "FARGATE",
+    "platformVersion": "LATEST",
+    "networkConfiguration": {
+        "awsvpcConfiguration": {
+            "subnets": [
+                "subnet-09972c78d2835e251",
+                "subnet-02ea7e8189a22c392"
+            ],
+            "securityGroups": [
+                "sg-071b9a8c2a54c166e"
+            ],
+            "assignPublicIp": "ENABLED"
+        }
+    },
+    "deploymentConfiguration": {
+        "maximumPercent": 200,
+        "minimumHealthyPercent": 100
+    },
+    "healthCheckGracePeriodSeconds": 60
+}
+

@@ -1,0 +1,38 @@
+MANUAL ALB SETUP STEPS
+========================
+
+Since the automated scripts aren't working properly, here are the manual commands to run:
+
+STEP 1: Create Internet Gateway
+aws ec2 create-internet-gateway --region us-east-1
+
+STEP 2: Attach Internet Gateway to VPC
+aws ec2 attach-internet-gateway --vpc-id vpc-03c3c2a66a0e4bbb6 --internet-gateway-id <IGW_ID> --region us-east-1
+
+STEP 3: Create Route Table
+aws ec2 create-route-table --vpc-id vpc-03c3c2a66a0e4bbb6 --region us-east-1
+
+STEP 4: Add Internet Route
+aws ec2 create-route --route-table-id <RT_ID> --destination-cidr-block 0.0.0.0/0 --gateway-id <IGW_ID> --region us-east-1
+
+STEP 5: Associate Route Table with Subnets
+aws ec2 associate-route-table --route-table-id <RT_ID> --subnet-id subnet-09972c78d2835e251 --region us-east-1
+aws ec2 associate-route-table --route-table-id <RT_ID> --subnet-id subnet-02ea7e8189a22c392 --region us-east-1
+
+STEP 6: Create Application Load Balancer
+aws elbv2 create-load-balancer --name seaandtea-alb --subnets subnet-09972c78d2835e251 subnet-02ea7e8189a22c392 --security-groups sg-071b9a8c2a54c166e --region us-east-1
+
+STEP 7: Create Target Group
+aws elbv2 create-target-group --name seaandtea-tg --protocol HTTP --port 8080 --vpc-id vpc-03c3c2a66a0e4bbb6 --target-type ip --health-check-path /actuator/health --region us-east-1
+
+STEP 8: Create Listener
+aws elbv2 create-listener --load-balancer-arn <ALB_ARN> --protocol HTTP --port 80 --default-actions Type=forward,TargetGroupArn=<TG_ARN> --region us-east-1
+
+STEP 9: Update ECS Service
+aws ecs update-service --cluster seaandtea-cluster --service seaandtea-backend-service --load-balancers targetGroupArn=<TG_ARN>,containerName=seaandtea-backend,containerPort=8080 --region us-east-1
+
+NOTES:
+- Replace <IGW_ID>, <RT_ID>, <ALB_ARN>, <TG_ARN> with actual values from previous commands
+- Run commands one by one and note the output
+- The ALB will give you a public DNS name for access
+
