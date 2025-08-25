@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -53,7 +55,8 @@ public class Guide {
     @Column(name = "verification_status")
     private VerificationStatus verificationStatus = VerificationStatus.PENDING;
     
-    @Column(name = "verification_documents", columnDefinition = "jsonb")
+    @Column(name = "verification_documents")
+    @JdbcTypeCode(SqlTypes.JSON)
     private String verificationDocuments;
     
     @Column(name = "created_at")

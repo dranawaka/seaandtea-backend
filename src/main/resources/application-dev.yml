@@ -64,7 +64,42 @@ server:
 # Logging
 logging:
   level:
+    # Application logging
     com.seaandtea: DEBUG
+    
+    # Spring Security logging
     org.springframework.security: DEBUG
+    
+    # Hibernate SQL logging
     org.hibernate.SQL: DEBUG
     org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    
+    # Enable Wire logs for HTTP traffic
+    org.springframework.web.client.RestTemplate: DEBUG
+    org.springframework.web.reactive.function.client.WebClient: DEBUG
+    org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping: TRACE
+    org.springframework.web.servlet.DispatcherServlet: DEBUG
+    org.springframework.web.servlet.mvc.method.annotation.RequestResponseBodyMethodProcessor: DEBUG
+    
+    # Enable HTTP client logging
+    org.apache.http: DEBUG
+    org.apache.http.wire: DEBUG
+    org.apache.http.headers: DEBUG
+    org.apache.http.impl.client: DEBUG
+    
+    # Enable Spring Web logging
+    org.springframework.web: DEBUG
+    org.springframework.web.servlet: DEBUG
+    
+    # Enable Jackson JSON processing logging
+    com.fasterxml.jackson: DEBUG
+    
+    # Enable validation logging
+    org.springframework.validation: DEBUG
+    
+    # Enable filter logging
+    org.springframework.web.filter: DEBUG
+  
+  # Logging patterns (correct location)
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"

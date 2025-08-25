@@ -27,3 +27,32 @@ aws:
 server:
   servlet:
     context-path: /api/v1
+
+# Actuator configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+  health:
+    redis:
+      enabled: false
+    mail:
+      enabled: false
+
+# Common Logging Configuration
+logging:
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+  
+  # Common logging levels
+  level:
+    root: INFO
+    # Enable basic HTTP logging for all profiles
+    org.springframework.web: INFO
+    org.springframework.web.servlet: INFO

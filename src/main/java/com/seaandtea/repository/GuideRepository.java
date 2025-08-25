@@ -31,5 +31,15 @@ public interface GuideRepository extends JpaRepository<Guide, Long> {
                              @Param("minPrice") BigDecimal minPrice,
                              @Param("maxPrice") BigDecimal maxPrice,
                              Pageable pageable);
+    
+    /**
+     * Find guides by verification status
+     */
+    List<Guide> findByVerificationStatus(Guide.VerificationStatus verificationStatus);
+    
+    /**
+     * Find guides by verification status with pagination
+     */
+    Page<Guide> findByVerificationStatus(Guide.VerificationStatus verificationStatus, Pageable pageable);
 }
 

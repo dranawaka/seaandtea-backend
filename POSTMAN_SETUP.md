@@ -1,243 +1,182 @@
-# 🚀 Sea & Tea Tours API - Postman Collection Setup Guide
+# Postman Setup Guide for Sea & Tea Tours API
 
-This guide will help you set up and use the complete Postman collection for testing the Sea & Tea Tours backend API.
+This guide will help you set up Postman to test the Sea & Tea Tours Backend API.
 
-## 📋 Prerequisites
+## 📥 Import Files
 
-- **Postman Desktop App** (Download from [postman.com](https://www.postman.com/downloads/))
-- **Sea & Tea Tours Backend** running locally or on Railway
-- **Git** (to clone the repository)
+1. **Import the API Collection:**
+   - Open Postman
+   - Click "Import" button
+   - Import `Sea_Tea_Tours_API.postman_collection.json`
 
-## 🎯 Quick Start
+2. **Import Environment Files:**
+   - Import `Sea_Tea_Tours_Environment.postman_environment.json` (Railway Production)
+   - Import `Sea_Tea_Tours_Local.postman_environment.json` (Local Development)
 
-### 1. Import the Collection
+## 🌍 Environment Setup
 
-1. Open Postman
-2. Click **Import** button
-3. Drag and drop `Sea_Tea_Tours_API.postman_collection.json` or click **Upload Files**
-4. The collection will appear in your Collections tab
+### Railway Production Environment
+- **Name:** Sea & Tea Tours - Railway Production
+- **Base URL:** `https://your-railway-domain.railway.app/api/v1`
+- **Use this for:** Testing the deployed application
 
-### 2. Import the Environment
-
-1. Click **Import** button again
-2. Drag and drop `Sea_Tea_Tours_Environment.postman_environment.json`
-3. Select the environment from the dropdown in the top-right corner
-
-### 3. Start the Backend
-
-```bash
-# Clone the repository (if not already done)
-git clone https://github.com/dranawaka/seaandtea-backend.git
-cd seaandtea-backend
-
-# Start the application
-mvn spring-boot:run
-```
-
-Wait for the application to start (check logs in the terminal)
+### Local Development Environment
+- **Name:** Sea & Tea Tours - Local Development  
+- **Base URL:** `http://localhost:8080/api/v1`
+- **Use this for:** Testing locally (requires Maven and local database)
 
 ## 🔧 Environment Variables
 
-The collection uses the following environment variables:
+| Variable | Description | Auto-populated |
+|----------|-------------|----------------|
+| `base_url` | API base URL | ✅ Yes |
+| `auth_token` | JWT authentication token | ✅ Yes (after login) |
+| `user_id` | Current user ID | ❌ Manual |
+| `guide_id` | Guide profile ID | ❌ Manual |
 
-| Variable | Description | Default Value |
-|----------|-------------|---------------|
-| `base_url` | API base URL | `http://localhost:8080/api/v1` |
-| `auth_token` | JWT authentication token | (auto-populated after login) |
-| `user_id` | Current user ID | (set after user operations) |
-| `tour_id` | Tour ID for testing | (set after tour operations) |
-| `guide_id` | Guide ID for testing | (set after guide operations) |
-| `booking_id` | Booking ID for testing | (set after booking operations) |
-| `review_id` | Review ID for testing | (set after review operations) |
-| `conversation_id` | Conversation ID for testing | (set after messaging operations) |
-| `recipient_id` | Recipient user ID for messaging | (set after user operations) |
+## 🚀 Quick Start
 
-## 🧪 Testing Workflow
+1. **Select Environment:** Choose "Sea & Tea Tours - Railway Production"
+2. **Test Health Endpoint:** Run "Health Check" to verify API is accessible
+3. **Register User:** Use "User Registration" to create an account
+4. **Login:** Use "User Login" to get authentication token
+5. **Test Protected Endpoints:** The token will auto-populate for authenticated requests
 
-### Step 1: Health Check
-Start by testing the health endpoint to ensure the API is running:
-
-1. **Health Check** (`GET /health`)
-   - Should return status 200
-   - Verify the application is running
-
-### Step 2: User Registration
-Create a test user account:
-
-1. **User Registration** (`POST /auth/register`)
-   - Use the provided sample data or modify as needed
-   - Note the response for user details
-
-### Step 3: User Login
-Authenticate to get a JWT token:
-
-1. **User Login** (`POST /auth/login`)
-   - Use the credentials from registration
-   - The `auth_token` will be automatically set in the environment
-   - Verify you receive a valid JWT token
-
-### Step 4: Test Protected Endpoints
-Now you can test endpoints that require authentication:
-
-1. **Get Current User Profile** (`GET /users/profile`)
-   - Should return the authenticated user's profile
-   - Verify the Authorization header is automatically included
-
-### Step 5: Create Test Data
-Set up test data for other endpoints:
-
-1. **Create Guide Profile** (`POST /guides`)
-   - Create a guide profile for the authenticated user
-   - Note the `guide_id` from the response
-
-2. **Create Tour** (`POST /tours`)
-   - Create a test tour (requires guide or admin role)
-   - Note the `tour_id` from the response
-
-### Step 6: Test Full Workflow
-Test the complete booking and review workflow:
-
-1. **Create Booking** (`POST /bookings`)
-   - Use the `tour_id` and `guide_id` from previous steps
-   - Note the `booking_id` from the response
-
-2. **Create Review** (`POST /reviews`)
-   - Use the `tour_id` from previous steps
-   - Note the `review_id` from the response
-
-## 📚 Collection Structure
-
-The collection is organized into logical groups:
+## 📋 Available Endpoints
 
 ### 🔐 Authentication
-- User Registration
-- User Login
+- `POST /auth/register` - User registration
+- `POST /auth/login` - User login
 
 ### 🏥 Health & Status
-- Health Check
-- Ping
+- `GET /health` - Application health check
+- `GET /health/ping` - Simple ping endpoint
+- `GET /actuator/health` - Spring Boot Actuator health
 
 ### 👥 User Management
-- Get Current User Profile
-- Update User Profile
-- Change Password
-
-### 🏖️ Tours
-- Get All Tours
-- Get Tour by ID
-- Search Tours
-- Create Tour (Admin/Guide)
-- Update Tour
-- Delete Tour
+- `GET /users/profile` - Get current user profile
+- `PUT /users/profile` - Update user profile
+- `PUT /users/password` - Change password
+- `PUT /users/role` - Update user role
 
 ### 👨‍🏫 Guides
-- Get All Guides
-- Get Guide by ID
-- Search Guides
-- Create Guide Profile
-- Update Guide Profile
+- `POST /guides` - Create guide profile
+- `GET /guides/{id}` - Get guide by ID
+- `GET /guides/my-profile` - Get my guide profile
+- `PUT /guides/my-profile` - Update my guide profile
+- `PUT /guides/{id}` - Update guide by ID (admin)
+- `DELETE /guides/my-profile` - Delete my guide profile
+- `DELETE /guides/{id}` - Delete guide by ID (admin)
+- `GET /guides/my-profile/exists` - Get guide profile if exists (returns profile or 404)
 
-### 📅 Bookings
-- Get User Bookings
-- Get Booking by ID
-- Create Booking
-- Update Booking
-- Cancel Booking
+## 🔑 Authentication Flow
 
-### ⭐ Reviews
-- Get Tour Reviews
-- Create Review
-- Update Review
-- Delete Review
+1. **Register:** Create a new user account
+2. **Login:** Authenticate and receive JWT token
+3. **Token Auto-population:** Postman automatically sets the `auth_token` variable
+4. **Protected Requests:** Include `Authorization: Bearer {token}` header
 
-### 💳 Payments
-- Create Payment Intent
-- Confirm Payment
-- Get Payment History
+## 📝 Testing Workflow
 
-### 📱 Messaging
-- Get Conversations
-- Get Messages in Conversation
-- Send Message
+### 1. Health Check
+```
+GET {{base_url}}/health
+```
+**Expected:** 200 OK with health status
 
-### 📊 Admin
-- Get All Users (Admin)
-- Update User Role (Admin)
-- Get System Statistics (Admin)
+### 2. User Registration
+```
+POST {{base_url}}/auth/register
+Body: {
+  "email": "test@example.com",
+  "password": "password123",
+  "firstName": "John",
+  "lastName": "Doe",
+  "phone": "+1234567890",
+  "dateOfBirth": "1990-01-01",
+  "nationality": "US"
+}
+```
+**Expected:** 200 OK with user details
 
-## 🔒 Authentication Flow
+### 3. User Login
+```
+POST {{base_url}}/auth/login
+Body: {
+  "email": "test@example.com",
+  "password": "password123"
+}
+```
+**Expected:** 200 OK with JWT token
 
-The collection includes automatic JWT token management:
+### 4. Create Guide Profile
+```
+POST {{base_url}}/guides
+Headers: Authorization: Bearer {{auth_token}}
+Body: {
+  "bio": "Experienced hiking guide",
+  "specialties": ["HIKING", "NATURE"],
+  "languages": ["ENGLISH"],
+  "certifications": ["Wilderness First Aid"],
+  "experience": 5,
+  "hourlyRate": 45.00
+}
+```
+**Expected:** 201 Created with guide profile
 
-1. **Login Request**: When you make a login request, the response is automatically parsed
-2. **Token Extraction**: If a token is found in the response, it's automatically set as `auth_token`
-3. **Automatic Headers**: All subsequent requests automatically include the `Authorization: Bearer {token}` header
+### 5. Get My Guide Profile
+```
+GET {{base_url}}/guides/my-profile
+Headers: Authorization: Bearer {{auth_token}}
+```
+**Expected:** 200 OK with guide profile
 
-## 🧪 Test Scripts
+## 🐛 Troubleshooting
 
-Each request includes common test scripts:
+### Common Issues
 
-- **Status Code Check**: Verifies the response status is 200
-- **Response Time Check**: Ensures response time is under 2000ms
-- **Header Validation**: Confirms required headers are present
+1. **401 Unauthorized:**
+   - Check if `auth_token` is set
+   - Verify token hasn't expired
+   - Re-run login request
 
-## 🚨 Common Issues & Solutions
+2. **404 Not Found:**
+   - Verify `base_url` is correct
+   - Check if endpoint path is correct
+   - Ensure application is running
 
-### Issue: 403 Forbidden
-**Cause**: Missing or invalid authentication token
-**Solution**: 
-1. Ensure you've logged in successfully
-2. Check that the `auth_token` environment variable is set
-3. Verify the token hasn't expired
+3. **500 Internal Server Error:**
+   - Check application logs
+   - Verify database connection
+   - Check request payload format
 
-### Issue: Connection Refused
-**Cause**: Backend application not running
-**Solution**:
-1. Check if the application is running: `netstat -an | findstr :8080`
-2. Start the application: `mvn spring-boot:run`
-3. Wait for startup and check logs in the terminal
+### Environment Switching
 
-### Issue: 500 Internal Server Error
-**Cause**: Backend application error
-**Solution**:
-1. Check application logs in the terminal
-2. Verify database connection
-3. Check if all required services are running
+- **Local Development:** Use "Sea & Tea Tours - Local Development"
+- **Railway Production:** Use "Sea & Tea Tours - Railway Production"
+- **Update base_url:** Modify environment variable as needed
 
-### Issue: Environment Variables Not Working
-**Cause**: Environment not selected or variables not set
-**Solution**:
-1. Ensure the correct environment is selected in the top-right dropdown
-2. Check that all required variables are set in the environment
-3. Verify variable names match exactly (case-sensitive)
+## 📚 Additional Resources
 
-## 🔄 Updating the Collection
+- **API Documentation:** Swagger UI at `/swagger-ui/` (when implemented)
+- **Health Monitoring:** Actuator endpoints for system health
+- **Error Handling:** Check `/error` endpoint for detailed error information
 
-When new endpoints are added to the API:
+## 🔄 Collection Updates
 
-1. **Add New Requests**: Create new request items in the appropriate folder
-2. **Update Variables**: Add any new environment variables needed
-3. **Test Scripts**: Include appropriate test scripts for validation
-4. **Documentation**: Update this README with new endpoint information
+The collection automatically:
+- Sets `auth_token` after successful login
+- Includes proper headers for each request type
+- Provides sample request bodies
+- Handles authentication flow
 
-## 📖 Additional Resources
+## 🎯 Next Steps
 
-- **API Documentation**: Available at `http://localhost:8080/api/v1/swagger-ui/` when the app is running
-- **Backend Repository**: [GitHub Repository](https://github.com/dranawaka/seaandtea-backend)
-- **Local Setup**: See `README.md` in the main repository
-- **Postman Learning Center**: [postman.com/learning](https://learning.postman.com/)
-
-## 🎉 Getting Help
-
-If you encounter issues:
-
-1. **Check the logs**: Check the terminal where the application is running
-2. **Verify environment**: Ensure all variables are set correctly
-3. **Test health endpoint**: Start with the basic health check
-4. **Review this guide**: Follow the testing workflow step by step
+1. **Test all endpoints** to ensure they work correctly
+2. **Create test data** for comprehensive testing
+3. **Set up automated testing** using Postman's test scripts
+4. **Monitor performance** using Postman's response time metrics
 
 ---
 
-**Happy Testing! 🚀**
-
-The Sea & Tea Tours API collection is designed to make testing comprehensive and efficient. Follow this guide to get started and explore all the available endpoints.
+**Note:** Replace `your-railway-domain.railway.app` with your actual Railway domain in the environment variables.

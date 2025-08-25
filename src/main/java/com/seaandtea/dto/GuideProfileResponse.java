@@ -29,6 +29,7 @@ public class GuideProfileResponse {
     private BigDecimal averageRating;
     private Integer totalReviews;
     private String verificationStatus;
+    private String verificationDocuments;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<GuideSpecialtyResponse> specialties;

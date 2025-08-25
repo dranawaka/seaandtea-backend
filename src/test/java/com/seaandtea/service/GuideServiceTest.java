@@ -114,6 +114,43 @@ class GuideServiceTest {
         assertEquals(2, response.getSpecialties().size());
         assertEquals(2, response.getLanguages().size());
         
+        // Note: createGuideProfile no longer updates user role, it assumes user already has GUIDE role
+        verify(userService, never()).updateUserRole(any(), any());
+        verify(guideRepository, times(2)).save(any(Guide.class));
+    }
+    
+    @Test
+    void upgradeToGuideAndCreateProfile_Success() {
+        // Given
+        when(userRepository.findById(1L)).thenReturn(Optional.of(testUser));
+        when(guideRepository.findByUserId(1L)).thenReturn(Optional.empty());
+        when(guideRepository.save(any(Guide.class))).thenAnswer(invocation -> {
+            Guide guide = invocation.getArgument(0);
+            guide.setId(1L);
+            guide.setCreatedAt(LocalDateTime.now());
+            guide.setUpdatedAt(LocalDateTime.now());
+            return guide;
+        });
+        
+        // When
+        GuideProfileResponse response = guideService.upgradeToGuideAndCreateProfile(1L, testRequest);
+        
+        // Then
+        assertNotNull(response);
+        assertEquals(1L, response.getId());
+        assertEquals(1L, response.getUserId());
+        assertEquals("John", response.getUserFirstName());
+        assertEquals("Doe", response.getUserLastName());
+        assertEquals("test@example.com", response.getUserEmail());
+        assertEquals(testRequest.getBio(), response.getBio());
+        assertEquals(testRequest.getHourlyRate(), response.getHourlyRate());
+        assertEquals(testRequest.getDailyRate(), response.getDailyRate());
+        assertEquals(testRequest.getResponseTimeHours(), response.getResponseTimeHours());
+        assertEquals(testRequest.getIsAvailable(), response.getIsAvailable());
+        assertEquals(2, response.getSpecialties().size());
+        assertEquals(2, response.getLanguages().size());
+        
+        // Verify that user role was updated to GUIDE
         verify(userService).updateUserRole(1L, any());
         verify(guideRepository, times(2)).save(any(Guide.class));
     }

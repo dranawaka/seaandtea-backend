@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "sea-tea-tours-api-collection",
 		"name": "Sea & Tea Tours Backend API",
-		"description": "Complete API collection for the Sea & Tea Tours platform backend. Includes authentication, user management, tours, guides, bookings, and more.",
+		"description": "Complete API collection for the Sea & Tea Tours platform backend. Includes authentication, user management, guides, and health checks.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "sea-tea-tours-api"
 	},
@@ -108,6 +108,25 @@
 						"description": "Simple ping endpoint for load balancer health checks"
 					},
 					"response": []
+				},
+				{
+					"name": "Actuator Health",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/actuator/health",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						},
+						"description": "Spring Boot Actuator health check endpoint"
+					},
+					"response": []
 				}
 			],
 			"description": "Health check and status endpoints"
@@ -205,135 +224,9 @@
 						"description": "Change the current user's password"
 					},
 					"response": []
-				}
-			],
-			"description": "User profile management endpoints"
-		},
-		{
-			"name": "🏖️ Tours",
-			"item": [
-				{
-					"name": "Get All Tours",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/tours?page=0&size=10&sort=name,asc",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"tours"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "10"
-								},
-								{
-									"key": "sort",
-									"value": "name,asc"
-								}
-							]
-						},
-						"description": "Get paginated list of all available tours"
-					},
-					"response": []
 				},
 				{
-					"name": "Get Tour by ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/tours/{{tour_id}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"tours",
-								"{{tour_id}}"
-							]
-						},
-						"description": "Get detailed information about a specific tour"
-					},
-					"response": []
-				},
-				{
-					"name": "Search Tours",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/tours/search?query=beach&location=Hawaii&minPrice=100&maxPrice=500",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"tours",
-								"search"
-							],
-							"query": [
-								{
-									"key": "query",
-									"value": "beach"
-								},
-								{
-									"key": "location",
-									"value": "Hawaii"
-								},
-								{
-									"key": "minPrice",
-									"value": "100"
-								},
-								{
-									"key": "maxPrice",
-									"value": "500"
-								}
-							]
-						},
-						"description": "Search tours with filters"
-					},
-					"response": []
-				},
-				{
-					"name": "Create Tour (Admin/Guide)",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"name\": \"Sunset Beach Tour\",\n  \"description\": \"Experience the beautiful sunset at Waikiki Beach\",\n  \"duration\": 120,\n  \"price\": 150.00,\n  \"maxGroupSize\": 15,\n  \"location\": \"Waikiki Beach, Hawaii\",\n  \"category\": \"BEACH\",\n  \"difficultyLevel\": \"EASY\",\n  \"includedServices\": [\"Transportation\", \"Guide\", \"Equipment\"],\n  \"excludedServices\": [\"Meals\", \"Personal expenses\"]\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/tours",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"tours"
-							]
-						},
-						"description": "Create a new tour (requires admin or guide role)"
-					},
-					"response": []
-				},
-				{
-					"name": "Update Tour",
+					"name": "Update User Role",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -349,137 +242,28 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Sunset Beach Tour Updated\",\n  \"description\": \"Updated description for the sunset tour\",\n  \"price\": 175.00,\n  \"maxGroupSize\": 20\n}"
+							"raw": "{\n  \"role\": \"GUIDE\"\n}"
 						},
 						"url": {
-							"raw": "{{base_url}}/tours/{{tour_id}}",
+							"raw": "{{base_url}}/users/role",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"tours",
-								"{{tour_id}}"
+								"users",
+								"role"
 							]
 						},
-						"description": "Update an existing tour"
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Tour",
-					"request": {
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/tours/{{tour_id}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"tours",
-								"{{tour_id}}"
-							]
-						},
-						"description": "Delete a tour (requires admin or guide role)"
+						"description": "Update the current user's role"
 					},
 					"response": []
 				}
 			],
-			"description": "Tour management endpoints"
+			"description": "User profile management endpoints"
 		},
 		{
 			"name": "👨‍🏫 Guides",
 			"item": [
-				{
-					"name": "Get All Guides",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/guides?page=0&size=10&sort=rating,desc",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"guides"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "10"
-								},
-								{
-									"key": "sort",
-									"value": "rating,desc"
-								}
-							]
-						},
-						"description": "Get paginated list of all guides"
-					},
-					"response": []
-				},
-				{
-					"name": "Get Guide by ID",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/guides/{{guide_id}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"guides",
-								"{{guide_id}}"
-							]
-						},
-						"description": "Get detailed information about a specific guide"
-					},
-					"response": []
-				},
-				{
-					"name": "Search Guides",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/guides/search?specialty=HIKING&language=ENGLISH&location=Hawaii",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"guides",
-								"search"
-							],
-							"query": [
-								{
-									"key": "specialty",
-									"value": "HIKING"
-								},
-								{
-									"key": "language",
-									"value": "ENGLISH"
-								},
-								{
-									"key": "location",
-									"value": "Hawaii"
-								}
-							]
-						},
-						"description": "Search guides with filters"
-					},
-					"response": []
-				},
 				{
 					"name": "Create Guide Profile",
 					"request": {
@@ -513,7 +297,51 @@
 					"response": []
 				},
 				{
-					"name": "Update Guide Profile",
+					"name": "Get Guide Profile by ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/guides/{{guide_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"guides",
+								"{{guide_id}}"
+							]
+						},
+						"description": "Get detailed information about a specific guide"
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Guide Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/guides/my-profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"guides",
+								"my-profile"
+							]
+						},
+						"description": "Get the current authenticated user's guide profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Update My Guide Profile",
 					"request": {
 						"method": "PUT",
 						"header": [
@@ -532,6 +360,39 @@
 							"raw": "{\n  \"bio\": \"Updated bio with more experience\",\n  \"hourlyRate\": 55.00,\n  \"certifications\": [\"Wilderness First Aid\", \"CPR\", \"Advanced Wilderness Medicine\"]\n}"
 						},
 						"url": {
+							"raw": "{{base_url}}/guides/my-profile",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"guides",
+								"my-profile"
+							]
+						},
+						"description": "Update the current user's guide profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Guide Profile by ID (Admin)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bio\": \"Updated bio by admin\",\n  \"hourlyRate\": 60.00\n}"
+						},
+						"url": {
 							"raw": "{{base_url}}/guides/{{guide_id}}",
 							"host": [
 								"{{base_url}}"
@@ -541,285 +402,12 @@
 								"{{guide_id}}"
 							]
 						},
-						"description": "Update guide profile"
-					},
-					"response": []
-				}
-			],
-			"description": "Guide management endpoints"
-		},
-		{
-			"name": "📅 Bookings",
-			"item": [
-				{
-					"name": "Get User Bookings",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/bookings?page=0&size=10&status=CONFIRMED",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"bookings"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "10"
-								},
-								{
-									"key": "status",
-									"value": "CONFIRMED"
-								}
-							]
-						},
-						"description": "Get current user's bookings"
+						"description": "Update guide profile by ID (admin only)"
 					},
 					"response": []
 				},
 				{
-					"name": "Get Booking by ID",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/bookings/{{booking_id}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"bookings",
-								"{{booking_id}}"
-							]
-						},
-						"description": "Get detailed information about a specific booking"
-					},
-					"response": []
-				},
-				{
-					"name": "Create Booking",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"tourId\": \"{{tour_id}}\",\n  \"guideId\": \"{{guide_id}}\",\n  \"bookingDate\": \"2025-09-15\",\n  \"startTime\": \"09:00:00\",\n  \"numberOfPeople\": 2,\n  \"specialRequests\": \"Vegetarian meal preference\",\n  \"contactPhone\": \"+1234567890\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/bookings",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"bookings"
-							]
-						},
-						"description": "Create a new booking for a tour"
-					},
-					"response": []
-				},
-				{
-					"name": "Update Booking",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"numberOfPeople\": 3,\n  \"specialRequests\": \"Updated special requests\",\n  \"contactPhone\": \"+1234567890\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/bookings/{{booking_id}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"bookings",
-								"{{booking_id}}"
-							]
-						},
-						"description": "Update an existing booking"
-					},
-					"response": []
-				},
-				{
-					"name": "Cancel Booking",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"status\": \"CANCELLED\",\n  \"cancellationReason\": \"Schedule conflict\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/bookings/{{booking_id}}/status",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"bookings",
-								"{{booking_id}}",
-								"status"
-							]
-						},
-						"description": "Cancel a booking"
-					},
-					"response": []
-				}
-			],
-			"description": "Booking management endpoints"
-		},
-		{
-			"name": "⭐ Reviews",
-			"item": [
-				{
-					"name": "Get Tour Reviews",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{base_url}}/tours/{{tour_id}}/reviews?page=0&size=10&sort=rating,desc",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"tours",
-								"{{tour_id}}",
-								"reviews"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "10"
-								},
-								{
-									"key": "sort",
-									"value": "rating,desc"
-								}
-							]
-						},
-						"description": "Get reviews for a specific tour"
-					},
-					"response": []
-				},
-				{
-					"name": "Create Review",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"tourId\": \"{{tour_id}}\",\n  \"rating\": 5,\n  \"comment\": \"Amazing experience! The guide was knowledgeable and friendly.\",\n  \"recommendToOthers\": true\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/reviews",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"reviews"
-							]
-						},
-						"description": "Create a review for a tour"
-					},
-					"response": []
-				},
-				{
-					"name": "Update Review",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"rating\": 4,\n  \"comment\": \"Updated comment with more details\",\n  \"recommendToOthers\": true\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/reviews/{{review_id}}",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"reviews",
-								"{{review_id}}"
-							]
-						},
-						"description": "Update an existing review"
-					},
-					"response": []
-				},
-				{
-					"name": "Delete Review",
+					"name": "Delete My Guide Profile",
 					"request": {
 						"method": "DELETE",
 						"header": [
@@ -830,342 +418,72 @@
 							}
 						],
 						"url": {
-							"raw": "{{base_url}}/reviews/{{review_id}}",
+							"raw": "{{base_url}}/guides/my-profile",
 							"host": [
 								"{{base_url}}"
 							],
 							"path": [
-								"reviews",
-								"{{review_id}}"
+								"guides",
+								"my-profile"
 							]
 						},
-						"description": "Delete a review"
+						"description": "Delete the current user's guide profile"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Guide Profile by ID (Admin)",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/guides/{{guide_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"guides",
+								"{{guide_id}}"
+							]
+						},
+						"description": "Delete guide profile by ID (admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Guide Profile If Exists",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/guides/my-profile/exists",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"guides",
+								"my-profile",
+								"exists"
+							]
+						},
+						"description": "Get guide profile for authenticated user if it exists (returns profile or 404)"
 					},
 					"response": []
 				}
 			],
-			"description": "Review management endpoints"
-		},
-		{
-			"name": "💳 Payments",
-			"item": [
-				{
-					"name": "Create Payment Intent",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"bookingId\": \"{{booking_id}}\",\n  \"amount\": 300.00,\n  \"currency\": \"USD\",\n  \"paymentMethod\": \"card\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/payments/create-intent",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"payments",
-								"create-intent"
-							]
-						},
-						"description": "Create a Stripe payment intent for a booking"
-					},
-					"response": []
-				},
-				{
-					"name": "Confirm Payment",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"paymentIntentId\": \"pi_1234567890\",\n  \"bookingId\": \"{{booking_id}}\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/payments/confirm",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"payments",
-								"confirm"
-							]
-						},
-						"description": "Confirm a payment after successful Stripe payment"
-					},
-					"response": []
-				},
-				{
-					"name": "Get Payment History",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/payments/history?page=0&size=10",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"payments",
-								"history"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "10"
-								}
-							]
-						},
-						"description": "Get user's payment history"
-					},
-					"response": []
-				}
-			],
-			"description": "Payment processing endpoints"
-		},
-		{
-			"name": "📱 Messaging",
-			"item": [
-				{
-					"name": "Get Conversations",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/messages/conversations?page=0&size=10",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"messages",
-								"conversations"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "10"
-								}
-							]
-						},
-						"description": "Get user's conversations"
-					},
-					"response": []
-				},
-				{
-					"name": "Get Messages in Conversation",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/messages/conversations/{{conversation_id}}?page=0&size=50",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"messages",
-								"conversations",
-								"{{conversation_id}}"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "50"
-								}
-							]
-						},
-						"description": "Get messages in a specific conversation"
-					},
-					"response": []
-				},
-				{
-					"name": "Send Message",
-					"request": {
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"recipientId\": \"{{recipient_id}}\",\n  \"content\": \"Hello! I have a question about the tour.\",\n  \"messageType\": \"TEXT\"\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/messages",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"messages"
-							]
-						},
-						"description": "Send a message to another user"
-					},
-					"response": []
-				}
-			],
-			"description": "Real-time messaging endpoints"
-		},
-		{
-			"name": "📊 Admin",
-			"item": [
-				{
-					"name": "Get All Users (Admin)",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/admin/users?page=0&size=20&role=USER",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"admin",
-								"users"
-							],
-							"query": [
-								{
-									"key": "page",
-									"value": "0"
-								},
-								{
-									"key": "size",
-									"value": "20"
-								},
-								{
-									"key": "role",
-									"value": "USER"
-								}
-							]
-						},
-						"description": "Get all users (admin only)"
-					},
-					"response": []
-				},
-				{
-					"name": "Update User Role (Admin)",
-					"request": {
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							},
-							{
-								"key": "Content-Type",
-								"value": "application/json"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"role\": \"GUIDE\",\n  \"isActive\": true\n}"
-						},
-						"url": {
-							"raw": "{{base_url}}/admin/users/{{user_id}}/role",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"admin",
-								"users",
-								"{{user_id}}",
-								"role"
-							]
-						},
-						"description": "Update user role (admin only)"
-					},
-					"response": []
-				},
-				{
-					"name": "Get System Statistics (Admin)",
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{auth_token}}",
-								"type": "text"
-							}
-						],
-						"url": {
-							"raw": "{{base_url}}/admin/statistics",
-							"host": [
-								"{{base_url}}"
-							],
-							"path": [
-								"admin",
-								"statistics"
-							]
-						},
-						"description": "Get system statistics (admin only)"
-					},
-					"response": []
-				}
-			],
-			"description": "Admin-only endpoints for system management"
+			"description": "Guide management endpoints"
 		}
 	],
 	"event": [
@@ -1180,7 +498,7 @@
 					"        url: pm.request.url,",
 					"        method: 'POST',",
 					"        header: pm.request.headers,",
-					"        body: pm.request.body",
+					"        body: pm.request.body,",
 					"    }, function (err, response) {",
 					"        if (response.code === 200) {",
 					"            const responseJson = response.json();",
@@ -1218,7 +536,7 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "http://localhost:8080/api/v1",
+			"value": "https://your-railway-domain.railway.app/api/v1",
 			"type": "string"
 		},
 		{
@@ -1232,33 +550,7 @@
 			"type": "string"
 		},
 		{
-			"key": "tour_id",
-			"value": "",
-			"value": "",
-			"type": "string"
-		},
-		{
 			"key": "guide_id",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "booking_id",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "review_id",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "conversation_id",
-			"value": "",
-			"type": "string"
-		},
-		{
-			"key": "recipient_id",
 			"value": "",
 			"type": "string"
 		}

@@ -20,7 +20,7 @@ This document describes the complete implementation of the Guide Profile Managem
   - Create guide profile
   - Update guide profile
   - Get guide profile by ID or user ID
-  - Check if user has guide profile
+  - Get guide profile if exists (returns profile or 404)
   - Delete guide profile
   - Automatic user role update to GUIDE
 
@@ -33,7 +33,7 @@ This document describes the complete implementation of the Guide Profile Managem
   - `PUT /api/v1/guides/{guideId}` - Update guide profile by ID (admin)
   - `DELETE /api/v1/guides/my-profile` - Delete current user's guide profile
   - `DELETE /api/v1/guides/{guideId}` - Delete guide profile by ID (admin)
-  - `GET /api/v1/guides/my-profile/exists` - Check if user has guide profile
+  - `GET /api/v1/guides/my-profile/exists` - Get guide profile if exists (returns profile or 404)
 
 ### 5. Repository Layer
 - **GuideRepository**: Enhanced with search and filtering capabilities
@@ -56,7 +56,7 @@ PUT    /api/v1/guides/my-profile         - Update current user's guide profile
 PUT    /api/v1/guides/{guideId}          - Update guide profile by ID
 DELETE /api/v1/guides/my-profile         - Delete current user's guide profile
 DELETE /api/v1/guides/{guideId}          - Delete guide profile by ID
-GET    /api/v1/guides/my-profile/exists  - Check if user has guide profile
+GET    /api/v1/guides/my-profile/exists  - Get guide profile if exists (returns profile or 404)
 ```
 
 ### User Role Management

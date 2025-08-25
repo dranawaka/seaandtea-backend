@@ -32,8 +32,10 @@ public class SecurityConfig {
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/auth/**").permitAll()
                 .requestMatchers("/public/**").permitAll()
+                .requestMatchers("/actuator/**").permitAll()
                 .requestMatchers("/health/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .requestMatchers("/error").permitAll() // Allow error endpoint to avoid redirect loops
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session

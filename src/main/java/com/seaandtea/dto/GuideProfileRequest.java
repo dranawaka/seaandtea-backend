@@ -45,6 +45,8 @@ public class GuideProfileRequest {
     @Size(max = 5, message = "Maximum 5 languages allowed")
     private List<GuideLanguageRequest> languages;
     
+    private String verificationDocuments;
+    
     @Data
     @Builder
     @NoArgsConstructor
