@@ -297,6 +297,31 @@ public class GuideService {
     }
     
     /**
+     * Get all verified guides (public endpoint)
+     */
+    @Transactional(readOnly = true)
+    public List<GuideProfileResponse> getAllVerifiedGuides() {
+        log.info("Fetching all verified guides for public endpoint");
+        
+        List<Guide> verifiedGuides = guideRepository.findByVerificationStatus(Guide.VerificationStatus.VERIFIED);
+        return verifiedGuides.stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+    
+    /**
+     * Get verified guides with pagination (public endpoint)
+     */
+    @Transactional(readOnly = true)
+    public Page<GuideProfileResponse> getVerifiedGuidesPaginated(Pageable pageable) {
+        log.info("Fetching verified guides with pagination: page {}, size {}", 
+                pageable.getPageNumber(), pageable.getPageSize());
+        
+        Page<Guide> verifiedGuides = guideRepository.findByVerificationStatus(Guide.VerificationStatus.VERIFIED, pageable);
+        return verifiedGuides.map(this::mapToResponse);
+    }
+    
+    /**
      * Verify guide profile (approve)
      */
     public GuideProfileResponse verifyGuideProfile(Long guideId) {
@@ -347,6 +372,7 @@ public class GuideService {
                 .userFirstName(guide.getUser().getFirstName())
                 .userLastName(guide.getUser().getLastName())
                 .userEmail(guide.getUser().getEmail())
+                .profilePictureUrl(guide.getUser().getProfilePictureUrl())
                 .bio(guide.getBio())
                 .hourlyRate(guide.getHourlyRate())
                 .dailyRate(guide.getDailyRate())

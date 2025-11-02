@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
+import org.hibernate.type.SqlTypes;
+import org.hibernate.annotations.JdbcTypeCode;
 
 @Entity
 @Table(name = "tours")
@@ -50,17 +52,21 @@ public class Tour {
     @Column(name = "secure_payment")
     private Boolean securePayment = true;
     
-    @Column(columnDefinition = "jsonb")
-    private String languages;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "languages")
+    private List<String> languages;
     
-    @Column(columnDefinition = "jsonb")
-    private String highlights;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "highlights")
+    private List<String> highlights;
     
-    @Column(name = "included_items", columnDefinition = "jsonb")
-    private String includedItems;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "included_items")
+    private List<String> includedItems;
     
-    @Column(name = "excluded_items", columnDefinition = "jsonb")
-    private String excludedItems;
+    @JdbcTypeCode(SqlTypes.JSON)
+    @Column(name = "excluded_items")
+    private List<String> excludedItems;
     
     @Column(name = "meeting_point")
     private String meetingPoint;

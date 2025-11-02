@@ -65,10 +65,10 @@ CREATE TABLE IF NOT EXISTS tours (
     price_per_person DECIMAL(10,2),
     instant_booking BOOLEAN DEFAULT false,
     secure_payment BOOLEAN DEFAULT true,
-    languages JSONB,
-    highlights JSONB,
-    included_items JSONB,
-    excluded_items JSONB,
+    languages VARCHAR(2000),
+    highlights VARCHAR(2000),
+    included_items VARCHAR(2000),
+    excluded_items VARCHAR(2000),
     meeting_point VARCHAR(255),
     cancellation_policy TEXT,
     is_active BOOLEAN DEFAULT true,
@@ -151,20 +151,5 @@ CREATE INDEX IF NOT EXISTS idx_reviews_guide_id ON reviews(guide_id);
 CREATE INDEX IF NOT EXISTS idx_payments_booking_id ON payments(booking_id);
 CREATE INDEX IF NOT EXISTS idx_messages_booking_id ON messages(booking_id);
 
--- Create updated_at trigger function
-CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $$
-BEGIN
-    NEW.updated_at = CURRENT_TIMESTAMP;
-    RETURN NEW;
-END;
-$$ language 'plpgsql';
-
--- Create triggers for updated_at columns
-CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_guides_updated_at BEFORE UPDATE ON guides FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_tours_updated_at BEFORE UPDATE ON tours FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_bookings_updated_at BEFORE UPDATE ON bookings FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_payments_updated_at BEFORE UPDATE ON payments FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 
 

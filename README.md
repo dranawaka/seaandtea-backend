@@ -130,6 +130,29 @@ The application uses the following main entities:
 - CORS configuration
 - Input validation and sanitization
 
+## 🌐 Public API Endpoints
+
+The following endpoints are accessible without authentication for public browsing:
+
+### Guide Discovery
+- **`GET /api/v1/guides/verified`** - Get all verified guides
+- **`GET /api/v1/guides/verified/paginated`** - Get verified guides with pagination and sorting
+
+### Tour Discovery
+- **`GET /tours/public/verified`** - Get all verified tours
+- **`GET /tours/public/verified/paginated`** - Get verified tours with pagination and sorting
+
+These endpoints allow anyone to:
+- Browse available verified guides and their profiles
+- View guide specialties, languages, and ratings
+- Discover active tours from verified guides
+- Access tour information without registration
+- Sort and paginate results for better user experience
+
+For detailed API documentation, see:
+- [PUBLIC_GUIDE_ENDPOINTS.md](PUBLIC_GUIDE_ENDPOINTS.md)
+- [PUBLIC_TOURS_ENDPOINTS.md](PUBLIC_TOURS_ENDPOINTS.md)
+
 ## 🧪 Testing
 
 ```bash

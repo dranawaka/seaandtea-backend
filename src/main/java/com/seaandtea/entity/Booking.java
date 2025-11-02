@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "bookings")
@@ -57,9 +58,6 @@ public class Booking {
     @Column(name = "payment_status")
     private PaymentStatus paymentStatus = PaymentStatus.PENDING;
     
-    @Column(name = "payment_intent_id")
-    private String paymentIntentId;
-    
     @Column(name = "special_requests")
     private String specialRequests;
     
@@ -68,6 +66,9 @@ public class Booking {
     
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+    
+    @OneToMany(mappedBy = "booking", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Payment> payments;
     
     @PrePersist
     protected void onCreate() {

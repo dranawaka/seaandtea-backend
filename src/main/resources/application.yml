@@ -19,9 +19,11 @@ jwt:
 stripe:
   webhook-secret: ${STRIPE_WEBHOOK_SECRET}
 
-# Common AWS Configuration
-aws:
-  region: ${AWS_REGION:us-east-1}
+# Common Cloudinary Configuration
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}
 
 # Common Server Configuration
 server:
@@ -56,3 +58,7 @@ logging:
     # Enable basic HTTP logging for all profiles
     org.springframework.web: INFO
     org.springframework.web.servlet: INFO
+    # Enable comprehensive HTTP logging for development
+    com.seaandtea.interceptor: INFO
+    com.seaandtea.filter: INFO
+    com.seaandtea.util: INFO

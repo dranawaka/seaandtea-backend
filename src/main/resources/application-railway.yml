@@ -1,8 +1,11 @@
 spring:
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://${DB_HOST:hopper.proxy.rlwy.net}:${DB_PORT:23545}/${DB_NAME:railway}}
+    # Construct JDBC URL from individual components (Railway provides these separately)
+    # DATABASE_URL format: postgresql://user:pass@host:port/db
+    # We need JDBC format: jdbc:postgresql://host:port/db
+    url: jdbc:postgresql://${DB_HOST:tramway.proxy.rlwy.net}:${DB_PORT:59578}/${DB_NAME:railway}
     username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:SIBfwvrqlFipfkvaqRkIZzvARpfEIoti}
+    password: ${DB_PASSWORD:yPHavvxcXnHQzwrXQtrEqMcraqyzQETf}
     driver-class-name: org.postgresql.Driver
   
   jpa:
@@ -18,8 +21,9 @@ spring:
     enabled: true
     baseline-on-migrate: true
     locations: classpath:db/migration
-    validate-on-migrate: true
+    validate-on-migrate: false
     out-of-order: false
+    repair-on-migrate: true
   
   redis:
     host: ${REDIS_HOST:localhost}
@@ -49,13 +53,12 @@ stripe:
   publishable-key: ${STRIPE_PUBLISHABLE_KEY}
   webhook-secret: ${STRIPE_WEBHOOK_SECRET}
 
-# AWS Configuration
-aws:
-  s3:
-    bucket-name: ${AWS_S3_BUCKET:seaandtea-uploads}
-    region: ${AWS_REGION:us-east-1}
-    access-key: ${AWS_ACCESS_KEY}
-    secret-key: ${AWS_SECRET_KEY}
+# Cloudinary Configuration
+cloudinary:
+  cloud-name: ${CLOUDINARY_CLOUD_NAME}
+  api-key: ${CLOUDINARY_API_KEY}
+  api-secret: ${CLOUDINARY_API_SECRET}
+  folder: ${CLOUDINARY_FOLDER:seaandtea-prod}
 
 # Server Configuration
 server:

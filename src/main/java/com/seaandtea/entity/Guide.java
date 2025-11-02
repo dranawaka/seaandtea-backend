@@ -57,7 +57,7 @@ public class Guide {
     
     @Column(name = "verification_documents")
     @JdbcTypeCode(SqlTypes.JSON)
-    private String verificationDocuments;
+    private List<String> verificationDocuments;
     
     @Column(name = "created_at")
     private LocalDateTime createdAt;

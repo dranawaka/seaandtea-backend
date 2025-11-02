@@ -20,6 +20,7 @@ public class GuideProfileResponse {
     private String userFirstName;
     private String userLastName;
     private String userEmail;
+    private String profilePictureUrl;
     private String bio;
     private BigDecimal hourlyRate;
     private BigDecimal dailyRate;
@@ -29,7 +30,7 @@ public class GuideProfileResponse {
     private BigDecimal averageRating;
     private Integer totalReviews;
     private String verificationStatus;
-    private String verificationDocuments;
+    private List<String> verificationDocuments;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private List<GuideSpecialtyResponse> specialties;

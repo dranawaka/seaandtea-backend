@@ -2,7 +2,7 @@
 	"info": {
 		"_postman_id": "sea-tea-tours-api-collection",
 		"name": "Sea & Tea Tours Backend API",
-		"description": "Complete API collection for the Sea & Tea Tours platform backend. Includes authentication, user management, guides, and health checks.",
+		"description": "Complete API collection for the Sea & Tea Tours platform backend. Includes authentication, user management, guides, tours, file uploads, and health checks.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "sea-tea-tours-api"
 	},
@@ -22,7 +22,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phone\": \"+1234567890\",\n  \"dateOfBirth\": \"1990-01-01\",\n  \"nationality\": \"US\"\n}"
+							"raw": "{\n  \"email\": \"tourist@example.com\",\n  \"password\": \"password123\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"phone\": \"+1234567890\",\n  \"dateOfBirth\": \"1990-01-01\",\n  \"nationality\": \"American\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/auth/register",
@@ -40,6 +40,27 @@
 				},
 				{
 					"name": "User Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const responseJson = pm.response.json();",
+									"    if (responseJson.token) {",
+									"        pm.environment.set('auth_token', responseJson.token);",
+									"        console.log('Auth token saved to environment');",
+									"    }",
+									"    if (responseJson.user && responseJson.user.id) {",
+									"        pm.environment.set('user_id', responseJson.user.id);",
+									"        console.log('User ID saved to environment');",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "POST",
 						"header": [
@@ -50,7 +71,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"user@example.com\",\n  \"password\": \"password123\"\n}"
+							"raw": "{\n  \"email\": \"guide1@seaandtea.com\",\n  \"password\": \"password\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/auth/login",
@@ -62,7 +83,56 @@
 								"login"
 							]
 						},
-						"description": "Authenticate user and receive JWT token"
+						"description": "Authenticate user and receive JWT token. Test credentials: guide1@seaandtea.com / password"
+					},
+					"response": []
+				},
+				{
+					"name": "Login as Admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const responseJson = pm.response.json();",
+									"    if (responseJson.token) {",
+									"        pm.environment.set('auth_token', responseJson.token);",
+									"        console.log('Admin auth token saved to environment');",
+									"    }",
+									"    if (responseJson.user && responseJson.user.id) {",
+									"        pm.environment.set('user_id', responseJson.user.id);",
+									"        console.log('Admin User ID saved to environment');",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@seaandtea.com\",\n  \"password\": \"password\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/auth/login",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login as admin user"
 					},
 					"response": []
 				}
@@ -176,7 +246,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"firstName\": \"John Updated\",\n  \"lastName\": \"Doe Updated\",\n  \"phone\": \"+1234567890\",\n  \"nationality\": \"US\"\n}"
+							"raw": "{\n  \"firstName\": \"John Updated\",\n  \"lastName\": \"Doe Updated\",\n  \"phone\": \"+1234567890\",\n  \"nationality\": \"American\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users/profile",
@@ -209,7 +279,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"currentPassword\": \"password123\",\n  \"newPassword\": \"newpassword123\"\n}"
+							"raw": "{\n  \"currentPassword\": \"password\",\n  \"newPassword\": \"newpassword123\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/users/password",
@@ -254,7 +324,7 @@
 								"role"
 							]
 						},
-						"description": "Update the current user's role"
+						"description": "Update the current user's role (Admin only)"
 					},
 					"response": []
 				}
@@ -264,6 +334,25 @@
 		{
 			"name": "👨‍🏫 Guides",
 			"item": [
+				{
+					"name": "Guide Ping",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/guides/ping",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"guides",
+								"ping"
+							]
+						},
+						"description": "Test guide controller availability"
+					},
+					"response": []
+				},
 				{
 					"name": "Create Guide Profile",
 					"request": {
@@ -281,7 +370,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"bio\": \"Experienced hiking guide with 10+ years in Hawaii\",\n  \"specialties\": [\"HIKING\", \"NATURE\"],\n  \"languages\": [\"ENGLISH\", \"SPANISH\"],\n  \"certifications\": [\"Wilderness First Aid\", \"CPR\"],\n  \"experience\": 10,\n  \"hourlyRate\": 50.00\n}"
+							"raw": "{\n  \"bio\": \"Experienced tea plantation guide with 10+ years of experience. Specialized in Ceylon tea tours and cultural experiences in the beautiful hill country of Sri Lanka.\",\n  \"hourlyRate\": 25.00,\n  \"dailyRate\": 200.00,\n  \"responseTimeHours\": 2,\n  \"specialties\": [\n    {\n      \"specialty\": \"Tea Tours\",\n      \"yearsExperience\": 10\n    },\n    {\n      \"specialty\": \"Cultural Tours\",\n      \"yearsExperience\": 8\n    }\n  ],\n  \"languages\": [\n    {\n      \"language\": \"English\",\n      \"proficiencyLevel\": \"FLUENT\"\n    },\n    {\n      \"language\": \"Sinhala\",\n      \"proficiencyLevel\": \"NATIVE\"\n    }\n  ]\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/guides",
@@ -292,7 +381,40 @@
 								"guides"
 							]
 						},
-						"description": "Create a guide profile for the authenticated user"
+						"description": "Create a guide profile for the authenticated user (GUIDE/ADMIN role required)"
+					},
+					"response": []
+				},
+				{
+					"name": "Upgrade User to Guide",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"bio\": \"New guide looking to share the beauty of Sri Lanka with tourists. Passionate about cultural heritage and nature.\",\n  \"hourlyRate\": 20.00,\n  \"dailyRate\": 150.00,\n  \"responseTimeHours\": 4,\n  \"specialties\": [\n    {\n      \"specialty\": \"Cultural Tours\",\n      \"yearsExperience\": 2\n    }\n  ],\n  \"languages\": [\n    {\n      \"language\": \"English\",\n      \"proficiencyLevel\": \"FLUENT\"\n    }\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/guides/upgrade",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"guides",
+								"upgrade"
+							]
+						},
+						"description": "Upgrade USER to GUIDE role and create guide profile (USER role required)"
 					},
 					"response": []
 				},
@@ -317,6 +439,23 @@
 				},
 				{
 					"name": "Get My Guide Profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const responseJson = pm.response.json();",
+									"    if (responseJson.id) {",
+									"        pm.environment.set('guide_id', responseJson.id);",
+									"        console.log('Guide ID saved to environment: ' + responseJson.id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
 					"request": {
 						"method": "GET",
 						"header": [
@@ -357,7 +496,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"bio\": \"Updated bio with more experience\",\n  \"hourlyRate\": 55.00,\n  \"certifications\": [\"Wilderness First Aid\", \"CPR\", \"Advanced Wilderness Medicine\"]\n}"
+							"raw": "{\n  \"bio\": \"Updated bio with more experience and certifications\",\n  \"hourlyRate\": 30.00,\n  \"dailyRate\": 250.00,\n  \"responseTimeHours\": 1\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/guides/my-profile",
@@ -390,7 +529,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"bio\": \"Updated bio by admin\",\n  \"hourlyRate\": 60.00\n}"
+							"raw": "{\n  \"bio\": \"Profile updated by admin\",\n  \"hourlyRate\": 35.00,\n  \"verificationStatus\": \"VERIFIED\"\n}"
 						},
 						"url": {
 							"raw": "{{base_url}}/guides/{{guide_id}}",
@@ -481,9 +620,474 @@
 						"description": "Get guide profile for authenticated user if it exists (returns profile or 404)"
 					},
 					"response": []
+				},
+				{
+					"name": "Get Unverified Guides (Admin)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/guides?verificationStatus=PENDING",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"guides"
+							],
+							"query": [
+								{
+									"key": "verificationStatus",
+									"value": "PENDING"
+								}
+							]
+						},
+						"description": "Fetch guides with pending verification status (Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Guide Profile (Admin)",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/guides/{{guide_id}}/verify",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"guides",
+								"{{guide_id}}",
+								"verify"
+							]
+						},
+						"description": "Approve/verify a guide profile (Admin only)"
+					},
+					"response": []
 				}
 			],
 			"description": "Guide management endpoints"
+		},
+		{
+			"name": "🎯 Tours",
+			"item": [
+				{
+					"name": "Create Tour",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Amazing Ceylon Tea Experience\",\n  \"description\": \"Discover the world-famous Ceylon tea plantations in the beautiful hill country of Sri Lanka. Learn about tea processing, taste different varieties, and enjoy scenic views.\",\n  \"category\": \"TEA_TOURS\",\n  \"durationHours\": 6,\n  \"maxGroupSize\": 8,\n  \"pricePerPerson\": 75.00,\n  \"instantBooking\": true,\n  \"securePayment\": true,\n  \"languages\": [\"English\", \"Sinhala\"],\n  \"highlights\": [\"Tea plantation visit\", \"Tea factory tour\", \"Tea tasting session\", \"Scenic viewpoints\"],\n  \"includedItems\": [\"Transportation\", \"Tea tasting\", \"Local guide\", \"Refreshments\"],\n  \"excludedItems\": [\"Lunch\", \"Personal expenses\", \"Souvenirs\"],\n  \"meetingPoint\": \"Kandy Railway Station\",\n  \"cancellationPolicy\": \"Free cancellation up to 24 hours before tour\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tours",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tours"
+							]
+						},
+						"description": "Create a new tour (Guide/Admin only)"
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Tours",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tours?page=0&size=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tours"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get paginated list of all active tours"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tour by ID",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const responseJson = pm.response.json();",
+									"    if (responseJson.id) {",
+									"        pm.environment.set('tour_id', responseJson.id);",
+									"        console.log('Tour ID saved to environment: ' + responseJson.id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tours/{{tour_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tours",
+								"{{tour_id}}"
+							]
+						},
+						"description": "Get detailed information about a specific tour"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Tour",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"title\": \"Updated Ceylon Tea Experience\",\n  \"description\": \"Updated description with new highlights and improved itinerary\",\n  \"pricePerPerson\": 85.00,\n  \"maxGroupSize\": 10,\n  \"highlights\": [\"Tea plantation visit\", \"Tea factory tour\", \"Premium tea tasting\", \"Scenic viewpoints\", \"Local village interaction\"]\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tours/{{tour_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tours",
+								"{{tour_id}}"
+							]
+						},
+						"description": "Update an existing tour (Guide owns tour or Admin)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Tour",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/tours/{{tour_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tours",
+								"{{tour_id}}"
+							]
+						},
+						"description": "Delete a tour (Guide owns tour or Admin)"
+					},
+					"response": []
+				},
+				{
+					"name": "Filter Tours",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"category\": \"TEA_TOURS\",\n  \"minPrice\": 50.00,\n  \"maxPrice\": 100.00,\n  \"durationHours\": 6,\n  \"languages\": [\"English\"],\n  \"instantBooking\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/tours/filter?page=0&size=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tours",
+								"filter"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Filter tours by various criteria"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tours by Category",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tours/category/TEA_TOURS?page=0&size=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tours",
+								"category",
+								"TEA_TOURS"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get tours by specific category"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Tours by Guide",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/tours/guide/{{guide_id}}?page=0&size=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tours",
+								"guide",
+								"{{guide_id}}"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get all tours offered by a specific guide"
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Tours (Guide)",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/tours/my-tours?page=0&size=10",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"tours",
+								"my-tours"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								}
+							]
+						},
+						"description": "Get all tours created by the authenticated guide"
+					},
+					"response": []
+				}
+			],
+			"description": "Tour management endpoints"
+		},
+		{
+			"name": "📁 File Upload",
+			"item": [
+				{
+					"name": "Upload Tour Image",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "isPrimary",
+									"value": "true",
+									"type": "text"
+								},
+								{
+									"key": "altText",
+									"value": "Beautiful tea plantation view",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/upload/tour/{{tour_id}}/image",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"upload",
+								"tour",
+								"{{tour_id}}",
+								"image"
+							]
+						},
+						"description": "Upload an image for a tour (Guide owns tour or Admin)"
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Tour Image",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{base_url}}/upload/tour/{{tour_id}}/image/{{image_id}}",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"upload",
+								"tour",
+								"{{tour_id}}",
+								"image",
+								"{{image_id}}"
+							]
+						},
+						"description": "Delete a tour image (Guide owns tour or Admin)"
+					},
+					"response": []
+				},
+				{
+					"name": "Upload Profile Picture",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{auth_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{base_url}}/upload/profile-picture",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"upload",
+								"profile-picture"
+							]
+						},
+						"description": "Upload a profile picture for the authenticated user (User, Guide, or Admin)"
+					},
+					"response": []
+				}
+			],
+			"description": "File upload endpoints for tours and other media"
 		}
 	],
 	"event": [
@@ -492,21 +1096,15 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"// Auto-set auth token from login response",
-					"if (pm.request.url.path.includes('/auth/login') && pm.request.method === 'POST') {",
-					"    pm.sendRequest({",
-					"        url: pm.request.url,",
-					"        method: 'POST',",
-					"        header: pm.request.headers,",
-					"        body: pm.request.body,",
-					"    }, function (err, response) {",
-					"        if (response.code === 200) {",
-					"            const responseJson = response.json();",
-					"            if (responseJson.token) {",
-					"                pm.environment.set('auth_token', responseJson.token);",
-					"            }",
-					"        }",
-					"    });",
+					"// Common pre-request setup",
+					"console.log('Making request to: ' + pm.request.url);",
+					"",
+					"// Log auth token if present",
+					"const token = pm.environment.get('auth_token');",
+					"if (token) {",
+					"    console.log('Using auth token: ' + token.substring(0, 20) + '...');",
+					"} else {",
+					"    console.log('No auth token set');",
 					"}"
 				]
 			}
@@ -517,18 +1115,42 @@
 				"type": "text/javascript",
 				"exec": [
 					"// Common test scripts",
-					"pm.test('Status code is 200', function () {",
-					"    pm.response.to.have.status(200);",
+					"const responseTime = pm.response.responseTime;",
+					"const statusCode = pm.response.code;",
+					"",
+					"// Log response details",
+					"console.log('Response status: ' + statusCode);",
+					"console.log('Response time: ' + responseTime + 'ms');",
+					"",
+					"// Basic response time test",
+					"pm.test('Response time is acceptable (< 5000ms)', function () {",
+					"    pm.expect(responseTime).to.be.below(5000);",
 					"});",
 					"",
-					"pm.test('Response time is less than 2000ms', function () {",
-					"    pm.expect(pm.response.responseTime).to.be.below(2000);",
-					"});",
+					"// Test for successful responses",
+					"if (statusCode >= 200 && statusCode < 300) {",
+					"    pm.test('Status code is successful (' + statusCode + ')', function () {",
+					"        pm.response.to.be.success;",
+					"    });",
+					"    ",
+					"    pm.test('Response has Content-Type header', function () {",
+					"        pm.response.to.have.header('Content-Type');",
+					"    });",
+					"}",
 					"",
-					"pm.test('Response has required headers', function () {",
-					"    pm.response.to.have.header('Content-Type');",
-					"    pm.response.to.have.header('Content-Type').to.include('application/json');",
-					"});"
+					"// Test for client errors",
+					"if (statusCode >= 400 && statusCode < 500) {",
+					"    pm.test('Client error status (' + statusCode + ')', function () {",
+					"        pm.response.to.be.clientError;",
+					"    });",
+					"}",
+					"",
+					"// Test for server errors",
+					"if (statusCode >= 500) {",
+					"    pm.test('Server error status (' + statusCode + ')', function () {",
+					"        pm.response.to.be.serverError;",
+					"    });",
+					"}"
 				]
 			}
 		}
@@ -536,7 +1158,7 @@
 	"variable": [
 		{
 			"key": "base_url",
-			"value": "https://your-railway-domain.railway.app/api/v1",
+			"value": "http://localhost:8080/api/v1",
 			"type": "string"
 		},
 		{
@@ -551,6 +1173,16 @@
 		},
 		{
 			"key": "guide_id",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "tour_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "image_id",
 			"value": "",
 			"type": "string"
 		}

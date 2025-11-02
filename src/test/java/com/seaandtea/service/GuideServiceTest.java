@@ -17,10 +17,12 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -203,6 +205,82 @@ class GuideServiceTest {
         // When & Then
         assertThrows(IllegalArgumentException.class, () -> 
                 guideService.getGuideProfile(1L));
+    }
+    
+    @Test
+    void deleteGuideProfile_Success() {
+        // Given
+        Guide testGuide = Guide.builder()
+                .id(1L)
+                .user(testUser)
+                .bio("Test bio")
+                .build();
+        
+        when(guideRepository.findById(1L)).thenReturn(Optional.of(testGuide));
+        when(guideRepository.save(any(Guide.class))).thenReturn(testGuide);
+        
+        // When
+        guideService.deleteGuideProfile(1L);
+        
+        // Then
+        verify(guideRepository).deleteById(1L);
+    }
+    
+    @Test
+    void getAllVerifiedGuides_Success() {
+        // Given
+        Guide verifiedGuide1 = Guide.builder()
+                .id(1L)
+                .user(testUser)
+                .verificationStatus(Guide.VerificationStatus.VERIFIED)
+                .bio("Verified guide 1")
+                .build();
+        
+        Guide verifiedGuide2 = Guide.builder()
+                .id(2L)
+                .user(testUser)
+                .verificationStatus(Guide.VerificationStatus.VERIFIED)
+                .bio("Verified guide 2")
+                .build();
+        
+        when(guideRepository.findByVerificationStatus(Guide.VerificationStatus.VERIFIED))
+                .thenReturn(Arrays.asList(verifiedGuide1, verifiedGuide2));
+        
+        // When
+        List<GuideProfileResponse> result = guideService.getAllVerifiedGuides();
+        
+        // Then
+        assertEquals(2, result.size());
+        verify(guideRepository).findByVerificationStatus(Guide.VerificationStatus.VERIFIED);
+    }
+    
+    @Test
+    void getVerifiedGuidesPaginated_Success() {
+        // Given
+        Guide verifiedGuide = Guide.builder()
+                .id(1L)
+                .user(testUser)
+                .verificationStatus(Guide.VerificationStatus.VERIFIED)
+                .bio("Verified guide")
+                .build();
+        
+        org.springframework.data.domain.Page<Guide> page = mock(org.springframework.data.domain.Page.class);
+        when(page.getContent()).thenReturn(Arrays.asList(verifiedGuide));
+        when(page.getTotalPages()).thenReturn(1);
+        when(page.getTotalElements()).thenReturn(1L);
+        
+        when(guideRepository.findByVerificationStatus(eq(Guide.VerificationStatus.VERIFIED), any(org.springframework.data.domain.Pageable.class)))
+                .thenReturn(page);
+        
+        org.springframework.data.domain.Pageable pageable = org.springframework.data.domain.PageRequest.of(0, 10);
+        
+        // When
+        org.springframework.data.domain.Page<GuideProfileResponse> result = guideService.getVerifiedGuidesPaginated(pageable);
+        
+        // Then
+        assertNotNull(result);
+        assertEquals(1, result.getContent().size());
+        verify(guideRepository).findByVerificationStatus(Guide.VerificationStatus.VERIFIED, pageable);
     }
 }
 

@@ -53,6 +53,15 @@ public class UserController {
         return ResponseEntity.ok(updatedUser);
     }
     
+    @PutMapping("/profile-picture")
+    @Operation(summary = "Update profile picture URL", description = "Updates the authenticated user's profile picture URL")
+    public ResponseEntity<UserDto> updateProfilePicture(
+            @AuthenticationPrincipal User user,
+            @RequestBody ProfilePictureUpdateRequest request) {
+        UserDto updatedUser = userService.updateProfilePicture(user.getId(), request.getProfilePictureUrl());
+        return ResponseEntity.ok(updatedUser);
+    }
+    
     public static class PasswordChangeRequest {
         private String currentPassword;
         private String newPassword;
@@ -62,5 +71,13 @@ public class UserController {
         public void setCurrentPassword(String currentPassword) { this.currentPassword = currentPassword; }
         public String getNewPassword() { return newPassword; }
         public void setNewPassword(String newPassword) { this.newPassword = newPassword; }
+    }
+    
+    public static class ProfilePictureUpdateRequest {
+        private String profilePictureUrl;
+        
+        // Getters and setters
+        public String getProfilePictureUrl() { return profilePictureUrl; }
+        public void setProfilePictureUrl(String profilePictureUrl) { this.profilePictureUrl = profilePictureUrl; }
     }
 }

@@ -36,6 +36,12 @@ public class SecurityConfig {
                 .requestMatchers("/health/**").permitAll()
                 .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
                 .requestMatchers("/error").permitAll() // Allow error endpoint to avoid redirect loops
+                .requestMatchers("/guides/test-public").permitAll() // Allow public access to test endpoint
+                .requestMatchers("/guides/verified").permitAll() // Allow public access to verified guides
+                .requestMatchers("/guides/verified/paginated").permitAll() // Allow public access to verified guides with pagination
+                .requestMatchers("/guides/verified/**").permitAll() // Allow public access to verified guides with any additional path
+                .requestMatchers("/tours/public/verified").permitAll() // Allow public access to verified tours
+                .requestMatchers("/tours/public/verified/**").permitAll() // Allow public access to verified tours with any additional path
                 .anyRequest().authenticated()
             )
             .sessionManagement(session -> session

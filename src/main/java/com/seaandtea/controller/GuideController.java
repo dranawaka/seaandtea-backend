@@ -2,19 +2,27 @@ package com.seaandtea.controller;
 
 import com.seaandtea.dto.GuideProfileRequest;
 import com.seaandtea.dto.GuideProfileResponse;
+import com.seaandtea.dto.UserDto;
 import com.seaandtea.entity.Guide;
 import com.seaandtea.entity.User;
 import com.seaandtea.service.GuideService;
+import com.seaandtea.service.FileUploadService;
+import com.seaandtea.service.UserService;
 import java.util.List;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @RequestMapping("/guides")
@@ -22,12 +30,18 @@ import org.springframework.web.bind.annotation.*;
 public class GuideController {
     
     private final GuideService guideService;
+    private final FileUploadService fileUploadService;
+    private final UserService userService;
     
     // Constructor logging
-    public GuideController(GuideService guideService) {
+    public GuideController(GuideService guideService, FileUploadService fileUploadService, UserService userService) {
         this.guideService = guideService;
+        this.fileUploadService = fileUploadService;
+        this.userService = userService;
         log.info("=== GUIDE CONTROLLER CONSTRUCTOR CALLED ===");
         log.info("GuideService: {}", guideService != null ? "INJECTED" : "NULL");
+        log.info("FileUploadService: {}", fileUploadService != null ? "INJECTED" : "NULL");
+        log.info("UserService: {}", userService != null ? "INJECTED" : "NULL");
     }
     
     // Log when controller is initialized
@@ -48,6 +62,10 @@ public class GuideController {
         log.info("  DELETE /guides/my-profile");
         log.info("  DELETE /guides/{guideId}");
         log.info("  GET    /guides/my-profile/exists - Get guide profile if exists (returns profile or 404)");
+        log.info("  POST   /guides/my-profile/picture - Upload guide profile picture (GUIDE only)");
+        log.info("  GET    /guides/test-public        - Test public endpoint (PUBLIC - no auth required)");
+        log.info("  GET    /guides/verified           - Get all verified guides (PUBLIC - no auth required)");
+        log.info("  GET    /guides/verified/paginated - Get verified guides with pagination (PUBLIC - no auth required)");
         log.info("  GET    /guides?verificationStatus=PENDING - Fetch unverified guides (ADMIN only)");
         log.info("  POST   /guides/{id}/verify - Approve guide profile (ADMIN only)");
     }
@@ -270,6 +288,69 @@ public class GuideController {
     }
     
     /**
+     * Simple test endpoint to verify public access is working
+     */
+    @GetMapping("/test-public")
+    public ResponseEntity<String> testPublic(HttpServletRequest request) {
+        logRequest(request, null);
+        
+        log.info("=== PUBLIC TEST ENDPOINT CALLED ===");
+        String response = "Public guide endpoint is working! No authentication required.";
+        
+        ResponseEntity<String> responseEntity = ResponseEntity.ok(response);
+        logResponse(HttpStatus.OK, response);
+        return responseEntity;
+    }
+    
+    /**
+     * Public endpoint to get all verified guides
+     * No authentication required - accessible to everyone
+     */
+    @GetMapping("/verified")
+    public ResponseEntity<List<GuideProfileResponse>> getAllVerifiedGuides(HttpServletRequest request) {
+        logRequest(request, null);
+        log.info("=== PUBLIC ENDPOINT: Fetching all verified guides ===");
+        
+        List<GuideProfileResponse> verifiedGuides = guideService.getAllVerifiedGuides();
+        log.info("Successfully fetched {} verified guides", verifiedGuides.size());
+        
+        ResponseEntity<List<GuideProfileResponse>> responseEntity = ResponseEntity.ok(verifiedGuides);
+        logResponse(HttpStatus.OK, verifiedGuides);
+        return responseEntity;
+    }
+    
+    /**
+     * Public endpoint to get verified guides with pagination
+     * No authentication required - accessible to everyone
+     */
+    @GetMapping("/verified/paginated")
+    public ResponseEntity<Page<GuideProfileResponse>> getVerifiedGuidesPaginated(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir,
+            HttpServletRequest request) {
+        
+        logRequest(request, null, "page=" + page, "size=" + size, "sortBy=" + sortBy, "sortDir=" + sortDir);
+        log.info("=== PUBLIC ENDPOINT: Fetching verified guides with pagination ===");
+        
+        // Create pageable object with sorting
+        Sort sort = sortDir.equalsIgnoreCase("desc") 
+            ? Sort.by(sortBy).descending()
+            : Sort.by(sortBy).ascending();
+        
+        Pageable pageable = PageRequest.of(page, size, sort);
+        
+        Page<GuideProfileResponse> verifiedGuides = guideService.getVerifiedGuidesPaginated(pageable);
+        log.info("Successfully fetched {} verified guides (page {} of {})", 
+                verifiedGuides.getContent().size(), page, verifiedGuides.getTotalPages());
+        
+        ResponseEntity<Page<GuideProfileResponse>> responseEntity = ResponseEntity.ok(verifiedGuides);
+        logResponse(HttpStatus.OK, verifiedGuides);
+        return responseEntity;
+    }
+    
+    /**
      * Get guide profile by ID
      */
     @GetMapping("/{guideId}")
@@ -478,6 +559,43 @@ public class GuideController {
             logResponse(HttpStatus.NOT_FOUND, null);
             return responseEntity;
         }
+    }
+    
+    /**
+     * Upload profile picture for the authenticated guide
+     * Only guides can upload their profile pictures
+     */
+    @PostMapping("/my-profile/picture")
+    @PreAuthorize("hasRole('GUIDE') or hasRole('ADMIN')")
+    public ResponseEntity<GuideProfileResponse> uploadGuideProfilePicture(
+            @RequestParam("file") MultipartFile file,
+            HttpServletRequest request) {
+        
+        logRequest(request, null);
+        log.info("=== GUIDE CONTROLLER: Uploading guide profile picture ===");
+        
+        // Get user ID from JWT token
+        Long userId = getCurrentUserId();
+        log.info("Extracted user ID: {}", userId);
+        
+        // Check if user has a guide profile
+        GuideProfileResponse currentProfile = guideService.getGuideProfileByUserId(userId);
+        log.info("Found guide profile with ID: {}", currentProfile.getId());
+        
+        // Upload file to Cloudinary
+        String imageUrl = fileUploadService.uploadProfilePicture(file, currentProfile.getUserEmail());
+        log.info("Profile picture uploaded successfully: {}", imageUrl);
+        
+        // Update user's profile picture URL
+        userService.updateProfilePictureByEmail(currentProfile.getUserEmail(), imageUrl);
+        log.info("User profile picture updated successfully");
+        
+        // Return updated guide profile
+        GuideProfileResponse updatedProfile = guideService.getGuideProfileByUserId(userId);
+        
+        ResponseEntity<GuideProfileResponse> responseEntity = ResponseEntity.ok(updatedProfile);
+        logResponse(HttpStatus.OK, updatedProfile);
+        return responseEntity;
     }
     
     /**

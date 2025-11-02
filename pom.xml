@@ -66,11 +66,11 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
         
-        <!-- H2 Database for Testing -->
+        <!-- H2 Database for Local Development (runtime) -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
-            <scope>test</scope>
+            <scope>runtime</scope>
         </dependency>
         
         <!-- JWT -->
@@ -99,11 +99,11 @@
             <version>24.8.0</version>
         </dependency>
         
-        <!-- AWS S3 -->
+        <!-- Cloudinary -->
         <dependency>
-            <groupId>software.amazon.awssdk</groupId>
-            <artifactId>s3</artifactId>
-            <version>2.24.12</version>
+            <groupId>com.cloudinary</groupId>
+            <artifactId>cloudinary-http44</artifactId>
+            <version>1.36.0</version>
         </dependency>
         
         <!-- OpenAPI -->

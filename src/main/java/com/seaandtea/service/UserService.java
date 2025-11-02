@@ -73,6 +73,24 @@ public class UserService {
         }
     }
     
+    public UserDto updateProfilePicture(Long userId, String profilePictureUrl) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        user.setProfilePictureUrl(profilePictureUrl);
+        User savedUser = userRepository.save(user);
+        return mapToUserDto(savedUser);
+    }
+    
+    public UserDto updateProfilePictureByEmail(String email, String profilePictureUrl) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+        
+        user.setProfilePictureUrl(profilePictureUrl);
+        User savedUser = userRepository.save(user);
+        return mapToUserDto(savedUser);
+    }
+    
     private UserDto mapToUserDto(User user) {
         return UserDto.builder()
                 .id(user.getId())
