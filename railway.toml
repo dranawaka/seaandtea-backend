@@ -9,12 +9,12 @@ restartPolicyType = "ON_FAILURE"
 restartPolicyMaxRetries = 10
 
 [deploy.variables]
-DATABASE_URL = "postgresql://postgres:yPHavvxcXnHQzwrXQtrEqMcraqyzQETf@tramway.proxy.rlwy.net:59578/railway"
-DB_HOST = "tramway.proxy.rlwy.net"
-DB_PORT = "59578"
+DATABASE_URL = "postgresql://postgres:SIBfwvrqlFipfkvaqRkIZzvARpfEIoti@hopper.proxy.rlwy.net:23545/railway"
+DB_HOST = "hopper.proxy.rlwy.net"
+DB_PORT = "23545"
 DB_NAME = "railway"
 DB_USERNAME = "postgres"
-DB_PASSWORD = "yPHavvxcXnHQzwrXQtrEqMcraqyzQETf"
+DB_PASSWORD = "SIBfwvrqlFipfkvaqRkIZzvARpfEIoti"
 SPRING_PROFILES_ACTIVE = "railway"
 JWT_SECRET = "c2VhYW5kdGVhLXByb2R1Y3Rpb24tanNlY3JldC1rZXktMjAyNC1yYWlsd2F5LWRlcGxveW1lbnQ="
 MAIL_USERNAME = ""

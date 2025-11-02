@@ -46,12 +46,12 @@ spring:
 ```
 
 **Current Railway Configuration:**
-- **DATABASE_URL**: `postgresql://postgres:yPHavvxcXnHQzwrXQtrEqMcraqyzQETf@tramway.proxy.rlwy.net:59578/railway`
-- **DB_HOST**: `tramway.proxy.rlwy.net`
-- **DB_PORT**: `59578`
+- **DATABASE_URL**: `postgresql://postgres:SIBfwvrqlFipfkvaqRkIZzvARpfEIoti@hopper.proxy.rlwy.net:23545/railway`
+- **DB_HOST**: `hopper.proxy.rlwy.net`
+- **DB_PORT**: `23545`
 - **DB_NAME**: `railway`
 - **DB_USERNAME**: `postgres`
-- **DB_PASSWORD**: `yPHavvxcXnHQzwrXQtrEqMcraqyzQETf`
+- **DB_PASSWORD**: `SIBfwvrqlFipfkvaqRkIZzvARpfEIoti`
 
 ### **Environment Variables**
 

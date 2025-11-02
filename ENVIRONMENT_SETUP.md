@@ -93,7 +93,7 @@ export SPRING_PROFILES_ACTIVE=dev
 
 | Setting | Dev | Railway |
 |---------|-----|---------|
-| **Database** | `localhost:5432` | `tramway.proxy.rlwy.net:59578` |
+| **Database** | `localhost:5432` | `hopper.proxy.rlwy.net:23545` |
 | **Logging** | `DEBUG` | `INFO` |
 | **SQL Output** | `true` | `false` |
 | **DDL Mode** | `validate` | `update` |
@@ -147,7 +147,7 @@ echo $SPRING_PROFILES_ACTIVE
 psql -h localhost -U postgres -d seaandtea_dev
 
 # Railway environment
-psql "postgresql://postgres:yPHavvxcXnHQzwrXQtrEqMcraqyzQETf@tramway.proxy.rlwy.net:59578/railway"
+psql "postgresql://postgres:SIBfwvrqlFipfkvaqRkIZzvARpfEIoti@hopper.proxy.rlwy.net:23545/railway"
 ```
 
 ## 🚨 **Important Notes**

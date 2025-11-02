@@ -3,9 +3,9 @@ spring:
     # Construct JDBC URL from individual components (Railway provides these separately)
     # DATABASE_URL format: postgresql://user:pass@host:port/db
     # We need JDBC format: jdbc:postgresql://host:port/db
-    url: jdbc:postgresql://${DB_HOST:tramway.proxy.rlwy.net}:${DB_PORT:59578}/${DB_NAME:railway}
+    url: jdbc:postgresql://${DB_HOST:hopper.proxy.rlwy.net}:${DB_PORT:23545}/${DB_NAME:railway}
     username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:yPHavvxcXnHQzwrXQtrEqMcraqyzQETf}
+    password: ${DB_PASSWORD:SIBfwvrqlFipfkvaqRkIZzvARpfEIoti}
     driver-class-name: org.postgresql.Driver
   
   jpa:
