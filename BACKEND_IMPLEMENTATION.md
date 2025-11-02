@@ -5,7 +5,7 @@ This document provides a complete backend implementation using Spring Boot for t
 
 ## 🏗️ Architecture
 - **Framework**: Spring Boot 3.2+
-- **Database**: PostgreSQL (Primary) + Redis (Caching)
+- **Database**: PostgreSQL
 - **Authentication**: JWT + Spring Security
 - **File Storage**: AWS S3 / Local Storage
 - **Payment**: Stripe Integration
@@ -82,10 +82,6 @@ src/
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -204,11 +200,6 @@ spring:
   flyway:
     enabled: true
     baseline-on-migrate: true
-  
-  redis:
-    host: localhost
-    port: 6379
-    password: ${REDIS_PASSWORD:}
   
   mail:
     host: smtp.gmail.com
@@ -1092,7 +1083,6 @@ For local development, ensure you have:
 - Java 17 or higher
 - Maven 3.6+
 - PostgreSQL database
-- Redis (optional)
 
 ### Railway Configuration
 The application uses `railway.json`, `railway.toml`, and `nixpacks.toml` for deployment configuration.
@@ -1152,11 +1142,10 @@ public class DatabaseHealthIndicator implements HealthIndicator {
 ## 📈 Performance Optimization
 
 1. **Database Indexing**: Create proper indexes on frequently queried columns
-2. **Caching**: Implement Redis caching for frequently accessed data
-3. **Connection Pooling**: Configure HikariCP connection pool
-4. **Async Processing**: Use @Async for non-blocking operations
-5. **Pagination**: Implement proper pagination for large datasets
-6. **Image Optimization**: Compress and resize images before storage
+2. **Connection Pooling**: Configure HikariCP connection pool
+3. **Async Processing**: Use @Async for non-blocking operations
+4. **Pagination**: Implement proper pagination for large datasets
+5. **Image Optimization**: Compress and resize images before storage
 
 ## 🚀 Next Steps
 

@@ -18,7 +18,7 @@ A comprehensive Spring Boot backend for the Sea & Tea Tours platform - "The Upwo
 ## 🛠️ Tech Stack
 
 - **Framework**: Spring Boot 3.2+
-- **Database**: PostgreSQL + Redis (Caching)
+- **Database**: PostgreSQL
 - **Authentication**: JWT + Spring Security
 - **Payment**: Stripe Integration
 - **File Storage**: AWS S3
@@ -32,8 +32,6 @@ A comprehensive Spring Boot backend for the Sea & Tea Tours platform - "The Upwo
 - Java 17 or higher
 - Maven 3.6+
 - PostgreSQL 15+
-- Redis 7+
-- Java 17 & Maven 3.6+
 
 ## 🚀 Quick Start
 
@@ -64,12 +62,7 @@ A comprehensive Spring Boot backend for the Sea & Tea Tours platform - "The Upwo
    GRANT ALL PRIVILEGES ON DATABASE seaandtea_dev TO postgres;
    ```
 
-2. **Set up Redis**
-   ```bash
-   redis-server
-   ```
-
-3. **Configure environment variables**
+2. **Configure environment variables**
    ```bash
    export DB_USERNAME=postgres
    export DB_PASSWORD=password
