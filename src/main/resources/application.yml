@@ -2,33 +2,68 @@ spring:
   application:
     name: seaandtea-backend
   
-  profiles:
-    active: dev
-  
-  # Common configuration shared across all profiles
+  # Common configuration shared across all environments
   servlet:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://${DB_HOST:hopper.proxy.rlwy.net}:${DB_PORT:23545}/${DB_NAME:railway}}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:SIBfwvrqlFipfkvaqRkIZzvARpfEIoti}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      maximum-pool-size: 5
+  
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: ${SHOW_SQL:true}
+    properties:
+      hibernate:
+        format_sql: ${FORMAT_SQL:true}
+
+  
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
 
 # Common JWT Configuration
 jwt:
+  secret: ${JWT_SECRET:ZGVmYXVsdC1zZWNyZXQta2V5LWZvci1kZXZlbG9wbWVudC1vbmx5LWRvLW5vdC11c2UtaW4tcHJvZHVjdGlvbg==}
   expiration: 86400000 # 24 hours
 
 # Common Stripe Configuration
 stripe:
-  webhook-secret: ${STRIPE_WEBHOOK_SECRET}
+  secret-key: ${STRIPE_SECRET_KEY:sk_test_dummy}
+  publishable-key: ${STRIPE_PUBLISHABLE_KEY:pk_test_dummy}
+  webhook-secret: ${STRIPE_WEBHOOK_SECRET:whsec_dummy}
 
 # Common Cloudinary Configuration
 cloudinary:
-  cloud-name: ${CLOUDINARY_CLOUD_NAME}
-  api-key: ${CLOUDINARY_API_KEY}
-  api-secret: ${CLOUDINARY_API_SECRET}
+  cloud-name: ${CLOUDINARY_CLOUD_NAME:do0x8z2ju}
+  api-key: ${CLOUDINARY_API_KEY:395789284248876}
+  api-secret: ${CLOUDINARY_API_SECRET:RqIxjLLJwXH2BqIErRKwbfA1fB8}
+  folder: ${CLOUDINARY_FOLDER:sea-and-tea}
+
+
 
 # Common Server Configuration
 server:
-  servlet:
-    context-path: /api/v1
+  port: ${PORT:8080}
+
 
 # Actuator configuration
 management:
@@ -50,13 +85,14 @@ logging:
     console: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
     file: "%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
   
-  # Common logging levels
   level:
     root: INFO
-    # Enable basic HTTP logging for all profiles
+    com.seaandtea: ${LOG_LEVEL:INFO}
+    org.springframework.security: INFO
+    org.hibernate.SQL: ${SQL_LOG_LEVEL:INFO}
+    org.hibernate.type.descriptor.sql.BasicBinder: ${SQL_LOG_LEVEL:INFO}
     org.springframework.web: INFO
     org.springframework.web.servlet: INFO
-    # Enable comprehensive HTTP logging for development
     com.seaandtea.interceptor: INFO
     com.seaandtea.filter: INFO
     com.seaandtea.util: INFO
