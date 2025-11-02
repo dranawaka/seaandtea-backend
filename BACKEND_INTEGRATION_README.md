@@ -165,7 +165,7 @@ REACT_APP_API_BASE_URL=https://your-api-domain.com/api/v1
    - Check navigation shows login/signup buttons
 
 ### API Testing Tools
-- **Swagger UI**: `http://localhost:8080/api/v1/swagger-ui/index.html` - Interactive API documentation and testing
+- **Swagger UI**: `http://localhost:8080/swagger-ui/index.html` - Interactive API documentation and testing
 - **Postman**: Use the provided collection for comprehensive API testing
 - **Browser DevTools**: Monitor network requests and responses
 
@@ -350,7 +350,7 @@ The tour creation/editing form includes:
 ## API Documentation Reference
 
 The backend API endpoints are documented in:
-- **Swagger UI**: `http://localhost:8080/api/v1/swagger-ui/index.html` - Interactive API documentation
+- **Swagger UI**: `http://localhost:8080/swagger-ui/index.html` - Interactive API documentation
 - **Postman Collection**: `Sea_Tea_Tours_API.postman_collection.json` - Complete API collection
 - **Backend Implementation**: `BACKEND_IMPLEMENTATION.md` - Backend implementation details
 
@@ -359,7 +359,7 @@ The backend API endpoints are documented in:
 For issues or questions regarding the backend integration:
 1. Check this documentation
 2. Review the API configuration files
-3. Test with Swagger UI at `http://localhost:8080/api/v1/swagger-ui/index.html`
+3. Test with Swagger UI at `http://localhost:8080/swagger-ui/index.html`
 4. Use the Postman collection for comprehensive testing
 5. Check backend server status and logs
 6. Verify authentication flow in browser DevTools

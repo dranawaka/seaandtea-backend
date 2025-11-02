@@ -197,7 +197,7 @@ mvn spring-boot:run
 
 4. **Access the application**
    - API: http://localhost:8080/api/v1
-   - Swagger UI: http://localhost:8080/api/v1/swagger-ui/index.html
+   - Swagger UI: http://localhost:8080/swagger-ui/index.html
    - Health Check: http://localhost:8080/api/v1/health
 
 ## 📊 Implementation Progress
