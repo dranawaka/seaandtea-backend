@@ -2,7 +2,6 @@ package com.seaandtea.controller;
 
 import com.seaandtea.dto.GuideProfileRequest;
 import com.seaandtea.dto.GuideProfileResponse;
-import com.seaandtea.dto.UserDto;
 import com.seaandtea.entity.Guide;
 import com.seaandtea.entity.User;
 import com.seaandtea.service.GuideService;
@@ -25,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/guides")
+@RequestMapping("/api/v1/guides")
 @Slf4j
 public class GuideController {
     
@@ -47,27 +46,27 @@ public class GuideController {
     // Log when controller is initialized
     {
         log.info("=== GUIDE CONTROLLER INITIALIZED ===");
-        log.info("Base mapping: /guides");
-        log.info("Full URL: /api/v1/guides (with context path)");
+        log.info("Base mapping: /api/v1/guides");
+        log.info("Full URL: /api/v1/guides");
         log.info("Available endpoints:");
-        log.info("  POST   /guides                    - Create guide profile (GUIDE/ADMIN only)");
-        log.info("  POST   /guides/upgrade            - Upgrade to GUIDE and create profile (USER only)");
-        log.info("  GET    /guides/ping");
-        log.info("  GET    /guides/health");
-        log.info("  GET    /guides/test");
-        log.info("  GET    /guides/{guideId}");
-        log.info("  GET    /guides/my-profile");
-        log.info("  PUT    /guides/my-profile");
-        log.info("  PUT    /guides/{guideId}");
-        log.info("  DELETE /guides/my-profile");
-        log.info("  DELETE /guides/{guideId}");
-        log.info("  GET    /guides/my-profile/exists - Get guide profile if exists (returns profile or 404)");
-        log.info("  POST   /guides/my-profile/picture - Upload guide profile picture (GUIDE only)");
-        log.info("  GET    /guides/test-public        - Test public endpoint (PUBLIC - no auth required)");
-        log.info("  GET    /guides/verified           - Get all verified guides (PUBLIC - no auth required)");
-        log.info("  GET    /guides/verified/paginated - Get verified guides with pagination (PUBLIC - no auth required)");
-        log.info("  GET    /guides?verificationStatus=PENDING - Fetch unverified guides (ADMIN only)");
-        log.info("  POST   /guides/{id}/verify - Approve guide profile (ADMIN only)");
+        log.info("  POST   /api/v1/guides                    - Create guide profile (GUIDE/ADMIN only)");
+        log.info("  POST   /api/v1/guides/upgrade            - Upgrade to GUIDE and create profile (USER only)");
+        log.info("  GET    /api/v1/guides/ping");
+        log.info("  GET    /api/v1/guides/health");
+        log.info("  GET    /api/v1/guides/test");
+        log.info("  GET    /api/v1/guides/{guideId}");
+        log.info("  GET    /api/v1/guides/my-profile");
+        log.info("  PUT    /api/v1/guides/my-profile");
+        log.info("  PUT    /api/v1/guides/{guideId}");
+        log.info("  DELETE /api/v1/guides/my-profile");
+        log.info("  DELETE /api/v1/guides/{guideId}");
+        log.info("  GET    /api/v1/guides/my-profile/exists - Get guide profile if exists (returns profile or 404)");
+        log.info("  POST   /api/v1/guides/my-profile/picture - Upload guide profile picture (GUIDE only)");
+        log.info("  GET    /api/v1/guides/test-public        - Test public endpoint (PUBLIC - no auth required)");
+        log.info("  GET    /api/v1/guides/verified           - Get all verified guides (PUBLIC - no auth required)");
+        log.info("  GET    /api/v1/guides/verified/paginated - Get verified guides with pagination (PUBLIC - no auth required)");
+        log.info("  GET    /api/v1/guides?verificationStatus=PENDING - Fetch unverified guides (ADMIN only)");
+        log.info("  POST   /api/v1/guides/{id}/verify - Approve guide profile (ADMIN only)");
     }
     
     /**

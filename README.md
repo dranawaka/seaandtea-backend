@@ -132,8 +132,8 @@ The following endpoints are accessible without authentication for public browsin
 - **`GET /api/v1/guides/verified/paginated`** - Get verified guides with pagination and sorting
 
 ### Tour Discovery
-- **`GET /tours/public/verified`** - Get all verified tours
-- **`GET /tours/public/verified/paginated`** - Get verified tours with pagination and sorting
+- **`GET /api/v1/tours/public/verified`** - Get all verified tours
+- **`GET /api/v1/tours/public/verified/paginated`** - Get verified tours with pagination and sorting
 
 These endpoints allow anyone to:
 - Browse available verified guides and their profiles

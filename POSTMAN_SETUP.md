@@ -45,29 +45,29 @@ This guide will help you set up Postman to test the Sea & Tea Tours Backend API.
 ## 📋 Available Endpoints
 
 ### 🔐 Authentication
-- `POST /auth/register` - User registration
-- `POST /auth/login` - User login
+- `POST /api/v1/auth/register` - User registration
+- `POST /api/v1/auth/login` - User login
 
 ### 🏥 Health & Status
-- `GET /health` - Application health check
-- `GET /health/ping` - Simple ping endpoint
+- `GET /api/v1/health` - Application health check
+- `GET /api/v1/health/ping` - Simple ping endpoint
 - `GET /actuator/health` - Spring Boot Actuator health
 
 ### 👥 User Management
-- `GET /users/profile` - Get current user profile
-- `PUT /users/profile` - Update user profile
-- `PUT /users/password` - Change password
-- `PUT /users/role` - Update user role
+- `GET /api/v1/users/profile` - Get current user profile
+- `PUT /api/v1/users/profile` - Update user profile
+- `PUT /api/v1/users/password` - Change password
+- `PUT /api/v1/users/role` - Update user role
 
 ### 👨‍🏫 Guides
-- `POST /guides` - Create guide profile
-- `GET /guides/{id}` - Get guide by ID
-- `GET /guides/my-profile` - Get my guide profile
-- `PUT /guides/my-profile` - Update my guide profile
-- `PUT /guides/{id}` - Update guide by ID (admin)
-- `DELETE /guides/my-profile` - Delete my guide profile
-- `DELETE /guides/{id}` - Delete guide by ID (admin)
-- `GET /guides/my-profile/exists` - Get guide profile if exists (returns profile or 404)
+- `POST /api/v1/guides` - Create guide profile
+- `GET /api/v1/guides/{id}` - Get guide by ID
+- `GET /api/v1/guides/my-profile` - Get my guide profile
+- `PUT /api/v1/guides/my-profile` - Update my guide profile
+- `PUT /api/v1/guides/{id}` - Update guide by ID (admin)
+- `DELETE /api/v1/guides/my-profile` - Delete my guide profile
+- `DELETE /api/v1/guides/{id}` - Delete guide by ID (admin)
+- `GET /api/v1/guides/my-profile/exists` - Get guide profile if exists (returns profile or 404)
 
 ## 🔑 Authentication Flow
 

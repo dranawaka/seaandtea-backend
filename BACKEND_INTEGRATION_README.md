@@ -11,7 +11,7 @@ The application is configured to connect to the backend API at:
 - **Production**: Set via `REACT_APP_API_BASE_URL` environment variable
 
 ### API Documentation
-- **Swagger UI**: `http://localhost:8080/api/v1/swagger-ui/index.html`
+- **Swagger UI**: `http://localhost:8080/swagger-ui/index.html`
 - **Postman Collection**: `Sea_Tea_Tours_API.postman_collection.json`
 - **Backend Implementation**: `BACKEND_IMPLEMENTATION.md`
 
@@ -65,7 +65,7 @@ The registration form now includes all required fields from the backend API:
 
 ### Backend Integration
 The registration form now:
-- Sends data to `POST /auth/register` endpoint
+- Sends data to `POST /api/v1/auth/register` endpoint
 - Matches the exact payload structure expected by the backend
 - Handles API responses and errors appropriately
 - Redirects to login page on successful registration
@@ -73,7 +73,7 @@ The registration form now:
 ## Updated Login Form
 
 ### Features
-- **Real API Integration** with `POST /auth/login` endpoint
+- **Real API Integration** with `POST /api/v1/auth/login` endpoint
 - **JWT Token Management** - automatically stores and manages tokens
 - **User Session Persistence** - remembers login across browser sessions
 - **Error Handling** - displays backend validation errors
@@ -90,8 +90,8 @@ The registration form now:
 ## API Endpoints Used
 
 ### Authentication
-- `POST /auth/register` - User registration
-- `POST /auth/login` - User authentication and JWT token generation
+- `POST /api/v1/auth/register` - User registration
+- `POST /api/v1/auth/login` - User authentication and JWT token generation
 
 ## Error Handling
 
@@ -248,8 +248,8 @@ Guides can manage their professional information through the guide profile page 
 ### API Integration
 Both profile systems integrate with the backend API:
 
-- **User Profile**: `PUT /users/profile` for updates, `PUT /users/password` for password changes
-- **Guide Profile**: `POST /guides` for creation, `PUT /guides/:id` for updates
+- **User Profile**: `PUT /api/v1/users/profile` for updates, `PUT /api/v1/users/password` for password changes
+- **Guide Profile**: `POST /api/v1/guides` for creation, `PUT /api/v1/guides/:id` for updates
 - **Authentication**: All requests require valid JWT tokens
 - **Error Handling**: Comprehensive error messages from backend
 
@@ -295,10 +295,10 @@ The tour creation/editing form includes:
   - Highlights (key attractions, experiences)
 
 ### API Integration
-- **Tour Creation**: `POST /tours` with comprehensive tour data
-- **Tour Updates**: `PUT /tours/:id` for editing existing tours
-- **Tour Deletion**: `DELETE /tours/:id` with confirmation
-- **Tour Listing**: `GET /tours` filtered by guide ID
+- **Tour Creation**: `POST /api/v1/tours` with comprehensive tour data
+- **Tour Updates**: `PUT /api/v1/tours/:id` for editing existing tours
+- **Tour Deletion**: `DELETE /api/v1/tours/:id` with confirmation
+- **Tour Listing**: `GET /api/v1/tours` filtered by guide ID
 - **Authentication**: All operations require valid JWT tokens
 
 ### User Experience Features

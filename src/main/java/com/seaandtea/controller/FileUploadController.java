@@ -26,7 +26,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/upload")
+@RequestMapping("/api/v1/upload")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "File Upload", description = "API endpoints for file upload operations")

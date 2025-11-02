@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/tours")
+@RequestMapping("/api/v1/tours")
 @RequiredArgsConstructor
 @Slf4j
 @Tag(name = "Tour Management", description = "API endpoints for managing tours")
