@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public class TourService {
     private final TourImageRepository tourImageRepository;
     private final GuideRepository guideRepository;
     private final UserRepository userRepository;
+    private final ReviewRepository reviewRepository;
     
     @Transactional
     public TourResponse createTour(TourCreateRequest request, String userEmail) {
@@ -395,13 +397,17 @@ public class TourService {
             .updatedAt(tour.getUpdatedAt())
             .guide(guideInfo)
             .images(imageDtos)
-            // These would be calculated from related entities in a real implementation
             .totalBookings(0L)
-            .averageRating(BigDecimal.ZERO)
-            .totalReviews(0L)
+            .averageRating(getTourAverageRating(tour.getId()))
+            .totalReviews(reviewRepository.countByTourId(tour.getId()))
             .build();
     }
     
+    private BigDecimal getTourAverageRating(Long tourId) {
+        Double avg = reviewRepository.getAverageRatingByTourId(tourId);
+        return avg != null ? BigDecimal.valueOf(avg).setScale(2, RoundingMode.HALF_UP) : BigDecimal.ZERO;
+    }
+
     private TourListResponse convertToTourListResponse(Tour tour) {
         String primaryImageUrl = null;
         if (tour.getImages() != null && !tour.getImages().isEmpty()) {
@@ -437,8 +443,8 @@ public class TourService {
             .guideProfilePicture(tour.getGuide().getUser().getProfilePictureUrl())
             .guideAverageRating(tour.getGuide().getAverageRating())
             .guideIsVerified(tour.getGuide().getUser().getIsVerified())
-            .averageRating(BigDecimal.ZERO)
-            .totalReviews(0L)
+            .averageRating(getTourAverageRating(tour.getId()))
+            .totalReviews(reviewRepository.countByTourId(tour.getId()))
             .totalBookings(0L)
             .highlightsPreview(highlightsPreview)
             .build();
