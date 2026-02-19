@@ -124,4 +124,37 @@ public class ProductController {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }
+
+    @DeleteMapping("/{productId}/images/{imageId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Remove product image (Admin)", description = "Remove one image from a product; also deletes from storage", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Image removed", content = @Content(schema = @Schema(implementation = ProductResponse.class))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized"),
+        @ApiResponse(responseCode = "403", description = "Forbidden - Admin only"),
+        @ApiResponse(responseCode = "404", description = "Product or image not found")
+    })
+    public ResponseEntity<ProductResponse> removeProductImage(
+            @PathVariable Long productId,
+            @PathVariable Long imageId) {
+        ProductResponse response = productService.removeImageFromProduct(productId, imageId);
+        return ResponseEntity.ok(response);
+    }
+
+    @PatchMapping("/{productId}/images/{imageId}")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Update product image (Admin)", description = "Set primary, sort order, or alt text for an image", security = @SecurityRequirement(name = "bearerAuth"))
+    @ApiResponses(value = {
+        @ApiResponse(responseCode = "200", description = "Image updated", content = @Content(schema = @Schema(implementation = ProductResponse.class))),
+        @ApiResponse(responseCode = "401", description = "Unauthorized"),
+        @ApiResponse(responseCode = "403", description = "Forbidden - Admin only"),
+        @ApiResponse(responseCode = "404", description = "Product or image not found")
+    })
+    public ResponseEntity<ProductResponse> updateProductImage(
+            @PathVariable Long productId,
+            @PathVariable Long imageId,
+            @RequestBody(required = false) ProductImageUpdateRequest request) {
+        ProductResponse response = productService.updateProductImage(productId, imageId, request);
+        return ResponseEntity.ok(response);
+    }
 }

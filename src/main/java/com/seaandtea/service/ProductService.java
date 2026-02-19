@@ -29,6 +29,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
+    private final FileUploadService fileUploadService;
 
     @Transactional
     public ProductResponse createProduct(ProductCreateRequest request) {
@@ -142,6 +143,68 @@ public class ProductService {
         Map<Long, List<String>> imagesByProductId = fetchImageUrlsByProductIds(
                 products.getContent().stream().map(Product::getId).toList());
         return products.map(p -> toProductListResponse(p, imagesByProductId.getOrDefault(p.getId(), Collections.emptyList())));
+    }
+
+    /** Add a single image to a product (e.g. after upload). Admin only. */
+    @Transactional
+    public ProductResponse addImageToProduct(Long productId, String imageUrl, Boolean isPrimary, String altText) {
+        Product product = productRepository.findByIdWithImages(productId)
+                .orElseThrow(() -> new ResourceNotFoundException("Product", productId));
+        if (product.getImages() != null && product.getImages().size() >= 10) {
+            throw new IllegalArgumentException("Product already has maximum 10 images");
+        }
+        if (Boolean.TRUE.equals(isPrimary)) {
+            productImageRepository.clearPrimaryForProduct(productId);
+        }
+        int nextOrder = product.getImages() == null || product.getImages().isEmpty()
+                ? 0
+                : product.getImages().stream().mapToInt(ProductImage::getSortOrder).max().orElse(0) + 1;
+        ProductImage img = ProductImage.builder()
+                .product(product)
+                .imageUrl(imageUrl)
+                .isPrimary(Boolean.TRUE.equals(isPrimary))
+                .sortOrder(nextOrder)
+                .altText(altText)
+                .build();
+        productImageRepository.save(img);
+        return toProductResponse(loadProductWithImages(productId));
+    }
+
+    /** Remove a single image from a product. Deletes from DB and from storage. Admin only. */
+    @Transactional
+    public ProductResponse removeImageFromProduct(Long productId, Long imageId) {
+        ProductImage image = productImageRepository.findById(imageId)
+                .orElseThrow(() -> new ResourceNotFoundException("ProductImage", imageId));
+        if (!productId.equals(image.getProduct().getId())) {
+            throw new ResourceNotFoundException("ProductImage", imageId);
+        }
+        String imageUrl = image.getImageUrl();
+        productImageRepository.delete(image);
+        try {
+            fileUploadService.deleteImage(imageUrl);
+        } catch (Exception e) {
+            log.warn("Could not delete image from storage: {}", imageUrl, e);
+        }
+        return toProductResponse(loadProductWithImages(productId));
+    }
+
+    /** Update a product image (primary flag, sort order, alt text). Admin only. */
+    @Transactional
+    public ProductResponse updateProductImage(Long productId, Long imageId, ProductImageUpdateRequest request) {
+        if (request == null) return getById(productId);
+        ProductImage image = productImageRepository.findById(imageId)
+                .orElseThrow(() -> new ResourceNotFoundException("ProductImage", imageId));
+        if (!productId.equals(image.getProduct().getId())) {
+            throw new ResourceNotFoundException("ProductImage", imageId);
+        }
+        if (Boolean.TRUE.equals(request.getIsPrimary())) {
+            productImageRepository.clearPrimaryForProduct(productId);
+            image.setIsPrimary(true);
+        }
+        if (request.getSortOrder() != null) image.setSortOrder(request.getSortOrder());
+        if (request.getAltText() != null) image.setAltText(request.getAltText());
+        productImageRepository.save(image);
+        return toProductResponse(loadProductWithImages(productId));
     }
 
     private Product loadProductWithImages(Long productId) {

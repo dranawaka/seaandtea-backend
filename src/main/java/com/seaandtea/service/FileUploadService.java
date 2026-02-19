@@ -94,6 +94,37 @@ public class FileUploadService {
             throw new RuntimeException("Failed to upload profile picture");
         }
     }
+
+    public String uploadHomepageSliderImage(MultipartFile file, String uploaderEmail) {
+        validateImageFile(file);
+
+        try {
+            String publicId = generateSliderImagePublicId();
+            String folder = baseFolder + "/homepage/slider";
+
+            Map<String, Object> uploadParams = ObjectUtils.asMap(
+                "public_id", publicId,
+                "folder", folder,
+                "resource_type", "image",
+                "format", "webp",
+                "quality", "auto:good",
+                "fetch_format", "auto",
+                "width", 1920,
+                "height", 720,
+                "crop", "limit"
+            );
+
+            Map<String, Object> uploadResult = cloudinary.uploader().upload(file.getBytes(), uploadParams);
+            String imageUrl = (String) uploadResult.get("secure_url");
+
+            log.info("Homepage slider image uploaded to Cloudinary: {} by user: {}", imageUrl, uploaderEmail);
+            return imageUrl;
+
+        } catch (IOException e) {
+            log.error("Error uploading homepage slider image", e);
+            throw new RuntimeException("Failed to upload homepage slider image");
+        }
+    }
     
     public void deleteImage(String imageUrl) {
         try {
@@ -143,6 +174,49 @@ public class FileUploadService {
         String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
         String emailHash = String.valueOf(userEmail.hashCode()).replace("-", "");
         return String.format("profile_%s_%s", emailHash, timestamp);
+    }
+
+    private String generateSliderImagePublicId() {
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        String uuid = UUID.randomUUID().toString().substring(0, 8);
+        return String.format("slider_%s_%s", timestamp, uuid);
+    }
+
+    public String uploadProductImage(MultipartFile file, Long productId, String uploaderEmail) {
+        validateImageFile(file);
+
+        try {
+            String publicId = generateProductImagePublicId(productId);
+            String folder = baseFolder + "/products/" + productId + "/images";
+
+            Map<String, Object> uploadParams = ObjectUtils.asMap(
+                "public_id", publicId,
+                "folder", folder,
+                "resource_type", "image",
+                "format", "webp",
+                "quality", "auto:good",
+                "fetch_format", "auto",
+                "width", 1200,
+                "height", 1200,
+                "crop", "limit"
+            );
+
+            Map<String, Object> uploadResult = cloudinary.uploader().upload(file.getBytes(), uploadParams);
+            String imageUrl = (String) uploadResult.get("secure_url");
+
+            log.info("Product image uploaded to Cloudinary: {} for product {} by user: {}", imageUrl, productId, uploaderEmail);
+            return imageUrl;
+
+        } catch (IOException e) {
+            log.error("Error uploading image for product: {}", productId, e);
+            throw new RuntimeException("Failed to upload product image");
+        }
+    }
+
+    private String generateProductImagePublicId(Long productId) {
+        String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+        String uuid = UUID.randomUUID().toString().substring(0, 8);
+        return String.format("product_%d_%s_%s", productId, timestamp, uuid);
     }
     
     private String extractPublicIdFromUrl(String imageUrl) {
