@@ -4,6 +4,7 @@ import com.seaandtea.entity.Review;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,14 @@ import java.util.Optional;
 
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
+
+    @Modifying
+    @Query("DELETE FROM Review r WHERE r.tourist.id = :userId")
+    void deleteByTouristId(@Param("userId") Long userId);
+
+    @Modifying
+    @Query("DELETE FROM Review r WHERE r.guide.id = :guideId")
+    void deleteByGuideId(@Param("guideId") Long guideId);
 
     Optional<Review> findByBookingId(Long bookingId);
 
