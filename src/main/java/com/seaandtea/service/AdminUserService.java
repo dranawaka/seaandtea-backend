@@ -114,7 +114,7 @@ public class AdminUserService {
                     .guideId(g.getId())
                     .verificationStatus(g.getVerificationStatus() != null ? g.getVerificationStatus().name() : null)
                     .isAvailable(g.getIsAvailable())
-                    .totalTours(g.getTotalTours())
+                    .totalTours(g.getTotalTours() != null ? g.getTotalTours() : 0)
                     .averageRating(g.getAverageRating() != null ? g.getAverageRating() : BigDecimal.ZERO)
                     .totalReviews(g.getTotalReviews() != null ? g.getTotalReviews() : 0)
                     .build();

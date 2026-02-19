@@ -70,8 +70,9 @@ public class TourService {
             addImagesToTour(tour, request.getImageUrls(), request.getPrimaryImageIndex());
         }
         
-        // Update guide total tours count
-        guide.setTotalTours(guide.getTotalTours() + 1);
+        // Update guide total tours count (null-safe: DB may have NULL for existing rows)
+        int currentTotal = guide.getTotalTours() != null ? guide.getTotalTours() : 0;
+        guide.setTotalTours(currentTotal + 1);
         guideRepository.save(guide);
         
         log.info("Tour created successfully with ID: {}", tour.getId());
@@ -359,7 +360,7 @@ public class TourService {
             .lastName(tour.getGuide().getUser().getLastName())
             .profilePictureUrl(tour.getGuide().getUser().getProfilePictureUrl())
             .averageRating(tour.getGuide().getAverageRating())
-            .totalTours(tour.getGuide().getTotalTours())
+            .totalTours(tour.getGuide().getTotalTours() != null ? tour.getGuide().getTotalTours() : 0)
             .isVerified(tour.getGuide().getUser().getIsVerified())
             .build();
         
