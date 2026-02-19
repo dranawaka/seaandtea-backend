@@ -83,14 +83,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<Map<String, Object>> handleAccessDeniedException(
             AccessDeniedException ex, WebRequest request) {
-        
+
         log.error("Access denied: {}", ex.getMessage());
-        
+
         Map<String, Object> response = new HashMap<>();
         response.put("timestamp", LocalDateTime.now());
         response.put("status", HttpStatus.FORBIDDEN.value());
         response.put("error", "Forbidden");
-        response.put("message", "Access denied");
+        response.put("message", "Access denied. For admin endpoints, log in as an administrator and send the token in the Authorization header.");
         response.put("path", request.getDescription(false).replace("uri=", ""));
 
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
