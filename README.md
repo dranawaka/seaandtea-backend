@@ -45,7 +45,7 @@ A comprehensive Spring Boot backend for the Sea & Tea Tours platform - "The Upwo
 
 2. **Start the application**
    ```bash
-   mvn spring-boot:run
+   mvn -pl seaandtea-application -am spring-boot:run
    ```
 
 3. **Access the application**
@@ -71,8 +71,8 @@ A comprehensive Spring Boot backend for the Sea & Tea Tours platform - "The Upwo
 
 4. **Build and run**
    ```bash
-   mvn clean install
-   mvn spring-boot:run
+   mvn clean install -pl seaandtea-application -am
+   mvn -pl seaandtea-application spring-boot:run
    ```
 
 ## 🔧 Configuration
@@ -162,10 +162,7 @@ mvn verify
 ## 📦 Building
 
 ```bash
-# Build the application
-mvn clean package
-
-# Build the application
+# Build every module and the runnable JAR
 mvn clean package
 ```
 
@@ -187,7 +184,7 @@ railway open
 ### Traditional Deployment
 
 1. Build the JAR file: `mvn clean package`
-2. Upload to your server
+2. Upload `seaandtea-application/target/seaandtea-backend.jar` to your server
 3. Run: `java -jar seaandtea-backend.jar --spring.profiles.active=prod`
 
 ## 📊 Monitoring

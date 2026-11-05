@@ -18,7 +18,7 @@ if ! command -v mvn &> /dev/null; then
 fi
 
 echo "Building the application..."
-mvn clean install -DskipTests
+mvn clean install -DskipTests -pl seaandtea-application -am
 
 if [ $? -ne 0 ]; then
     echo "Error: Build failed"
@@ -33,5 +33,5 @@ echo
 echo "Press Ctrl+C to stop the application"
 echo
 
-mvn spring-boot:run
+mvn -pl seaandtea-application spring-boot:run
 

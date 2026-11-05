@@ -21,7 +21,7 @@ if errorlevel 1 (
 )
 
 echo Building the application...
-call mvn clean install -DskipTests
+call mvn clean install -DskipTests -pl seaandtea-application -am
 
 if errorlevel 1 (
     echo Error: Build failed
@@ -37,7 +37,7 @@ echo.
 echo Press Ctrl+C to stop the application
 echo.
 
-call mvn spring-boot:run
+call mvn -pl seaandtea-application spring-boot:run
 
 pause
 
