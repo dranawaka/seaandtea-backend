@@ -7,6 +7,7 @@ import com.seaandtea.entity.Tour;
 import com.seaandtea.entity.User;
 import com.seaandtea.entity.Tour.TourCategory;
 import com.seaandtea.entity.Guide.VerificationStatus;
+import com.seaandtea.repository.ReviewRepository;
 import com.seaandtea.repository.TourRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -32,6 +34,9 @@ class TourServiceTest {
 
     @Mock
     private TourRepository tourRepository;
+
+    @Mock
+    private ReviewRepository reviewRepository;
 
     @InjectMocks
     private TourService tourService;
@@ -102,7 +107,7 @@ class TourServiceTest {
     @Test
     void getAllVerifiedTours_ShouldReturnAllVerifiedTours() {
         // Arrange
-        Pageable pageable = PageRequest.of(0, 1000);
+        Pageable pageable = PageRequest.of(0, 1000, Sort.by(Sort.Direction.DESC, "createdAt"));
         Page<Tour> tourPage = new PageImpl<>(Arrays.asList(testTour), pageable, 1);
         
         when(tourRepository.findActiveToursFromVerifiedGuidesWithImages(pageable))

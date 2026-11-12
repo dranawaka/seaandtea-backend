@@ -2,6 +2,7 @@ package com.seaandtea.controller;
 
 import com.seaandtea.dto.*;
 import com.seaandtea.entity.Tour.TourCategory;
+import com.seaandtea.service.BookingService;
 import com.seaandtea.service.TourService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -21,6 +22,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -32,6 +34,7 @@ import java.util.Map;
 public class TourController {
     
     private final TourService tourService;
+    private final BookingService bookingService;
     
     @PostMapping
     @PreAuthorize("hasRole('GUIDE') or hasRole('ADMIN')")
@@ -96,6 +99,15 @@ public class TourController {
         TourResponse response = tourService.getTourById(id);
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/{id}/availability")
+    @Operation(summary = "Daily remaining spots", description = "Remaining spots for each day in the range. One departure per day.")
+    public ResponseEntity<List<AvailabilityDayResponse>> getAvailability(
+            @PathVariable Long id,
+            @RequestParam(required = false) LocalDate from,
+            @RequestParam(required = false) LocalDate to) {
+        return ResponseEntity.ok(bookingService.getAvailability(id, from, to));
+    }
     
     @GetMapping
     @Operation(
@@ -106,8 +118,11 @@ public class TourController {
         @ApiResponse(responseCode = "200", description = "Tours retrieved successfully")
     })
     public ResponseEntity<Page<TourListResponse>> getTours(
-            @Parameter(description = "Search term for title or description")
+            @Parameter(description = "Search term for title, description, destination, or meeting point")
             @RequestParam(required = false) String searchTerm,
+
+            @Parameter(description = "Exact destination, for example Ella or Galle")
+            @RequestParam(required = false) String destination,
             
             @Parameter(description = "Filter by category")
             @RequestParam(required = false) TourCategory category,
@@ -133,7 +148,7 @@ public class TourController {
             @Parameter(description = "Page size")
             @RequestParam(defaultValue = "10") int size,
             
-            @Parameter(description = "Sort field")
+            @Parameter(description = "Sort field: createdAt, price, rating, or bookings")
             @RequestParam(defaultValue = "createdAt") String sortBy,
             
             @Parameter(description = "Sort direction (asc/desc)")
@@ -141,6 +156,7 @@ public class TourController {
         
         TourFilterRequest filterRequest = TourFilterRequest.builder()
             .searchTerm(searchTerm)
+            .destination(destination)
             .category(category)
             .minPrice(minPrice)
             .maxPrice(maxPrice)
@@ -261,6 +277,12 @@ public class TourController {
         return ResponseEntity.noContent().build();
     }
     
+    @GetMapping("/destinations")
+    @Operation(summary = "List destinations", description = "Sri Lanka destinations used for search and tour creation")
+    public ResponseEntity<List<String>> getDestinations() {
+        return ResponseEntity.ok(com.seaandtea.service.Destinations.ALL);
+    }
+
     @GetMapping("/popular")
     @Operation(
         summary = "Get popular tours",

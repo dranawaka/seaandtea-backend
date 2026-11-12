@@ -23,6 +23,9 @@ public class TourUpdateRequest {
     private String description;
     
     private TourCategory category;
+
+    @Size(max = 100, message = "Destination cannot exceed 100 characters")
+    private String destination;
     
     @Min(value = 1, message = "Duration must be at least 1 hour")
     @Max(value = 168, message = "Duration cannot exceed 168 hours (1 week)")

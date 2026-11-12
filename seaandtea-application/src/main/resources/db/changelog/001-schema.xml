@@ -1,0 +1,335 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="001-users" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="users"/></not>
+        </preConditions>
+        <createTable tableName="users">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="date_of_birth" type="DATE"/>
+            <column name="email" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="first_name" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="is_active" type="BOOLEAN"/>
+            <column name="is_verified" type="BOOLEAN"/>
+            <column name="last_name" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="nationality" type="VARCHAR(255)"/>
+            <column name="password_hash" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="phone" type="VARCHAR(255)"/>
+            <column name="profile_picture_url" type="VARCHAR(255)"/>
+            <column name="role" type="VARCHAR(255)"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-guides" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="guides"/></not>
+        </preConditions>
+        <createTable tableName="guides">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="average_rating" type="NUMERIC(38,2)"/>
+            <column name="bio" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="daily_rate" type="NUMERIC(38,2)"/>
+            <column name="hourly_rate" type="NUMERIC(38,2)"/>
+            <column name="is_available" type="BOOLEAN"/>
+            <column name="response_time_hours" type="INT"/>
+            <column name="total_reviews" type="INT"/>
+            <column name="total_tours" type="INT"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="verification_documents" type="${json.type}"/>
+            <column name="verification_status" type="VARCHAR(255)"/>
+            <column name="user_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-guide-languages" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="guide_languages"/></not>
+        </preConditions>
+        <createTable tableName="guide_languages">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="language" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="proficiency_level" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="guide_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-guide-specialties" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="guide_specialties"/></not>
+        </preConditions>
+        <createTable tableName="guide_specialties">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="certification_url" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="specialty" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="years_experience" type="INT"/>
+            <column name="guide_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-tours" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="tours"/></not>
+        </preConditions>
+        <createTable tableName="tours">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="cancellation_policy" type="VARCHAR(255)"/>
+            <column name="category" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="departure_time" type="TIME"/>
+            <column name="description" type="VARCHAR(255)"/>
+            <column name="destination" type="VARCHAR(100)"/>
+            <column name="duration_hours" type="INT"><constraints nullable="false"/></column>
+            <column name="excluded_items" type="${json.type}"/>
+            <column name="highlights" type="${json.type}"/>
+            <column name="included_items" type="${json.type}"/>
+            <column name="instant_booking" type="BOOLEAN"/>
+            <column name="is_active" type="BOOLEAN"/>
+            <column name="languages" type="${json.type}"/>
+            <column name="max_group_size" type="INT"/>
+            <column name="meeting_point" type="VARCHAR(255)"/>
+            <column name="price_per_person" type="NUMERIC(38,2)"><constraints nullable="false"/></column>
+            <column name="secure_payment" type="BOOLEAN"/>
+            <column name="title" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="guide_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-tour-images" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="tour_images"/></not>
+        </preConditions>
+        <createTable tableName="tour_images">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="alt_text" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="image_url" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="is_primary" type="BOOLEAN"/>
+            <column name="tour_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-bookings" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="bookings"/></not>
+        </preConditions>
+        <createTable tableName="bookings">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="booking_date" type="DATE"><constraints nullable="false"/></column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="end_time" type="TIME"><constraints nullable="false"/></column>
+            <column name="number_of_people" type="INT"><constraints nullable="false"/></column>
+            <column name="payment_status" type="VARCHAR(255)"/>
+            <column name="special_requests" type="VARCHAR(255)"/>
+            <column name="start_time" type="TIME"><constraints nullable="false"/></column>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="total_amount" type="NUMERIC(38,2)"><constraints nullable="false"/></column>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="guide_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="tour_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="tourist_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-reviews" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="reviews"/></not>
+        </preConditions>
+        <createTable tableName="reviews">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="comment" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="is_verified" type="BOOLEAN"/>
+            <column name="rating" type="INT"><constraints nullable="false"/></column>
+            <column name="booking_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="guide_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="tour_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="tourist_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-payments" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="payments"/></not>
+        </preConditions>
+        <createTable tableName="payments">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="amount" type="NUMERIC(38,2)"><constraints nullable="false"/></column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="currency" type="VARCHAR(255)"/>
+            <column name="payment_method" type="VARCHAR(255)"/>
+            <column name="status" type="VARCHAR(255)"/>
+            <column name="stripe_payment_intent_id" type="VARCHAR(255)"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="booking_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-messages" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="messages"/></not>
+        </preConditions>
+        <createTable tableName="messages">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="is_read" type="BOOLEAN"/>
+            <column name="message" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="booking_id" type="BIGINT"/>
+            <column name="receiver_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="sender_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-products" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="products"/></not>
+        </preConditions>
+        <createTable tableName="products">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="category" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="current_price" type="NUMERIC(10,2)"><constraints nullable="false"/></column>
+            <column name="description" type="VARCHAR(2000)"/>
+            <column name="is_active" type="BOOLEAN"/>
+            <column name="is_best_seller" type="BOOLEAN"/>
+            <column name="name" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="original_price" type="NUMERIC(10,2)"/>
+            <column name="rating" type="NUMERIC(3,2)"/>
+            <column name="review_count" type="INT"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-product-images" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="product_images"/></not>
+        </preConditions>
+        <createTable tableName="product_images">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="alt_text" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="image_url" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="is_primary" type="BOOLEAN"/>
+            <column name="sort_order" type="INT"/>
+            <column name="product_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-carts" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="carts"/></not>
+        </preConditions>
+        <createTable tableName="carts">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="user_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-cart-items" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="cart_items"/></not>
+        </preConditions>
+        <createTable tableName="cart_items">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="quantity" type="INT"><constraints nullable="false"/></column>
+            <column name="cart_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="product_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-news-posts" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="news_posts"/></not>
+        </preConditions>
+        <createTable tableName="news_posts">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="body" type="TEXT"><constraints nullable="false"/></column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="is_published" type="BOOLEAN"/>
+            <column name="title" type="VARCHAR(500)"><constraints nullable="false"/></column>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="author_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-news-comments" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="news_post_comments"/></not>
+        </preConditions>
+        <createTable tableName="news_post_comments">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="text" type="TEXT"><constraints nullable="false"/></column>
+            <column name="post_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="user_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-news-likes" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="news_post_likes"/></not>
+        </preConditions>
+        <createTable tableName="news_post_likes">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="post_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="user_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-slider" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="homepage_slider_images"/></not>
+        </preConditions>
+        <createTable tableName="homepage_slider_images">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="alt_text" type="VARCHAR(255)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="image_url" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="sort_order" type="INT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-wishlists" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><tableExists tableName="wishlists"/></not>
+        </preConditions>
+        <createTable tableName="wishlists">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="tour_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="user_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="001-index-tours-destination" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><indexExists indexName="idx_tours_destination"/></not>
+        </preConditions>
+        <createIndex tableName="tours" indexName="idx_tours_destination">
+            <column name="destination"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="001-index-bookings-tour-date" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><indexExists indexName="idx_bookings_tour_date"/></not>
+        </preConditions>
+        <createIndex tableName="bookings" indexName="idx_bookings_tour_date">
+            <column name="tour_id"/>
+            <column name="booking_date"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog>

@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -48,6 +49,8 @@ public class TourService {
             .title(request.getTitle())
             .description(request.getDescription())
             .category(request.getCategory())
+            .destination(Destinations.canonical(request.getDestination()))
+            .departureTime(LocalTime.of(9, 0))
             .durationHours(request.getDurationHours())
             .maxGroupSize(request.getMaxGroupSize())
             .pricePerPerson(request.getPricePerPerson())
@@ -104,6 +107,9 @@ public class TourService {
         }
         if (request.getCategory() != null) {
             tour.setCategory(request.getCategory());
+        }
+        if (request.getDestination() != null && !request.getDestination().isBlank()) {
+            tour.setDestination(Destinations.canonical(request.getDestination()));
         }
         if (request.getDurationHours() != null) {
             tour.setDurationHours(request.getDurationHours());
@@ -168,34 +174,28 @@ public class TourService {
     
     @Transactional(readOnly = true)
     public Page<TourListResponse> getToursWithFilters(TourFilterRequest filterRequest) {
-        Sort sort = Sort.by(
-            filterRequest.getSortDirection().equalsIgnoreCase("desc") ? 
-                Sort.Direction.DESC : Sort.Direction.ASC,
-            filterRequest.getSortBy()
-        );
-        
-        Pageable pageable = PageRequest.of(
-            filterRequest.getPage(), 
-            filterRequest.getSize(), 
-            sort
-        );
-        
-        Page<Tour> tours;
-        
-        if (hasFilters(filterRequest)) {
-            tours = tourRepository.findActiveToursWithFilters(
+        int page = filterRequest.getPage() == null ? 0 : Math.max(0, filterRequest.getPage());
+        int size = filterRequest.getSize() == null ? 10 : Math.min(50, Math.max(1, filterRequest.getSize()));
+        Pageable pageable = PageRequest.of(page, size);
+        String searchTerm = filterRequest.getSearchTerm();
+        if (searchTerm != null && searchTerm.isBlank()) {
+            searchTerm = null;
+        }
+
+        Page<Tour> tours = tourRepository.searchMarketplace(
                 filterRequest.getCategory(),
                 filterRequest.getMinPrice(),
                 filterRequest.getMaxPrice(),
                 filterRequest.getMinDuration(),
                 filterRequest.getMaxDuration(),
-                filterRequest.getSearchTerm(),
+                searchTerm,
+                filterRequest.getDestination(),
+                filterRequest.getInstantBooking(),
+                filterRequest.getSortBy(),
+                filterRequest.getSortDirection(),
                 pageable
-            );
-        } else {
-            tours = tourRepository.findActiveToursWithImages(pageable);
-        }
-        
+        );
+
         return tours.map(this::convertToTourListResponse);
     }
     
@@ -343,14 +343,8 @@ public class TourService {
         }
     }
     
-    private boolean hasFilters(TourFilterRequest filterRequest) {
-        return filterRequest.getCategory() != null ||
-               filterRequest.getMinPrice() != null ||
-               filterRequest.getMaxPrice() != null ||
-               filterRequest.getMinDuration() != null ||
-               filterRequest.getMaxDuration() != null ||
-               (filterRequest.getSearchTerm() != null && !filterRequest.getSearchTerm().trim().isEmpty()) ||
-               filterRequest.getInstantBooking() != null;
+    public List<TourListResponse> toListResponses(List<Tour> tours) {
+        return tours.stream().map(this::convertToTourListResponse).collect(Collectors.toList());
     }
     
     private TourResponse convertToTourResponse(Tour tour) {
@@ -382,6 +376,8 @@ public class TourService {
             .title(tour.getTitle())
             .description(tour.getDescription())
             .category(tour.getCategory())
+            .destination(tour.getDestination())
+            .departureTime(tour.getDepartureTime())
             .durationHours(tour.getDurationHours())
             .maxGroupSize(tour.getMaxGroupSize())
             .pricePerPerson(tour.getPricePerPerson())
@@ -404,6 +400,24 @@ public class TourService {
             .build();
     }
     
+    private boolean offersPickup(Tour tour) {
+        StringBuilder text = new StringBuilder();
+        if (tour.getMeetingPoint() != null) {
+            text.append(tour.getMeetingPoint()).append(' ');
+        }
+        if (tour.getIncludedItems() != null) {
+            tour.getIncludedItems().forEach(item -> text.append(item).append(' '));
+        }
+        if (tour.getHighlights() != null) {
+            tour.getHighlights().forEach(item -> text.append(item).append(' '));
+        }
+        String lowered = text.toString().toLowerCase(Locale.ROOT);
+        return lowered.contains("pickup")
+                || lowered.contains("pick-up")
+                || lowered.contains("pick up")
+                || lowered.contains("hotel transfer");
+    }
+
     private BigDecimal getTourAverageRating(Long tourId) {
         Double avg = reviewRepository.getAverageRatingByTourId(tourId);
         return avg != null ? BigDecimal.valueOf(avg).setScale(2, RoundingMode.HALF_UP) : BigDecimal.ZERO;
@@ -426,17 +440,24 @@ public class TourService {
                 .limit(3)
                 .collect(Collectors.joining(", "));
         }
+
+        String description = tour.getDescription() == null ? "" : tour.getDescription();
+        if (description.length() > 150) {
+            description = description.substring(0, 150) + "...";
+        }
         
         return TourListResponse.builder()
             .id(tour.getId())
             .title(tour.getTitle())
-            .description(tour.getDescription().length() > 150 ? 
-                tour.getDescription().substring(0, 150) + "..." : tour.getDescription())
+            .description(description)
             .category(tour.getCategory())
+            .destination(tour.getDestination())
+            .departureTime(tour.getDepartureTime())
             .durationHours(tour.getDurationHours())
             .maxGroupSize(tour.getMaxGroupSize())
             .pricePerPerson(tour.getPricePerPerson())
             .instantBooking(tour.getInstantBooking())
+            .pickupAvailable(offersPickup(tour))
             .primaryImageUrl(primaryImageUrl)
             .createdAt(tour.getCreatedAt())
             .guideName(tour.getGuide().getUser().getFirstName() + " " + 

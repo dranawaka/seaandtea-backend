@@ -26,6 +26,10 @@ public class TourCreateRequest {
     
     @NotNull(message = "Category is required")
     private TourCategory category;
+
+    @NotBlank(message = "Destination is required")
+    @Size(max = 100, message = "Destination cannot exceed 100 characters")
+    private String destination;
     
     @NotNull(message = "Duration is required")
     @Min(value = 1, message = "Duration must be at least 1 hour")

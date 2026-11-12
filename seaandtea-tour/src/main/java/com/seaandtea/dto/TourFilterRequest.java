@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 public class TourFilterRequest {
     
     private String searchTerm;
+    private String destination;
     private TourCategory category;
     private BigDecimal minPrice;
     private BigDecimal maxPrice;

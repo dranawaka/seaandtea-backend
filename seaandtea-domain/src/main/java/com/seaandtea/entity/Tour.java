@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 import org.hibernate.type.SqlTypes;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -68,6 +69,12 @@ public class Tour {
     @Column(name = "excluded_items")
     private List<String> excludedItems;
     
+    @Column(length = 100)
+    private String destination;
+
+    @Column(name = "departure_time")
+    private LocalTime departureTime;
+
     @Column(name = "meeting_point")
     private String meetingPoint;
     
@@ -90,6 +97,12 @@ public class Tour {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
+        if (destination == null || destination.isBlank()) {
+            destination = "Colombo";
+        }
+        if (departureTime == null) {
+            departureTime = LocalTime.of(9, 0);
+        }
     }
     
     @PreUpdate
@@ -98,7 +111,7 @@ public class Tour {
     }
     
     public enum TourCategory {
-        TEA_TOURS, BEACH_TOURS, CULTURAL_TOURS, ADVENTURE_TOURS, FOOD_TOURS, WILDLIFE_TOURS
+        TEA_TOURS, BEACH_TOURS, CULTURAL_TOURS, ADVENTURE_TOURS, FOOD_TOURS, WILDLIFE_TOURS, SCENIC_TOURS, FAMILY_TOURS
     }
 }
 

@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +16,21 @@ import java.util.Optional;
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByTouristId(Long touristId);
+
+    List<Booking> findByTouristIdOrderByCreatedAtDesc(Long touristId);
+
+    @Query("SELECT COALESCE(SUM(b.numberOfPeople), 0) FROM Booking b WHERE b.tour.id = :tourId AND b.bookingDate = :date AND b.status IN :statuses")
+    Long sumPeopleOnDate(
+            @Param("tourId") Long tourId,
+            @Param("date") LocalDate date,
+            @Param("statuses") Collection<BookingStatus> statuses);
+
+    @Query("SELECT b.bookingDate, COALESCE(SUM(b.numberOfPeople), 0) FROM Booking b WHERE b.tour.id = :tourId AND b.bookingDate BETWEEN :from AND :to AND b.status IN :statuses GROUP BY b.bookingDate")
+    List<Object[]> sumPeopleBetween(
+            @Param("tourId") Long tourId,
+            @Param("from") LocalDate from,
+            @Param("to") LocalDate to,
+            @Param("statuses") Collection<BookingStatus> statuses);
 
     List<Booking> findByGuideId(Long guideId);
 

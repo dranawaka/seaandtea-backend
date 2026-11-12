@@ -2,9 +2,11 @@ package com.seaandtea.repository;
 
 import com.seaandtea.entity.Tour;
 import com.seaandtea.entity.Tour.TourCategory;
+import jakarta.persistence.LockModeType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -14,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TourRepository extends JpaRepository<Tour, Long> {
+public interface TourRepository extends JpaRepository<Tour, Long>, TourRepositoryCustom {
     
     // Find tours by guide
     @Query("SELECT t FROM Tour t WHERE t.guide.id = :guideId AND t.isActive = true")
@@ -57,7 +59,9 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
            "AND (:maxDuration IS NULL OR t.durationHours <= :maxDuration) " +
            "AND (:searchTerm IS NULL OR " +
            "     LOWER(t.title) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
-           "     LOWER(t.description) LIKE LOWER(CONCAT('%', :searchTerm, '%')))")
+           "     LOWER(COALESCE(t.description, '')) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
+           "     LOWER(COALESCE(t.destination, '')) LIKE LOWER(CONCAT('%', :searchTerm, '%')) OR " +
+           "     LOWER(COALESCE(t.meetingPoint, '')) LIKE LOWER(CONCAT('%', :searchTerm, '%')))")
     Page<Tour> findActiveToursWithFilters(
         @Param("category") TourCategory category,
         @Param("minPrice") BigDecimal minPrice,
@@ -75,6 +79,10 @@ public interface TourRepository extends JpaRepository<Tour, Long> {
     // Find tour by id with images
     @Query("SELECT t FROM Tour t LEFT JOIN FETCH t.images WHERE t.id = :id AND t.isActive = true")
     Optional<Tour> findActiveByIdWithImages(@Param("id") Long id);
+
+    @Lock(LockModeType.PESSIMISTIC_WRITE)
+    @Query("SELECT t FROM Tour t WHERE t.id = :id")
+    Optional<Tour> findByIdForUpdate(@Param("id") Long id);
     
     // Find tours by guide with images
     @Query("SELECT DISTINCT t FROM Tour t LEFT JOIN FETCH t.images WHERE t.guide.id = :guideId AND t.isActive = true")

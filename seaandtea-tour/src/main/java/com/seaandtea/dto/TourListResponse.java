@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 @Data
 @Builder
@@ -19,10 +20,13 @@ public class TourListResponse {
     private String title;
     private String description;
     private TourCategory category;
+    private String destination;
+    private LocalTime departureTime;
     private Integer durationHours;
     private Integer maxGroupSize;
     private BigDecimal pricePerPerson;
     private Boolean instantBooking;
+    private Boolean pickupAvailable;
     private String primaryImageUrl;
     private LocalDateTime createdAt;
     

@@ -1,6 +1,10 @@
 spring:
   application:
     name: seaandtea-backend
+  config:
+    import: optional:file:.env.local[.properties],optional:file:../.env.local[.properties]
+  main:
+    lazy-initialization: ${SPRING_LAZY_INIT:false}
   
   # Common configuration shared across all environments
   servlet:
@@ -9,15 +13,17 @@ spring:
       max-request-size: 10MB
   
   datasource:
-    url: ${DATABASE_URL:jdbc:postgresql://${DB_HOST:hopper.proxy.rlwy.net}:${DB_PORT:23545}/${DB_NAME:railway}}
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:SIBfwvrqlFipfkvaqRkIZzvARpfEIoti}
+    url: ${DATABASE_URL:jdbc:postgresql://${DB_HOST:aws-0-us-east-1.pooler.supabase.com}:${DB_PORT:5432}/${DB_NAME:postgres}?sslmode=require}
+    username: ${DB_USERNAME:postgres.agehzrdlnfvzswhukuob}
+    password: ${DB_PASSWORD:}
     driver-class-name: org.postgresql.Driver
     hikari:
       connection-timeout: 30000
       idle-timeout: 600000
       max-lifetime: 1800000
       maximum-pool-size: 5
+      data-source-properties:
+        sslmode: require
   
   jpa:
     hibernate:
@@ -39,6 +45,10 @@ spring:
           auth: true
           starttls:
             enable: true
+
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
+    contexts: ${LIQUIBASE_CONTEXTS:default}
 
 # Common JWT Configuration
 jwt:

@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Data
@@ -20,6 +21,8 @@ public class TourResponse {
     private String title;
     private String description;
     private TourCategory category;
+    private String destination;
+    private LocalTime departureTime;
     private Integer durationHours;
     private Integer maxGroupSize;
     private BigDecimal pricePerPerson;
