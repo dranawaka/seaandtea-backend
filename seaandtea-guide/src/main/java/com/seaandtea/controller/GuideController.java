@@ -1,5 +1,6 @@
 package com.seaandtea.controller;
 
+import com.seaandtea.dto.GuideDashboardResponse;
 import com.seaandtea.dto.GuideProfileRequest;
 import com.seaandtea.dto.GuideProfileResponse;
 import com.seaandtea.entity.Guide;
@@ -55,6 +56,7 @@ public class GuideController {
         log.info("  GET    /api/v1/guides/health");
         log.info("  GET    /api/v1/guides/test");
         log.info("  GET    /api/v1/guides/{guideId}");
+        log.info("  GET    /api/v1/guides/dashboard");
         log.info("  GET    /api/v1/guides/my-profile");
         log.info("  PUT    /api/v1/guides/my-profile");
         log.info("  PUT    /api/v1/guides/{guideId}");
@@ -350,9 +352,27 @@ public class GuideController {
     }
     
     /**
+     * Guide dashboard for the signed-in user.
+     * Declared as a literal path so "dashboard" is not parsed as a guide id.
+     */
+    @GetMapping("/dashboard")
+    @PreAuthorize("isAuthenticated()")
+    public ResponseEntity<GuideDashboardResponse> getGuideDashboard(HttpServletRequest request) {
+        logRequest(request, null);
+        log.info("Fetching guide dashboard for authenticated user");
+
+        Long userId = getCurrentUserId();
+        GuideDashboardResponse response = guideService.getDashboard(userId);
+
+        ResponseEntity<GuideDashboardResponse> responseEntity = ResponseEntity.ok(response);
+        logResponse(HttpStatus.OK, response);
+        return responseEntity;
+    }
+
+    /**
      * Get guide profile by ID
      */
-    @GetMapping("/{guideId}")
+    @GetMapping("/{guideId:[0-9]+}")
     @PreAuthorize("permitAll()")
     public ResponseEntity<GuideProfileResponse> getGuideProfile(
             @PathVariable Long guideId,
@@ -410,7 +430,7 @@ public class GuideController {
     /**
      * Update guide profile by ID (admin only)
      */
-    @PutMapping("/{guideId}")
+    @PutMapping("/{guideId:[0-9]+}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<GuideProfileResponse> updateGuideProfile(
             @PathVariable Long guideId,
@@ -449,7 +469,7 @@ public class GuideController {
     /**
      * Delete guide profile by ID (admin only)
      */
-    @DeleteMapping("/{guideId}")
+    @DeleteMapping("/{guideId:[0-9]+}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> deleteGuideProfile(
             @PathVariable Long guideId,

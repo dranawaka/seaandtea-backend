@@ -19,6 +19,9 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
 
     List<Booking> findByTouristIdOrderByCreatedAtDesc(Long touristId);
 
+    @Query("SELECT b FROM Booking b JOIN FETCH b.tour JOIN FETCH b.tourist JOIN FETCH b.guide g JOIN FETCH g.user ORDER BY b.createdAt DESC")
+    List<Booking> findAllForAdmin();
+
     @Query("SELECT COALESCE(SUM(b.numberOfPeople), 0) FROM Booking b WHERE b.tour.id = :tourId AND b.bookingDate = :date AND b.status IN :statuses")
     Long sumPeopleOnDate(
             @Param("tourId") Long tourId,

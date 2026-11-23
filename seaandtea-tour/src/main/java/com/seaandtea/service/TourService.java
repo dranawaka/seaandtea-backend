@@ -2,6 +2,7 @@ package com.seaandtea.service;
 
 import com.seaandtea.dto.*;
 import com.seaandtea.entity.*;
+import com.seaandtea.exception.ResourceNotFoundException;
 import com.seaandtea.entity.Tour.TourCategory;
 import com.seaandtea.entity.User.UserRole;
 import com.seaandtea.repository.*;
@@ -210,10 +211,10 @@ public class TourService {
     @Transactional(readOnly = true)
     public List<TourResponse> getMyTours(String userEmail) {
         User user = userRepository.findByEmail(userEmail)
-            .orElseThrow(() -> new RuntimeException("User not found"));
-        
+            .orElseThrow(() -> new ResourceNotFoundException("User not found"));
+
         Guide guide = guideRepository.findByUserId(user.getId())
-            .orElseThrow(() -> new RuntimeException("Guide profile not found"));
+            .orElseThrow(() -> new ResourceNotFoundException("Guide profile not found"));
         
         List<Tour> tours = tourRepository.findAllByGuideIdOrderByCreatedAtDesc(guide.getId());
         return tours.stream()

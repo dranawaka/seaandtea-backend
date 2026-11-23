@@ -1,13 +1,19 @@
 package com.seaandtea.service;
 
+import com.seaandtea.dto.GuideDashboardResponse;
 import com.seaandtea.dto.GuideProfileRequest;
 import com.seaandtea.dto.GuideProfileResponse;
 import com.seaandtea.dto.UserRoleUpdateRequest;
+import com.seaandtea.entity.Booking;
 import com.seaandtea.entity.Guide;
 import com.seaandtea.entity.GuideLanguage;
 import com.seaandtea.entity.GuideSpecialty;
+import com.seaandtea.entity.Tour;
 import com.seaandtea.entity.User;
+import com.seaandtea.exception.ResourceNotFoundException;
+import com.seaandtea.repository.BookingRepository;
 import com.seaandtea.repository.GuideRepository;
+import com.seaandtea.repository.TourRepository;
 import com.seaandtea.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +23,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.time.YearMonth;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,6 +37,8 @@ public class GuideService {
     private final GuideRepository guideRepository;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final TourRepository tourRepository;
+    private final BookingRepository bookingRepository;
     
     /**
      * Create a new guide profile for a user
@@ -234,6 +244,53 @@ public class GuideService {
         
         return mapToResponse(guide);
     }
+
+    /**
+     * Dashboard for the signed-in user's guide profile.
+     * Tour counts come from the tour table so they match My Tours.
+     */
+    @Transactional(readOnly = true)
+    public GuideDashboardResponse getDashboard(Long userId) {
+        log.info("Building guide dashboard for user ID: {}", userId);
+
+        Guide guide = guideRepository.findByUserId(userId)
+                .orElseThrow(() -> new ResourceNotFoundException("Guide profile not found"));
+
+        List<Tour> tours = tourRepository.findAllByGuideIdOrderByCreatedAtDesc(guide.getId());
+        long activeTours = tourRepository.countActiveByGuideId(guide.getId());
+        List<Booking> bookings = bookingRepository.findByGuideId(guide.getId());
+
+        YearMonth thisMonth = YearMonth.now();
+        int thisMonthBookings = 0;
+        BigDecimal revenue = BigDecimal.ZERO;
+        for (Booking booking : bookings) {
+            if (booking.getStatus() == Booking.BookingStatus.CANCELLED) {
+                continue;
+            }
+            if (booking.getTotalAmount() != null) {
+                revenue = revenue.add(booking.getTotalAmount());
+            }
+            if (booking.getBookingDate() != null
+                    && YearMonth.from(booking.getBookingDate()).equals(thisMonth)) {
+                thisMonthBookings++;
+            }
+        }
+
+        int totalBookings = (int) bookings.stream()
+                .filter(booking -> booking.getStatus() != Booking.BookingStatus.CANCELLED)
+                .count();
+
+        return GuideDashboardResponse.builder()
+                .profile(mapToResponse(guide))
+                .totalTours(tours.size())
+                .activeTours((int) activeTours)
+                .totalBookings(totalBookings)
+                .thisMonthBookings(thisMonthBookings)
+                .totalRevenue(revenue)
+                .averageRating(guide.getAverageRating() != null ? guide.getAverageRating() : BigDecimal.ZERO)
+                .totalReviews(guide.getTotalReviews() != null ? guide.getTotalReviews() : 0)
+                .build();
+    }
     
     /**
      * Check if user has a guide profile
@@ -381,17 +438,23 @@ public class GuideService {
                 .totalTours(guide.getTotalTours() != null ? guide.getTotalTours() : 0)
                 .averageRating(guide.getAverageRating())
                 .totalReviews(guide.getTotalReviews() != null ? guide.getTotalReviews() : 0)
-                .verificationStatus(guide.getVerificationStatus().name())
+                .verificationStatus(guide.getVerificationStatus() != null
+                        ? guide.getVerificationStatus().name()
+                        : Guide.VerificationStatus.PENDING.name())
                 .verificationDocuments(guide.getVerificationDocuments())
                 .createdAt(guide.getCreatedAt())
                 .updatedAt(guide.getUpdatedAt())
-                .specialties(guide.getSpecialties().stream()
+                .specialties(safeList(guide.getSpecialties()).stream()
                         .map(this::mapSpecialtyToResponse)
                         .collect(Collectors.toList()))
-                .languages(guide.getLanguages().stream()
+                .languages(safeList(guide.getLanguages()).stream()
                         .map(this::mapLanguageToResponse)
                         .collect(Collectors.toList()))
                 .build();
+    }
+
+    private <T> List<T> safeList(List<T> values) {
+        return values == null ? List.of() : values;
     }
     
     private GuideProfileResponse.GuideSpecialtyResponse mapSpecialtyToResponse(GuideSpecialty specialty) {
@@ -408,7 +471,9 @@ public class GuideService {
         return GuideProfileResponse.GuideLanguageResponse.builder()
                 .id(language.getId())
                 .language(language.getLanguage())
-                .proficiencyLevel(language.getProficiencyLevel().name())
+                .proficiencyLevel(language.getProficiencyLevel() != null
+                        ? language.getProficiencyLevel().name()
+                        : null)
                 .createdAt(language.getCreatedAt())
                 .build();
     }

@@ -136,6 +136,13 @@ public class BookingService {
     }
 
     @Transactional(readOnly = true)
+    public List<BookingResponse> listAllForAdmin() {
+        return bookingRepository.findAllForAdmin().stream()
+                .map(this::toResponse)
+                .toList();
+    }
+
+    @Transactional(readOnly = true)
     public List<BookingResponse> listMyBookings(String userEmail) {
         User tourist = requireUser(userEmail);
         return bookingRepository.findByTouristIdOrderByCreatedAtDesc(tourist.getId()).stream()
@@ -227,8 +234,20 @@ public class BookingService {
                 .status(booking.getStatus() == null ? null : booking.getStatus().name())
                 .paymentStatus(booking.getPaymentStatus() == null ? null : booking.getPaymentStatus().name())
                 .specialRequests(booking.getSpecialRequests())
+                .touristName(displayName(booking.getTourist()))
+                .touristEmail(booking.getTourist() == null ? null : booking.getTourist().getEmail())
+                .guideName(booking.getGuide() == null ? null : displayName(booking.getGuide().getUser()))
                 .createdAt(booking.getCreatedAt())
                 .build();
+    }
+
+    private static String displayName(User user) {
+        if (user == null) {
+            return null;
+        }
+        String name = ((user.getFirstName() == null ? "" : user.getFirstName()) + " "
+                + (user.getLastName() == null ? "" : user.getLastName())).trim();
+        return name.isEmpty() ? user.getEmail() : name;
     }
 
     private static String primaryImage(Tour tour) {

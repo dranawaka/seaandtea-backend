@@ -13,7 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.math.BigDecimal;
 import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -31,7 +34,12 @@ public class AdminUserService {
 
     public Page<AdminUserResponse> listUsers(User.UserRole roleFilter, Boolean isActiveFilter, Pageable pageable) {
         Page<User> users = userRepository.findAllForAdmin(roleFilter, isActiveFilter, pageable);
-        return users.map(this::mapToAdminResponse);
+        List<Long> ids = users.getContent().stream().map(User::getId).toList();
+        Map<Long, Guide> guidesByUserId = ids.isEmpty()
+                ? Map.of()
+                : guideRepository.findWithUserByUserIdIn(ids).stream()
+                .collect(Collectors.toMap(guide -> guide.getUser().getId(), Function.identity(), (left, right) -> left));
+        return users.map(user -> mapToAdminResponse(user, guidesByUserId.get(user.getId())));
     }
 
     public AdminUserResponse getUser(Long id) {
@@ -106,10 +114,13 @@ public class AdminUserService {
     }
 
     private AdminUserResponse mapToAdminResponse(User user) {
+        return mapToAdminResponse(user, guideRepository.findByUserId(user.getId()).orElse(null));
+    }
+
+    private AdminUserResponse mapToAdminResponse(User user, Guide guide) {
         AdminUserResponse.GuideSummary guideSummary = null;
-        var guideOpt = guideRepository.findByUserId(user.getId());
-        if (guideOpt.isPresent()) {
-            Guide g = guideOpt.get();
+        if (guide != null) {
+            Guide g = guide;
             guideSummary = AdminUserResponse.GuideSummary.builder()
                     .guideId(g.getId())
                     .verificationStatus(g.getVerificationStatus() != null ? g.getVerificationStatus().name() : null)

@@ -25,5 +25,8 @@ public class BookingResponse {
     private String status;
     private String paymentStatus;
     private String specialRequests;
+    private String touristName;
+    private String touristEmail;
+    private String guideName;
     private LocalDateTime createdAt;
 }

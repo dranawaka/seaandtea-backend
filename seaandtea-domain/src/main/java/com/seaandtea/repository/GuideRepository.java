@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,6 +18,11 @@ public interface GuideRepository extends JpaRepository<Guide, Long> {
     
     @Query("SELECT g FROM Guide g WHERE g.user.id = :userId")
     Optional<Guide> findByUserId(Long userId);
+
+    @Query("SELECT g FROM Guide g JOIN FETCH g.user WHERE g.user.id IN :userIds")
+    List<Guide> findWithUserByUserIdIn(@Param("userIds") Collection<Long> userIds);
+
+    long countByVerificationStatus(Guide.VerificationStatus verificationStatus);
     
     @Query("SELECT g FROM Guide g WHERE g.verificationStatus = 'VERIFIED' AND g.isAvailable = true")
     Page<Guide> findAvailableVerifiedGuides(Pageable pageable);

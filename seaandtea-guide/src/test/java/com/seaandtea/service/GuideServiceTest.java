@@ -1,10 +1,14 @@
 package com.seaandtea.service;
 
+import com.seaandtea.dto.GuideDashboardResponse;
 import com.seaandtea.dto.GuideProfileRequest;
 import com.seaandtea.dto.GuideProfileResponse;
 import com.seaandtea.entity.Guide;
+import com.seaandtea.entity.Tour;
 import com.seaandtea.entity.User;
+import com.seaandtea.repository.BookingRepository;
 import com.seaandtea.repository.GuideRepository;
+import com.seaandtea.repository.TourRepository;
 import com.seaandtea.repository.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -36,6 +41,12 @@ class GuideServiceTest {
     
     @Mock
     private UserService userService;
+
+    @Mock
+    private TourRepository tourRepository;
+
+    @Mock
+    private BookingRepository bookingRepository;
     
     @InjectMocks
     private GuideService guideService;
@@ -281,6 +292,37 @@ class GuideServiceTest {
         assertNotNull(result);
         assertEquals(1, result.getContent().size());
         verify(guideRepository).findByVerificationStatus(Guide.VerificationStatus.VERIFIED, pageable);
+    }
+
+    @Test
+    void getDashboard_usesLiveTourCount() {
+        Guide guide = Guide.builder()
+                .id(4L)
+                .user(testUser)
+                .bio("Tea and hill-country guide with ten years of estate walks.")
+                .hourlyRate(new BigDecimal("25.00"))
+                .verificationStatus(Guide.VerificationStatus.VERIFIED)
+                .averageRating(new BigDecimal("4.80"))
+                .totalReviews(2)
+                .totalTours(0)
+                .specialties(List.of())
+                .languages(List.of())
+                .build();
+        List<Tour> tours = new ArrayList<>();
+        for (int i = 0; i < 6; i++) {
+            tours.add(new Tour());
+        }
+        when(guideRepository.findByUserId(1L)).thenReturn(Optional.of(guide));
+        when(tourRepository.findAllByGuideIdOrderByCreatedAtDesc(4L)).thenReturn(tours);
+        when(tourRepository.countActiveByGuideId(4L)).thenReturn(6L);
+        when(bookingRepository.findByGuideId(4L)).thenReturn(List.of());
+
+        GuideDashboardResponse dashboard = guideService.getDashboard(1L);
+
+        assertEquals(6, dashboard.getTotalTours());
+        assertEquals(6, dashboard.getActiveTours());
+        assertEquals(4L, dashboard.getProfile().getId());
+        assertEquals("VERIFIED", dashboard.getProfile().getVerificationStatus());
     }
 }
 
