@@ -70,9 +70,21 @@ cloudinary:
 
 
 
+app:
+  frontend-url: ${APP_FRONTEND_URL:http://localhost:3000}
+  oauth:
+    google:
+      client-id: ${GOOGLE_CLIENT_ID:}
+      client-secret: ${GOOGLE_CLIENT_SECRET:}
+    facebook:
+      client-id: ${FACEBOOK_CLIENT_ID:}
+      client-secret: ${FACEBOOK_CLIENT_SECRET:}
+
 # Common Server Configuration
 server:
   port: ${PORT:8080}
+  # Honor X-Forwarded-Proto so Google and Facebook redirect URIs stay https behind Railway.
+  forward-headers-strategy: framework
 
 
 # Actuator configuration

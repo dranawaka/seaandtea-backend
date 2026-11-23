@@ -8,7 +8,7 @@ A comprehensive Spring Boot backend for the Sea & Tea Tours platform - "The Upwo
 - **Guide Management**: Guide profiles, specialties, languages, and verification
 - **Tour Management**: Tour creation, search, and management
 - **Booking System**: Tour booking with real-time updates
-- **Payment Integration**: Stripe payment processing
+- **Payments**: Not collected on the site for MVP 1. Guide onboarding is a one-time fee paid off the site. Stripe checkout remains in the API for a later release.
 - **Review System**: Tour and guide reviews
 - **Real-time Communication**: WebSocket for instant updates
 - **File Storage**: AWS S3 integration for images
@@ -20,7 +20,7 @@ A comprehensive Spring Boot backend for the Sea & Tea Tours platform - "The Upwo
 - **Framework**: Spring Boot 3.2+
 - **Database**: PostgreSQL
 - **Authentication**: JWT + Spring Security
-- **Payment**: Stripe Integration
+- **Payment**: Stripe is present for a later release. MVP 1 does not charge through the site.
 - **File Storage**: AWS S3
 - **Real-time**: WebSocket
 - **Documentation**: OpenAPI 3.0 (Swagger)
@@ -90,6 +90,11 @@ A comprehensive Spring Boot backend for the Sea & Tea Tours platform - "The Upwo
 | `AWS_SECRET_KEY` | AWS secret key | - |
 | `MAIL_USERNAME` | Email username | - |
 | `MAIL_PASSWORD` | Email password | - |
+| `GOOGLE_CLIENT_ID` | Google OAuth client id | - |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret | - |
+| `FACEBOOK_CLIENT_ID` | Facebook app id | - |
+| `FACEBOOK_CLIENT_SECRET` | Facebook app secret | - |
+| `APP_FRONTEND_URL` | Frontend origin used when the browser return address is missing | `http://localhost:3000` |
 
 ### Application Profiles
 
@@ -118,10 +123,22 @@ The application uses the following main entities:
 ## 🔐 Security
 
 - JWT-based authentication
+- Google and Facebook sign-in (same account when the provider confirms the email)
 - Role-based access control (USER, GUIDE, ADMIN)
 - Password encryption with BCrypt
 - CORS configuration
 - Input validation and sanitization
+
+### Google and Facebook
+
+Add the client id and secret to the API environment (`seaandtea-backend/.env.local` for local runs). Register these redirect URIs on the Google Cloud OAuth client and the Facebook Login app. They point at the API, not the React app:
+
+- `http://localhost:8080/login/oauth2/code/google`
+- `http://localhost:8080/login/oauth2/code/facebook`
+- `https://<api-host>/login/oauth2/code/google`
+- `https://<api-host>/login/oauth2/code/facebook`
+
+Google needs the openid, profile, and email scopes. Facebook needs email and public_profile. A verified provider email signs in to an existing account with that email, or creates a traveler account. Email and password sign-in is unchanged.
 
 ## 🌐 Public API Endpoints
 

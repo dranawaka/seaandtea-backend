@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="004-user-oauth-columns" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not><columnExists tableName="users" columnName="auth_provider"/></not>
+        </preConditions>
+        <addColumn tableName="users">
+            <column name="auth_provider" type="VARCHAR(32)" defaultValue="LOCAL">
+                <constraints nullable="false"/>
+            </column>
+            <column name="provider_subject" type="VARCHAR(255)"/>
+        </addColumn>
+    </changeSet>
+
+    <changeSet id="004-user-oauth-unique" author="seaandtea">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <uniqueConstraintExists tableName="users" constraintName="uk_users_provider_subject"/>
+            </not>
+        </preConditions>
+        <addUniqueConstraint
+                tableName="users"
+                columnNames="auth_provider, provider_subject"
+                constraintName="uk_users_provider_subject"/>
+    </changeSet>
+
+    <changeSet id="004-profile-picture-length" author="seaandtea">
+        <modifyDataType tableName="users" columnName="profile_picture_url" newDataType="VARCHAR(1000)"/>
+    </changeSet>
+</databaseChangeLog>

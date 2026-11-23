@@ -47,8 +47,15 @@ public class User implements UserDetails {
     
     private String nationality;
     
-    @Column(name = "profile_picture_url")
+    @Column(name = "profile_picture_url", length = 1000)
     private String profilePictureUrl;
+
+    @Column(name = "auth_provider", nullable = false, length = 32)
+    @Builder.Default
+    private String authProvider = "LOCAL";
+
+    @Column(name = "provider_subject", length = 255)
+    private String providerSubject;
     
     @Column(name = "is_verified")
     private Boolean isVerified = false;

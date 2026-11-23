@@ -15,6 +15,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByEmail(String email);
 
+    Optional<User> findByEmailIgnoreCase(String email);
+
+    Optional<User> findByAuthProviderAndProviderSubject(String authProvider, String providerSubject);
+
     boolean existsByEmail(String email);
 
     @Query("SELECT u FROM User u WHERE (:role IS NULL OR u.role = :role) AND (:isActive IS NULL OR u.isActive = :isActive) ORDER BY u.createdAt DESC")

@@ -10,4 +10,5 @@
     <include file="001-schema.xml" relativeToChangelogFile="true"/>
     <include file="002-sample-data.sql" relativeToChangelogFile="true"/>
     <include file="003-sri-lanka-photos.sql" relativeToChangelogFile="true"/>
+    <include file="004-user-oauth.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>
