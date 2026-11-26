@@ -1,5 +1,7 @@
 package com.seaandtea.controller;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.seaandtea.dto.ApiViews;
 import com.seaandtea.dto.GuideDashboardResponse;
 import com.seaandtea.dto.GuideProfileRequest;
 import com.seaandtea.dto.GuideProfileResponse;
@@ -308,6 +310,7 @@ public class GuideController {
      * No authentication required - accessible to everyone
      */
     @GetMapping("/verified")
+    @JsonView(ApiViews.Public.class)
     public ResponseEntity<List<GuideProfileResponse>> getAllVerifiedGuides(HttpServletRequest request) {
         logRequest(request, null);
         log.info("=== PUBLIC ENDPOINT: Fetching all verified guides ===");
@@ -325,6 +328,7 @@ public class GuideController {
      * No authentication required - accessible to everyone
      */
     @GetMapping("/verified/paginated")
+    @JsonView(ApiViews.Public.class)
     public ResponseEntity<Page<GuideProfileResponse>> getVerifiedGuidesPaginated(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
@@ -374,6 +378,7 @@ public class GuideController {
      */
     @GetMapping("/{guideId:[0-9]+}")
     @PreAuthorize("permitAll()")
+    @JsonView(ApiViews.Public.class)
     public ResponseEntity<GuideProfileResponse> getGuideProfile(
             @PathVariable Long guideId,
             HttpServletRequest request) {

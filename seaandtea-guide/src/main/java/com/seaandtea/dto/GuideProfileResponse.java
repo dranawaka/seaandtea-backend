@@ -1,5 +1,7 @@
 package com.seaandtea.dto;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonView;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +21,8 @@ public class GuideProfileResponse {
     private Long userId;
     private String userFirstName;
     private String userLastName;
+    @JsonView(ApiViews.Internal.class)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String userEmail;
     private String profilePictureUrl;
     private String bio;
@@ -30,6 +34,8 @@ public class GuideProfileResponse {
     private BigDecimal averageRating;
     private Integer totalReviews;
     private String verificationStatus;
+    @JsonView(ApiViews.Internal.class)
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private List<String> verificationDocuments;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
@@ -44,6 +50,8 @@ public class GuideProfileResponse {
         private Long id;
         private String specialty;
         private Integer yearsExperience;
+        @JsonView(ApiViews.Internal.class)
+        @JsonInclude(JsonInclude.Include.NON_NULL)
         private String certificationUrl;
         private LocalDateTime createdAt;
     }

@@ -229,7 +229,7 @@ public class GuideService {
         Guide guide = guideRepository.findById(guideId)
                 .orElseThrow(() -> new IllegalArgumentException("Guide not found with ID: " + guideId));
         
-        return mapToResponse(guide);
+        return toPublicResponse(guide);
     }
     
     /**
@@ -362,7 +362,7 @@ public class GuideService {
         
         List<Guide> verifiedGuides = guideRepository.findByVerificationStatus(Guide.VerificationStatus.VERIFIED);
         return verifiedGuides.stream()
-                .map(this::mapToResponse)
+                .map(this::toPublicResponse)
                 .collect(Collectors.toList());
     }
     
@@ -375,7 +375,7 @@ public class GuideService {
                 pageable.getPageNumber(), pageable.getPageSize());
         
         Page<Guide> verifiedGuides = guideRepository.findByVerificationStatus(Guide.VerificationStatus.VERIFIED, pageable);
-        return verifiedGuides.map(this::mapToResponse);
+        return verifiedGuides.map(this::toPublicResponse);
     }
     
     /**
@@ -420,7 +420,21 @@ public class GuideService {
     }
     
     /**
-     * Map Guide entity to GuideProfileResponse DTO
+     * Public guide payloads omit contact details and verification files.
+     */
+    private GuideProfileResponse toPublicResponse(Guide guide) {
+        GuideProfileResponse response = mapToResponse(guide);
+        response.setUserEmail(null);
+        response.setVerificationDocuments(null);
+        if (response.getSpecialties() != null) {
+            response.getSpecialties().forEach(specialty -> specialty.setCertificationUrl(null));
+        }
+        return response;
+    }
+
+    /**
+     * Map Guide entity to GuideProfileResponse DTO.
+     * Includes email and verification files for the owner and admins.
      */
     private GuideProfileResponse mapToResponse(Guide guide) {
         return GuideProfileResponse.builder()

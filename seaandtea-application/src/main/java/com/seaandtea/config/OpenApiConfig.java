@@ -1,12 +1,18 @@
 package com.seaandtea.config;
 
+import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
+import io.swagger.v3.oas.models.security.SecurityRequirement;
+import io.swagger.v3.oas.models.security.SecurityScheme;
 import io.swagger.v3.oas.models.servers.Server;
+import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.AnnotatedElementUtils;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import java.util.List;
 
@@ -38,7 +44,41 @@ public class OpenApiConfig {
                 .termsOfService("https://www.seaandtea.com/terms")
                 .license(mitLicense);
         
-        return new OpenAPI().info(info).servers(List.of(devServer, prodServer));
+        SecurityScheme bearerAuth = new SecurityScheme()
+                .type(SecurityScheme.Type.HTTP)
+                .scheme("bearer")
+                .bearerFormat("JWT")
+                .description("JWT access token from the login endpoint");
+
+        return new OpenAPI()
+                .info(info)
+                .servers(List.of(devServer, prodServer))
+                .components(new Components().addSecuritySchemes("bearerAuth", bearerAuth));
+    }
+
+    /**
+     * Mark operations that use method security as requiring the bearer token.
+     * Public operations, including those annotated permitAll, stay unmarked.
+     */
+    @Bean
+    public OperationCustomizer bearerSecurityCustomizer() {
+        return (operation, handlerMethod) -> {
+            PreAuthorize methodSecurity = AnnotatedElementUtils.findMergedAnnotation(
+                    handlerMethod.getMethod(), PreAuthorize.class);
+            if (methodSecurity == null) {
+                methodSecurity = AnnotatedElementUtils.findMergedAnnotation(
+                        handlerMethod.getBeanType(), PreAuthorize.class);
+            }
+            if (methodSecurity == null || methodSecurity.value().contains("permitAll")) {
+                return operation;
+            }
+            boolean alreadyMarked = operation.getSecurity() != null && operation.getSecurity().stream()
+                    .anyMatch(requirement -> requirement.containsKey("bearerAuth"));
+            if (!alreadyMarked) {
+                operation.addSecurityItem(new SecurityRequirement().addList("bearerAuth"));
+            }
+            return operation;
+        };
     }
 }
 

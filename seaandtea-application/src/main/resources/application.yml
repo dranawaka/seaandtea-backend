@@ -73,6 +73,10 @@ cloudinary:
 
 
 app:
+  # Swagger and /v3/api-docs stay off for anonymous clients.
+  # The local profile sets this to true for development only.
+  api-docs:
+    permit-all: false
   frontend-url: ${APP_FRONTEND_URL:http://localhost:3000}
   oauth:
     google:
@@ -102,6 +106,13 @@ management:
   health:
     mail:
       enabled: false
+
+# API docs are disabled on deployed environments. Enable them with the local profile.
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
 
 # Common Logging Configuration
 logging:

@@ -1,6 +1,7 @@
 package com.seaandtea.security;
 
 import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -19,10 +20,23 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private static final String[] API_DOC_PATHS = {
+            "/swagger-ui.html",
+            "/swagger-ui/**",
+            "/v3/api-docs",
+            "/v3/api-docs/**",
+            "/v3/api-docs.yaml",
+            "/v3/api-docs.yml"
+    };
 
-    public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter) {
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final boolean permitApiDocs;
+
+    public SecurityConfig(
+            JwtAuthenticationFilter jwtAuthenticationFilter,
+            @Value("${app.api-docs.permit-all:false}") boolean permitApiDocs) {
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.permitApiDocs = permitApiDocs;
     }
 
     @Bean
@@ -35,9 +49,16 @@ public class SecurityConfig {
         http
             .csrf(csrf -> csrf.disable())
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll()  // Method-level @PreAuthorize still enforces role checks
-            );
+            .authorizeHttpRequests(auth -> {
+                // Swagger and the OpenAPI document are not public.
+                // Local profile may opt in; otherwise only an admin token can read them.
+                if (permitApiDocs) {
+                    auth.requestMatchers(API_DOC_PATHS).permitAll();
+                } else {
+                    auth.requestMatchers(API_DOC_PATHS).hasRole("ADMIN");
+                }
+                auth.anyRequest().permitAll(); // Method-level @PreAuthorize still enforces role checks
+            });
         ClientRegistrationRepository registrations = clientRegistrations.getIfAvailable();
         AuthenticationSuccessHandler successHandler = oauthSuccessHandler.getIfAvailable();
         AuthenticationFailureHandler failureHandler = oauthFailureHandler.getIfAvailable();

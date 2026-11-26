@@ -4,6 +4,7 @@ import com.seaandtea.dto.GuideDashboardResponse;
 import com.seaandtea.dto.GuideProfileRequest;
 import com.seaandtea.dto.GuideProfileResponse;
 import com.seaandtea.entity.Guide;
+import com.seaandtea.entity.GuideSpecialty;
 import com.seaandtea.entity.Tour;
 import com.seaandtea.entity.User;
 import com.seaandtea.repository.BookingRepository;
@@ -193,6 +194,12 @@ class GuideServiceTest {
                 .responseTimeHours(24)
                 .isAvailable(true)
                 .verificationStatus(Guide.VerificationStatus.PENDING)
+                .verificationDocuments(List.of("https://files.example/id.pdf"))
+                .specialties(List.of(GuideSpecialty.builder()
+                        .specialty("Cultural Tours")
+                        .yearsExperience(5)
+                        .certificationUrl("https://files.example/cert.pdf")
+                        .build()))
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
@@ -206,6 +213,10 @@ class GuideServiceTest {
         assertNotNull(response);
         assertEquals(1L, response.getId());
         assertEquals(1L, response.getUserId());
+        assertNull(response.getUserEmail());
+        assertNull(response.getVerificationDocuments());
+        assertNull(response.getSpecialties().get(0).getCertificationUrl());
+        assertEquals("Cultural Tours", response.getSpecialties().get(0).getSpecialty());
     }
     
     @Test
@@ -262,6 +273,8 @@ class GuideServiceTest {
         
         // Then
         assertEquals(2, result.size());
+        assertNull(result.get(0).getUserEmail());
+        assertNull(result.get(0).getVerificationDocuments());
         verify(guideRepository).findByVerificationStatus(Guide.VerificationStatus.VERIFIED);
     }
     
@@ -323,6 +336,7 @@ class GuideServiceTest {
         assertEquals(6, dashboard.getActiveTours());
         assertEquals(4L, dashboard.getProfile().getId());
         assertEquals("VERIFIED", dashboard.getProfile().getVerificationStatus());
+        assertEquals("test@example.com", dashboard.getProfile().getUserEmail());
     }
 }
 
