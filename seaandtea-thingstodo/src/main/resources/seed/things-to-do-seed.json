@@ -1,0 +1,1636 @@
+{
+  "_meta": {
+    "generated": "2026-11-26",
+    "note": "Facts only from cited sources. status DRAFT = needs human verification before publish. Dates are for 2027 unless stated."
+  },
+  "destinations": [
+    {
+      "slug": "colombo",
+      "name": "Colombo",
+      "region": "COLOMBO",
+      "existing": true
+    },
+    {
+      "slug": "kandy",
+      "name": "Kandy",
+      "region": "KANDY",
+      "existing": true
+    },
+    {
+      "slug": "sigiriya",
+      "name": "Sigiriya",
+      "region": "CULTURAL_TRIANGLE",
+      "existing": true
+    },
+    {
+      "slug": "ella",
+      "name": "Ella",
+      "region": "HILL_COUNTRY",
+      "existing": true
+    },
+    {
+      "slug": "nuwara-eliya",
+      "name": "Nuwara Eliya",
+      "region": "HILL_COUNTRY",
+      "existing": true
+    },
+    {
+      "slug": "galle",
+      "name": "Galle",
+      "region": "SOUTH_COAST",
+      "existing": true
+    },
+    {
+      "slug": "mirissa",
+      "name": "Mirissa",
+      "region": "SOUTH_COAST",
+      "existing": true
+    },
+    {
+      "slug": "bentota",
+      "name": "Bentota",
+      "region": "SOUTH_COAST",
+      "existing": true
+    },
+    {
+      "slug": "yala",
+      "name": "Yala",
+      "region": "WILDLIFE",
+      "existing": true
+    },
+    {
+      "slug": "wilpattu",
+      "name": "Wilpattu",
+      "region": "WILDLIFE",
+      "existing": true
+    },
+    {
+      "slug": "trincomalee",
+      "name": "Trincomalee",
+      "region": "EAST_COAST",
+      "existing": true
+    },
+    {
+      "slug": "negombo",
+      "name": "Negombo",
+      "region": "WEST_COAST",
+      "existing": true
+    },
+    {
+      "slug": "arugam-bay",
+      "name": "Arugam Bay",
+      "region": "EAST_COAST",
+      "existing": false
+    },
+    {
+      "slug": "weligama",
+      "name": "Weligama",
+      "region": "SOUTH_COAST",
+      "existing": false
+    },
+    {
+      "slug": "hikkaduwa",
+      "name": "Hikkaduwa",
+      "region": "SOUTH_COAST",
+      "existing": false
+    },
+    {
+      "slug": "unawatuna",
+      "name": "Unawatuna",
+      "region": "SOUTH_COAST",
+      "existing": false
+    },
+    {
+      "slug": "udawalawe",
+      "name": "Udawalawe",
+      "region": "WILDLIFE",
+      "existing": false
+    },
+    {
+      "slug": "minneriya",
+      "name": "Minneriya",
+      "region": "CULTURAL_TRIANGLE",
+      "existing": false
+    },
+    {
+      "slug": "kalpitiya",
+      "name": "Kalpitiya",
+      "region": "WEST_COAST",
+      "existing": false
+    },
+    {
+      "slug": "haputale",
+      "name": "Haputale",
+      "region": "HILL_COUNTRY",
+      "existing": false
+    },
+    {
+      "slug": "adams-peak",
+      "name": "Adam's Peak (Nallathanniya)",
+      "region": "HILL_COUNTRY",
+      "existing": false
+    },
+    {
+      "slug": "jaffna",
+      "name": "Jaffna",
+      "region": "NORTH",
+      "existing": false
+    },
+    {
+      "slug": "kataragama",
+      "name": "Kataragama",
+      "region": "WILDLIFE",
+      "existing": false
+    },
+    {
+      "slug": "anuradhapura",
+      "name": "Anuradhapura",
+      "region": "CULTURAL_TRIANGLE",
+      "existing": false
+    },
+    {
+      "slug": "kelaniya",
+      "name": "Kelaniya",
+      "region": "COLOMBO",
+      "existing": false
+    }
+  ],
+  "activities": [
+    {
+      "slug": "arugam-bay-surfing",
+      "title": "Surfing at Arugam Bay",
+      "category": "SURFING",
+      "destinationSlug": "arugam-bay",
+      "region": "EAST_COAST",
+      "seasonMonths": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "peakMonths": [
+        6,
+        7,
+        8
+      ],
+      "yearRound": false,
+      "difficulty": "MODERATE",
+      "summary": "Sri Lanka's best-known surf destination: a string of right-hand point breaks on the east coast, best from May to September.",
+      "seasonNote": "Opposite season to the south coast. Early mornings (about 5:30-9 am) are cleanest. Beginner-friendly spots exist (Baby Point, Elephant Rock, Peanut Farm inside), but coaching mostly targets improvers.",
+      "tourCategories": [
+        "ADVENTURE_TOURS",
+        "BEACH_TOURS"
+      ],
+      "seasonalAlternativeSlug": "weligama-surfing",
+      "responsibleTravelNote": null,
+      "nearbyDestinationSlugs": [],
+      "sources": [
+        {
+          "url": "https://www.roughguides.com/sri-lanka/best-surf-spots/",
+          "label": "Rough Guides",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://solonomads.com/guides/sri-lanka/surfing",
+          "label": "SoloNomads",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://destinsrilanka.com/surfing-in-sri-lanka-from-weligama-to-arugam-bay/",
+          "label": "DestinSriLanka",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "weligama-surfing",
+      "title": "Surfing and lessons: Weligama and the south coast",
+      "category": "SURFING",
+      "destinationSlug": "weligama",
+      "region": "SOUTH_WEST_COAST",
+      "seasonMonths": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "peakMonths": [
+        12,
+        1,
+        2,
+        3
+      ],
+      "yearRound": false,
+      "difficulty": "EASY",
+      "summary": "A wide, sandy bay with gentle waves that suits first lessons; reef breaks nearby (Midigama, Hikkaduwa) for intermediates. Best November to April.",
+      "seasonNote": "October and early November are unpredictable; May to September is rough monsoon on this coast, though Weligama's sheltered bay can still give gentle beginner waves.",
+      "tourCategories": [
+        "ADVENTURE_TOURS",
+        "BEACH_TOURS"
+      ],
+      "seasonalAlternativeSlug": "arugam-bay-surfing",
+      "responsibleTravelNote": null,
+      "nearbyDestinationSlugs": [
+        "mirissa",
+        "hikkaduwa",
+        "galle"
+      ],
+      "sources": [
+        {
+          "url": "https://www.roughguides.com/sri-lanka/best-surf-spots/",
+          "label": "Rough Guides",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://solonomads.com/guides/sri-lanka/surfing",
+          "label": "SoloNomads",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://www.thesurferweligama.com/en/blog/best-time-to-surf-in-sri-lanka-a-month-by-month-guide-for-europeans",
+          "label": "The Surfer Weligama",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "mirissa-whale-watching",
+      "title": "Whale and dolphin watching from Mirissa",
+      "category": "WHALE_WATCHING",
+      "destinationSlug": "mirissa",
+      "region": "SOUTH_WEST_COAST",
+      "seasonMonths": [
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "peakMonths": [
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "yearRound": false,
+      "difficulty": "EASY",
+      "summary": "Boat trips from Mirissa harbour for blue whales, sperm whales and dolphins during the south-coast season, roughly November to April.",
+      "seasonNote": "Sources differ on the peak (December to March versus December to April). No operator can promise a sighting.",
+      "tourCategories": [
+        "BEACH_TOURS",
+        "WILDLIFE_TOURS"
+      ],
+      "seasonalAlternativeSlug": "trincomalee-whale-watching",
+      "responsibleTravelNote": "No operator can promise a sighting. Choose operators that follow whale-watching rules and avoid swim-with-whale trips.",
+      "nearbyDestinationSlugs": [],
+      "sources": [
+        {
+          "url": "https://visitlanka.org/things-to-do/whales-and-dolphins",
+          "label": "VisitLanka",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://hillstoocean.com/guides/whale-watching-sri-lanka",
+          "label": "Hills to Ocean",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://wwhandbook.iwc.int/en/country-profiles/sri-lanka",
+          "label": "IWC Whale Watching Handbook",
+          "kind": "PRIMARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "trincomalee-whale-watching",
+      "title": "Whale and dolphin watching from Trincomalee",
+      "category": "WHALE_WATCHING",
+      "destinationSlug": "trincomalee",
+      "region": "EAST_COAST",
+      "seasonMonths": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "peakMonths": [
+        5,
+        6,
+        7,
+        8
+      ],
+      "yearRound": false,
+      "difficulty": "EASY",
+      "summary": "The east-coast counterpart of Mirissa, running roughly May to September when the south coast is rough.",
+      "seasonNote": "Sources differ: some say May to August, the IWC handbook lists blue whales off Trincomalee from March to July. October is poor on both coasts.",
+      "tourCategories": [
+        "BEACH_TOURS",
+        "WILDLIFE_TOURS"
+      ],
+      "seasonalAlternativeSlug": "mirissa-whale-watching",
+      "responsibleTravelNote": "No operator can promise a sighting. Choose operators that follow whale-watching rules.",
+      "nearbyDestinationSlugs": [],
+      "sources": [
+        {
+          "url": "https://visitlanka.org/things-to-do/whales-and-dolphins",
+          "label": "VisitLanka",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://connectlanka.com/travel-guide/mirissa-or-trincomalee-whales/",
+          "label": "Connect Lanka",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://wwhandbook.iwc.int/en/country-profiles/sri-lanka",
+          "label": "IWC Whale Watching Handbook",
+          "kind": "PRIMARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "yala-safari",
+      "title": "Leopard safari in Yala National Park",
+      "category": "SAFARI",
+      "destinationSlug": "yala",
+      "region": "SOUTH_EAST_PARKS",
+      "seasonMonths": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "peakMonths": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "yearRound": false,
+      "difficulty": "EASY",
+      "summary": "Jeep safaris in a park with one of the world's highest leopard densities; also elephants, sloth bears and crocodiles. Best February to July.",
+      "seasonNote": "Block 1 usually closes from about mid-September to mid-October (dates set each year by the Department of Wildlife Conservation). Confirm before booking. Enter at gate opening to avoid jeep queues.",
+      "tourCategories": [
+        "WILDLIFE_TOURS"
+      ],
+      "seasonalAlternativeSlug": "wilpattu-safari",
+      "responsibleTravelNote": "Follow ranger and park rules; keep distance from animals.",
+      "nearbyDestinationSlugs": [],
+      "sources": [
+        {
+          "url": "https://lankanstays.com/blog/best-time-for-safari-sri-lanka",
+          "label": "Lankan Stays & Trails",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://visitlanka.org/things-to-do/safaris",
+          "label": "VisitLanka",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://www.gotourride.com/blog/minneriya-or-yala-or-udawalawe-which-safari",
+          "label": "GoTourRide",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "wilpattu-safari",
+      "title": "Safari in Wilpattu National Park",
+      "category": "SAFARI",
+      "destinationSlug": "wilpattu",
+      "region": "NORTH_WEST_PARKS",
+      "seasonMonths": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "peakMonths": [
+        6,
+        7
+      ],
+      "yearRound": false,
+      "difficulty": "EASY",
+      "summary": "Sri Lanka's largest park: forest and natural lakes, far fewer jeeps than Yala. Leopards and sloth bears are possible but need patience.",
+      "seasonNote": "Palu fruiting around June and July is the best chance of sloth bears.",
+      "tourCategories": [
+        "WILDLIFE_TOURS"
+      ],
+      "seasonalAlternativeSlug": "yala-safari",
+      "responsibleTravelNote": "Follow ranger and park rules.",
+      "nearbyDestinationSlugs": [],
+      "sources": [
+        {
+          "url": "https://lankanstays.com/blog/best-time-for-safari-sri-lanka",
+          "label": "Lankan Stays & Trails",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://visitlanka.org/things-to-do/safaris",
+          "label": "VisitLanka",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "udawalawe-safari",
+      "title": "Elephant safari in Udawalawe",
+      "category": "SAFARI",
+      "destinationSlug": "udawalawe",
+      "region": "SOUTH_EAST_PARKS",
+      "seasonMonths": [],
+      "peakMonths": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "yearRound": true,
+      "difficulty": "EASY",
+      "summary": "Open grassland with a large resident elephant population; dependable sightings in any month and no annual closure reported.",
+      "seasonNote": "Sources disagree on the best months (February to July versus December to March). Treat it as a year-round park.",
+      "tourCategories": [
+        "WILDLIFE_TOURS"
+      ],
+      "seasonalAlternativeSlug": "minneriya-elephant-gathering",
+      "responsibleTravelNote": "Follow ranger and park rules.",
+      "nearbyDestinationSlugs": [],
+      "sources": [
+        {
+          "url": "https://visitlanka.org/things-to-do/safaris",
+          "label": "VisitLanka",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://lankanstays.com/blog/best-time-for-safari-sri-lanka",
+          "label": "Lankan Stays & Trails",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://www.gotourride.com/blog/minneriya-or-yala-or-udawalawe-which-safari",
+          "label": "GoTourRide",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "minneriya-elephant-gathering",
+      "title": "The Gathering: elephants at Minneriya and Kaudulla",
+      "category": "SAFARI",
+      "destinationSlug": "minneriya",
+      "region": "CULTURAL_TRIANGLE",
+      "seasonMonths": [
+        7,
+        8,
+        9,
+        10
+      ],
+      "peakMonths": [
+        8,
+        9
+      ],
+      "yearRound": false,
+      "difficulty": "EASY",
+      "summary": "As reservoirs shrink, large herds feed on the exposed lake bed; one of Asia's great wildlife sights. Late-afternoon drives are best.",
+      "seasonNote": "Some sources start the season in June. Herds move between Minneriya, Kaudulla and Hurulu with water levels: book by where the elephants are, not the park name.",
+      "tourCategories": [
+        "WILDLIFE_TOURS"
+      ],
+      "seasonalAlternativeSlug": "udawalawe-safari",
+      "responsibleTravelNote": "Follow ranger and park rules.",
+      "nearbyDestinationSlugs": [
+        "sigiriya"
+      ],
+      "sources": [
+        {
+          "url": "https://majeste.lk/guides/yala-vs-udawalawe-vs-wilpattu-vs-minneriya",
+          "label": "Majeste",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://visitlanka.org/things-to-do/safaris",
+          "label": "VisitLanka",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://www.lonelyplanet.com/sri-lanka/attractions",
+          "label": "Lonely Planet",
+          "kind": "PRIMARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "adams-peak-hike",
+      "title": "Climb Adam's Peak (Sri Pada)",
+      "category": "HIKING",
+      "destinationSlug": "adams-peak",
+      "region": "HILL_COUNTRY",
+      "seasonMonths": [
+        12,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "peakMonths": [
+        1,
+        2,
+        3
+      ],
+      "yearRound": false,
+      "difficulty": "CHALLENGING",
+      "summary": "An overnight climb of roughly 5,500 steps to a sacred summit for sunrise. The lit pilgrimage season runs from December to May.",
+      "seasonNote": "Season opens at the December Unduvap Poya and closes at the May Vesak Poya. Best on weekdays in January to March; avoid Poya nights, weekends and the April holidays. Outside the season the steps are unlit and a guide is advised.",
+      "tourCategories": [
+        "ADVENTURE_TOURS",
+        "CULTURAL_TOURS"
+      ],
+      "seasonalAlternativeSlug": null,
+      "responsibleTravelNote": "Sacred to Buddhists, Hindus, Muslims and Christians: dress modestly, remove shoes at the summit temple.",
+      "nearbyDestinationSlugs": [],
+      "sources": [
+        {
+          "url": "https://lankanstays.com/blog/adams-peak-season-guide",
+          "label": "Lankan Stays & Trails",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://srilor.com/adams-peak-climb/",
+          "label": "SriLor",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "ella-hikes",
+      "title": "Little Adam's Peak and Ella Rock",
+      "category": "HIKING",
+      "destinationSlug": "ella",
+      "region": "HILL_COUNTRY",
+      "seasonMonths": [],
+      "peakMonths": [
+        1,
+        2,
+        3
+      ],
+      "yearRound": true,
+      "difficulty": "MODERATE",
+      "summary": "Two classic hill-country hikes: Little Adam's Peak is a short easy walk (about 1-2 hours return); Ella Rock is a longer, rougher climb (about 3-4.5 hours return).",
+      "seasonNote": "Clearest mornings are January to March; showers can occur year-round. Ella Rock is poorly signed: use a local guide, especially in the dark.",
+      "tourCategories": [
+        "ADVENTURE_TOURS",
+        "SCENIC_TOURS"
+      ],
+      "seasonalAlternativeSlug": null,
+      "responsibleTravelNote": null,
+      "nearbyDestinationSlugs": [],
+      "sources": [
+        {
+          "url": "https://www.thesrilankaguides.com/city/ella/little-adams-peak/",
+          "label": "The Sri Lanka Guides",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://www.srilanka-spirit.com/guides/ella-rock-vs-little-adams-peak/",
+          "label": "Sri Lanka Spirit",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://blog.reservations.lk/ella-rock-hike-guide/",
+          "label": "Reservations.lk",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "horton-plains-worlds-end",
+      "title": "Horton Plains and World's End",
+      "category": "HIKING",
+      "destinationSlug": "nuwara-eliya",
+      "region": "HILL_COUNTRY",
+      "seasonMonths": [],
+      "peakMonths": [
+        1,
+        2,
+        3
+      ],
+      "yearRound": true,
+      "difficulty": "MODERATE",
+      "summary": "A loop of about 9.5 km across high plains to a cliff edge known as World's End.",
+      "seasonNote": "The park gate opens at 6 am; aim to reach World's End before about 9-9:30 am when mist usually closes in. Entry fees change: link to the official fee notice, do not store a price.",
+      "tourCategories": [
+        "ADVENTURE_TOURS",
+        "SCENIC_TOURS"
+      ],
+      "seasonalAlternativeSlug": null,
+      "responsibleTravelNote": null,
+      "nearbyDestinationSlugs": [],
+      "sources": [
+        {
+          "url": "https://www.whatsonceylon.com/horton-plains-and-worlds-end-tickets-opening-time-and-hike-guide-52cbc49f7558cbff",
+          "label": "What's On Ceylon",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://blog.reservations.lk/horton-plains-worlds-end-guide/",
+          "label": "Reservations.lk",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "hikkaduwa-unawatuna-diving",
+      "title": "Scuba diving: Hikkaduwa and Unawatuna",
+      "category": "DIVING",
+      "destinationSlug": "hikkaduwa",
+      "region": "SOUTH_WEST_COAST",
+      "seasonMonths": [
+        10,
+        11,
+        12,
+        1,
+        2,
+        3,
+        4
+      ],
+      "peakMonths": [
+        12,
+        1,
+        2,
+        3
+      ],
+      "yearRound": false,
+      "difficulty": "ALL_LEVELS",
+      "summary": "Reef, wreck and turtle dives on the south-west and south coast during the dry season, roughly October/November to April.",
+      "seasonNote": "Dive centres move to the east coast in the monsoon months (see Pigeon Island).",
+      "tourCategories": [
+        "BEACH_TOURS",
+        "ADVENTURE_TOURS"
+      ],
+      "seasonalAlternativeSlug": "pigeon-island-diving-snorkelling",
+      "responsibleTravelNote": "Follow local marine-park rules; do not touch coral or wildlife.",
+      "nearbyDestinationSlugs": [
+        "unawatuna",
+        "galle"
+      ],
+      "sources": [
+        {
+          "url": "https://www.lakpura.com/pages/diving",
+          "label": "Lakpura",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://www.padi.com/us/en/blog/why-sri-lanka-is-good-for-diving-all-year-round",
+          "label": "PADI Blog",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://divinguru.com/when-is-the-best-time-to-scuba-dive-in-sri-lanka/",
+          "label": "Divinguru (operator)",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "pigeon-island-diving-snorkelling",
+      "title": "Snorkelling and diving at Pigeon Island, Trincomalee",
+      "category": "SNORKELLING",
+      "destinationSlug": "trincomalee",
+      "region": "EAST_COAST",
+      "seasonMonths": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "peakMonths": [
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "yearRound": false,
+      "difficulty": "EASY",
+      "summary": "Shallow coral reefs, blacktip reef sharks and turtles in a marine national park off Nilaveli; best in the east-coast season.",
+      "seasonNote": "Operators quote different start and end months (roughly mid-March to October). Pigeon Island is a marine national park with its own rules.",
+      "tourCategories": [
+        "BEACH_TOURS"
+      ],
+      "seasonalAlternativeSlug": "hikkaduwa-unawatuna-diving",
+      "responsibleTravelNote": "Marine national park: follow ranger rules; do not touch coral or wildlife.",
+      "nearbyDestinationSlugs": [],
+      "sources": [
+        {
+          "url": "https://www.lakpura.com/pages/diving",
+          "label": "Lakpura",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://divinguru.com/when-is-the-best-time-to-scuba-dive-in-sri-lanka/",
+          "label": "Divinguru (operator)",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://sl1travels.com/things-to-do-in-sri-lanka/snorkeling-and-diving-sri-lanka/",
+          "label": "SL1 Travels",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "tea-estate-visits",
+      "title": "Tea estates and factory visits",
+      "category": "TEA",
+      "destinationSlug": "nuwara-eliya",
+      "region": "HILL_COUNTRY",
+      "seasonMonths": [],
+      "peakMonths": [],
+      "yearRound": true,
+      "difficulty": "EASY",
+      "summary": "Working tea factories and estates around Nuwara Eliya (Pedro, Labookellie), Haputale (Lipton's Seat, Dambatenne) and the Ceylon Tea Museum in Kandy.",
+      "seasonNote": "Opening hours and fees not verified: check each estate before publishing.",
+      "tourCategories": [
+        "TEA_TOURS"
+      ],
+      "seasonalAlternativeSlug": null,
+      "responsibleTravelNote": null,
+      "nearbyDestinationSlugs": [
+        "kandy",
+        "haputale"
+      ],
+      "sources": [
+        {
+          "url": "https://ouratravel.com/nuwara-eliya-tea-plantations-guide/",
+          "label": "Oura Travel",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://connectlanka.com/travel-guide/which-tea-factory-to-visit/",
+          "label": "Connect Lanka",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "DRAFT",
+      "needsVerification": "Season, opening hours and fees not verified. Central Province Tourism page timed out during research."
+    },
+    {
+      "slug": "kalpitiya-kitesurfing",
+      "title": "Kitesurfing in Kalpitiya",
+      "category": "KITESURFING",
+      "destinationSlug": "kalpitiya",
+      "region": "NORTH_WEST_COAST",
+      "seasonMonths": [
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "peakMonths": [
+        6,
+        7,
+        8,
+        9
+      ],
+      "yearRound": false,
+      "difficulty": "ALL_LEVELS",
+      "summary": "Flat-water lagoon kitesurfing on the north-west coast with reliable summer winds.",
+      "seasonNote": "Season from operator and blog snippets only; not independently verified.",
+      "tourCategories": [
+        "ADVENTURE_TOURS",
+        "BEACH_TOURS"
+      ],
+      "seasonalAlternativeSlug": null,
+      "responsibleTravelNote": null,
+      "nearbyDestinationSlugs": [],
+      "sources": [
+        {
+          "url": "https://www.lonelyplanet.com/sri-lanka/attractions",
+          "label": "Lonely Planet",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://kiteclubkalpitiya.com/",
+          "label": "Kite Club Kalpitiya (operator)",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://www.kitesurfing.me/blog/best-time-to-kitesurf-in-kalpitiya",
+          "label": "kitesurfing.me",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "DRAFT",
+      "needsVerification": "Season not independently verified."
+    }
+  ],
+  "events": [
+    {
+      "slug": "thai-pongal",
+      "name": "Thai Pongal",
+      "type": "RELIGIOUS_FESTIVAL",
+      "tradition": "HINDU",
+      "recurrenceType": "FIXED_DATE",
+      "typicalStartMonth": 1,
+      "typicalEndMonth": 1,
+      "destinationSlug": "jaffna",
+      "venueName": "Tamil homes and kovils, strongest in Jaffna and the hill country",
+      "summary": "Tamil harvest festival: families boil new rice in milk until it overflows, then offer it to the sun.",
+      "occurrences": [
+        {
+          "year": 2027,
+          "startDate": "2027-01-15",
+          "endDate": "2027-01-15",
+          "dateStatus": "CONFIRMED",
+          "statusSourceUrl": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027",
+          "label": "Central Bank of Sri Lanka 2027 holidays",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://www.srilankatravelguides.com/blog/sri-lanka-festivals-calendar",
+          "label": "Sri Lanka Travel Guides",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "duruthu-perahera-kelaniya",
+      "name": "Duruthu Perahera (Kelaniya)",
+      "type": "RELIGIOUS_FESTIVAL",
+      "tradition": "BUDDHIST",
+      "recurrenceType": "LUNAR_POYA",
+      "poyaName": "DURUTHU",
+      "typicalStartMonth": 1,
+      "typicalEndMonth": 1,
+      "destinationSlug": "kelaniya",
+      "venueName": "Kelaniya Raja Maha Vihara, near Colombo",
+      "summary": "Procession of dancers, drummers and elephants at Kelaniya temple around the January full-moon (Duruthu) Poya.",
+      "occurrences": [
+        {
+          "year": 2027,
+          "startDate": null,
+          "endDate": null,
+          "dateStatus": "TO_BE_ANNOUNCED",
+          "notes": "Duruthu Poya is Fri 22 Jan 2027 (CBSL). Procession nights may differ from the Poya day: confirm with the temple.",
+          "statusSourceUrl": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027",
+          "label": "Central Bank of Sri Lanka 2027 holidays",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://visitlanka.org/things-to-do/festival-immersion",
+          "label": "VisitLanka",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://ouratravel.com/sri-lanka-festivals/",
+          "label": "Oura Travel",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "DRAFT",
+      "needsVerification": "Perahera nights not confirmed; sources disagree with Poya date. Verify with Kelaniya temple."
+    },
+    {
+      "slug": "navam-perahera-colombo",
+      "name": "Navam Perahera (Gangaramaya, Colombo)",
+      "type": "RELIGIOUS_FESTIVAL",
+      "tradition": "BUDDHIST",
+      "recurrenceType": "LUNAR_POYA",
+      "poyaName": "NAVAM",
+      "typicalStartMonth": 2,
+      "typicalEndMonth": 2,
+      "destinationSlug": "colombo",
+      "venueName": "Gangaramaya Temple, Colombo",
+      "summary": "Colombo's big Buddhist procession, held around the February Navam full-moon Poya.",
+      "occurrences": [
+        {
+          "year": 2027,
+          "startDate": null,
+          "endDate": null,
+          "dateStatus": "EXPECTED",
+          "notes": "Navam Poya is Sat 20 Feb 2027 (CBSL). Procession dates not announced.",
+          "statusSourceUrl": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027",
+          "label": "Central Bank of Sri Lanka 2027 holidays",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://ouratravel.com/sri-lanka-festivals/",
+          "label": "Oura Travel",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "DRAFT",
+      "needsVerification": "Single secondary source for the procession. Verify with Gangaramaya."
+    },
+    {
+      "slug": "maha-sivarathri",
+      "name": "Maha Sivarathri",
+      "type": "RELIGIOUS_FESTIVAL",
+      "tradition": "HINDU",
+      "recurrenceType": "LUNAR_OTHER",
+      "typicalStartMonth": 3,
+      "typicalEndMonth": 3,
+      "destinationSlug": "colombo",
+      "venueName": "Hindu temples island-wide",
+      "summary": "Night-long Hindu worship of Shiva; a public holiday in Sri Lanka.",
+      "occurrences": [
+        {
+          "year": 2027,
+          "startDate": "2027-03-06",
+          "endDate": "2027-03-06",
+          "dateStatus": "CONFIRMED",
+          "statusSourceUrl": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027",
+          "label": "Central Bank of Sri Lanka 2027 holidays",
+          "kind": "PRIMARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "galle-literary-festival",
+      "name": "Galle Literary Festival",
+      "type": "LITERARY",
+      "tradition": "SECULAR",
+      "recurrenceType": "TYPICAL_MONTH",
+      "typicalStartMonth": 3,
+      "typicalEndMonth": 3,
+      "destinationSlug": "galle",
+      "venueName": "Galle Fort",
+      "isFree": false,
+      "officialUrl": "https://galleliteraryfestival.com/",
+      "summary": "Five days of talks, a children's festival, an art trail and author lunches inside UNESCO-listed Galle Fort. First held in 2007.",
+      "occurrences": [
+        {
+          "year": 2027,
+          "startDate": "2027-03-17",
+          "endDate": "2027-03-21",
+          "dateStatus": "CONFIRMED",
+          "statusSourceUrl": "https://galleliteraryfestival.com/",
+          "ticketUrl": "https://galleliteraryfestival.com/"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://galleliteraryfestival.com/",
+          "label": "Galle Literary Festival (organiser)",
+          "kind": "PRIMARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "sinhala-tamil-new-year",
+      "name": "Sinhala and Tamil New Year (Avurudu)",
+      "type": "CULTURAL",
+      "tradition": "MIXED",
+      "recurrenceType": "FIXED_DATE",
+      "typicalStartMonth": 4,
+      "typicalEndMonth": 4,
+      "destinationSlug": "colombo",
+      "venueName": "Island-wide",
+      "summary": "Mid-April New Year celebrated by Sinhalese and Tamils with family rituals, games and sweets; much of the country closes.",
+      "occurrences": [
+        {
+          "year": 2027,
+          "startDate": "2027-04-13",
+          "endDate": "2027-04-14",
+          "dateStatus": "CONFIRMED",
+          "statusSourceUrl": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027",
+          "label": "Central Bank of Sri Lanka 2027 holidays",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://solonomads.com/guides/sri-lanka/festivals",
+          "label": "SoloNomads",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "vesak",
+      "name": "Vesak",
+      "type": "RELIGIOUS_FESTIVAL",
+      "tradition": "BUDDHIST",
+      "recurrenceType": "LUNAR_POYA",
+      "poyaName": "VESAK",
+      "typicalStartMonth": 5,
+      "typicalEndMonth": 5,
+      "destinationSlug": "colombo",
+      "venueName": "Island-wide; especially Colombo, Kandy and Kelaniya",
+      "summary": "The holiest Buddhist festival: illuminated pandals and lanterns, and free food stalls (dansal) in towns across the island.",
+      "occurrences": [
+        {
+          "year": 2027,
+          "startDate": "2027-05-19",
+          "endDate": "2027-05-20",
+          "dateStatus": "CONFIRMED",
+          "statusSourceUrl": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027",
+          "notes": "Vesak Poya Wed 19 May; holiday also Thu 20 May."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027",
+          "label": "Central Bank of Sri Lanka 2027 holidays",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://www.srilanka.travel/festivals-year-around",
+          "label": "Sri Lanka Tourism",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://www.srilankatravelguides.com/blog/sri-lanka-festivals-calendar",
+          "label": "Sri Lanka Travel Guides",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "poson",
+      "name": "Poson",
+      "type": "RELIGIOUS_FESTIVAL",
+      "tradition": "BUDDHIST",
+      "recurrenceType": "LUNAR_POYA",
+      "poyaName": "POSON",
+      "typicalStartMonth": 6,
+      "typicalEndMonth": 6,
+      "destinationSlug": "anuradhapura",
+      "venueName": "Mihintale and Anuradhapura",
+      "summary": "Marks the arrival of Buddhism in Sri Lanka; pilgrims climb Mihintale and fill Anuradhapura.",
+      "occurrences": [
+        {
+          "year": 2027,
+          "startDate": "2027-06-18",
+          "endDate": "2027-06-18",
+          "dateStatus": "CONFIRMED",
+          "statusSourceUrl": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027",
+          "label": "Central Bank of Sri Lanka 2027 holidays",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://solonomads.com/guides/sri-lanka/festivals",
+          "label": "SoloNomads",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://visitlanka.org/things-to-do/festival-immersion",
+          "label": "VisitLanka",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "vel-festival-colombo",
+      "name": "Vel Festival (Colombo)",
+      "type": "RELIGIOUS_FESTIVAL",
+      "tradition": "HINDU",
+      "recurrenceType": "TYPICAL_MONTH",
+      "typicalStartMonth": 7,
+      "typicalEndMonth": 7,
+      "destinationSlug": "colombo",
+      "venueName": "Colombo",
+      "summary": "In July the silver-plated chariot of the god Skanda and his vel (spear) are paraded across Colombo.",
+      "occurrences": [
+        {
+          "year": 2027,
+          "startDate": null,
+          "endDate": null,
+          "dateStatus": "EXPECTED",
+          "notes": "2027 dates not announced."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.srilanka.travel/festivals-year-around",
+          "label": "Sri Lanka Tourism",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://ouratravel.com/sri-lanka-festivals/",
+          "label": "Oura Travel",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "kataragama-esala-festival",
+      "name": "Kataragama Festival",
+      "type": "RELIGIOUS_FESTIVAL",
+      "tradition": "MIXED",
+      "recurrenceType": "LUNAR_OTHER",
+      "typicalStartMonth": 7,
+      "typicalEndMonth": 8,
+      "destinationSlug": "kataragama",
+      "venueName": "Kataragama, deep south",
+      "summary": "Festival linked to the god Skanda in the far south, known for fire-walkers.",
+      "occurrences": [
+        {
+          "year": 2027,
+          "startDate": null,
+          "endDate": null,
+          "dateStatus": "EXPECTED",
+          "notes": "2027 dates not announced."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.srilanka.travel/festivals-year-around",
+          "label": "Sri Lanka Tourism",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://visitlanka.org/things-to-do/festival-immersion",
+          "label": "VisitLanka",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "kandy-esala-perahera",
+      "name": "Kandy Esala Perahera",
+      "type": "RELIGIOUS_FESTIVAL",
+      "tradition": "BUDDHIST",
+      "recurrenceType": "LUNAR_POYA",
+      "poyaName": "ESALA",
+      "typicalStartMonth": 7,
+      "typicalEndMonth": 8,
+      "typicalDurationDays": 11,
+      "destinationSlug": "kandy",
+      "venueName": "Temple of the Sacred Tooth Relic, Kandy",
+      "officialUrl": "https://sridaladamaligawa.lk/kandy-esala-perahera/",
+      "summary": "Ten nights of processions with drummers, dancers, whip-crackers and decorated elephants honouring the Sacred Tooth Relic; Sri Lanka's most visited festival.",
+      "occurrences": [
+        {
+          "year": 2026,
+          "startDate": "2026-08-18",
+          "endDate": "2026-08-28",
+          "dateStatus": "CONFIRMED",
+          "statusSourceUrl": "https://sridaladamaligawa.lk/kandy-esala-perahera/",
+          "notes": "Official: five Kumbal nights 18-22 Aug, five Randoli nights 23-27 Aug, day procession 28 Aug 2026."
+        },
+        {
+          "year": 2027,
+          "startDate": null,
+          "endDate": null,
+          "dateStatus": "TO_BE_ANNOUNCED",
+          "notes": "Esala Poya Sun 18 Jul 2027 and Nikini Poya Mon 16 Aug 2027 (CBSL). Wait for the Temple's announcement.",
+          "statusSourceUrl": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://sridaladamaligawa.lk/kandy-esala-perahera/",
+          "label": "Sri Dalada Maligawa (official schedule)",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://www.srilanka.travel/festivals-year-around",
+          "label": "Sri Lanka Tourism",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027",
+          "label": "Central Bank of Sri Lanka 2027 holidays",
+          "kind": "PRIMARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    },
+    {
+      "slug": "nallur-festival-jaffna",
+      "name": "Nallur Kandaswamy Festival",
+      "type": "RELIGIOUS_FESTIVAL",
+      "tradition": "HINDU",
+      "recurrenceType": "TYPICAL_MONTH",
+      "typicalStartMonth": 8,
+      "typicalEndMonth": 9,
+      "typicalDurationDays": 25,
+      "destinationSlug": "jaffna",
+      "venueName": "Nallur Kandaswamy Temple, Jaffna",
+      "summary": "About 25 days of festivities at the Nallur Kandaswamy temple in Jaffna, building to a chariot procession.",
+      "occurrences": [
+        {
+          "year": 2027,
+          "startDate": null,
+          "endDate": null,
+          "dateStatus": "EXPECTED",
+          "notes": "2026 flag-raising was 17 Aug; chariot day about 9 Sep (sources differ by a day or two). 2027 not announced."
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://solonomads.com/guides/sri-lanka/festivals",
+          "label": "SoloNomads",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://ouratravel.com/sri-lanka-festivals/",
+          "label": "Oura Travel",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://visitlanka.org/things-to-do/festival-immersion",
+          "label": "VisitLanka",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "DRAFT",
+      "needsVerification": "Secondary sources only and dates differ. Verify with the temple."
+    },
+    {
+      "slug": "deepavali",
+      "name": "Deepavali",
+      "type": "RELIGIOUS_FESTIVAL",
+      "tradition": "HINDU",
+      "recurrenceType": "LUNAR_OTHER",
+      "typicalStartMonth": 10,
+      "typicalEndMonth": 11,
+      "destinationSlug": "colombo",
+      "venueName": "Tamil areas island-wide",
+      "summary": "Hindu festival of lights; a public holiday celebrated in Tamil communities across the island.",
+      "occurrences": [
+        {
+          "year": 2027,
+          "startDate": "2027-10-28",
+          "endDate": "2027-10-28",
+          "dateStatus": "CONFIRMED",
+          "statusSourceUrl": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027"
+        }
+      ],
+      "sources": [
+        {
+          "url": "https://www.cbsl.gov.lk/en/about/about-the-bank/bank-holidays-2027",
+          "label": "Central Bank of Sri Lanka 2027 holidays",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://visitlanka.org/things-to-do/festival-immersion",
+          "label": "VisitLanka",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED"
+    }
+  ],
+  "restaurants": [
+    {
+      "slug": "ministry-of-crab",
+      "name": "Ministry of Crab",
+      "destinationSlug": "colombo",
+      "neighbourhood": "Colombo Fort",
+      "addressLine": "No. 04 Hospital Street, Old Dutch Hospital Complex, Colombo 1",
+      "openingHoursText": "Daily 12:00-22:30 (last order 21:30). Closed on Poya days.",
+      "cuisines": [
+        "SEAFOOD",
+        "SRI_LANKAN"
+      ],
+      "priceTier": "UPSCALE",
+      "priceNote": "Priced in USD per the restaurant's own site (tier is our classification).",
+      "phone": "+94 77 002 4823",
+      "websiteUrl": "https://www.ministryofcrab.com/colombo/",
+      "sources": [
+        {
+          "url": "https://www.ministryofcrab.com/colombo/",
+          "label": "Ministry of Crab",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://www.ministryofcrab.com/colombo/contact-us/",
+          "label": "Ministry of Crab: contact",
+          "kind": "PRIMARY"
+        }
+      ],
+      "status": "PUBLISHED",
+      "closedOnPoya": true,
+      "summary": "Wild-caught Sri Lankan mud crab and freshwater prawns in the 17th-century Dutch Hospital building; opened 2011.",
+      "reservationsEmail": "reservations@ministryofcrab.com"
+    },
+    {
+      "slug": "upalis-by-nawaloka",
+      "name": "Upali's by Nawaloka",
+      "destinationSlug": "colombo",
+      "neighbourhood": "Colombo 07",
+      "addressLine": "No. 65, C.W.W. Kannangara Mawatha, Colombo 07",
+      "openingHoursText": "Daily 08:00-23:00 (last orders 22:30).",
+      "cuisines": [
+        "SRI_LANKAN"
+      ],
+      "priceTier": "MID",
+      "priceNote": "Tier is our classification; the site gives no price range.",
+      "phone": "011 269 4359 / 011 269 5812 / 0777 769 714",
+      "websiteUrl": "https://upalis.com/",
+      "sources": [
+        {
+          "url": "https://upalis.com/",
+          "label": "Upali's",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://upalis.com/contact/",
+          "label": "Upali's: contact",
+          "kind": "PRIMARY"
+        }
+      ],
+      "status": "PUBLISHED",
+      "summary": "Traditional Sri Lankan food: lunch set menu, hathmaluwa (seven-vegetable curry), fish head curry and baduma."
+    },
+    {
+      "slug": "nuga-gama",
+      "name": "Nuga Gama (Cinnamon Grand Colombo)",
+      "destinationSlug": "colombo",
+      "neighbourhood": "Colombo 03",
+      "addressLine": "Cinnamon Grand Colombo, Colombo 03",
+      "openingHoursText": "Daily 19:00-23:00.",
+      "cuisines": [
+        "SRI_LANKAN"
+      ],
+      "priceTier": "UPSCALE",
+      "priceNote": "Tier is our classification; the page lists drink prices only.",
+      "phone": "+94 76 560 4972",
+      "websiteUrl": "https://www.cinnamonhotels.com/cinnamon-grand-colombo/dine-with-us/nuga-gama",
+      "sources": [
+        {
+          "url": "https://www.cinnamonhotels.com/cinnamon-grand-colombo/dine-with-us/nuga-gama",
+          "label": "Cinnamon Hotels: Nuga Gama",
+          "kind": "PRIMARY"
+        }
+      ],
+      "status": "PUBLISHED",
+      "summary": "Village-style Sri Lankan dinner prepared by traditional home cooks (ammes), with arrack cocktails.",
+      "servesAlcohol": true
+    },
+    {
+      "slug": "balaji-dosai",
+      "name": "Balaji Dosai",
+      "destinationSlug": "kandy",
+      "neighbourhood": "Kandy centre",
+      "addressLine": "03 D.S. Senanayake Veediya, Kandy 20000",
+      "openingHoursText": "Daily 07:00-22:00. Rice & curry and the South Indian thali are served 11:00-15:00.",
+      "cuisines": [
+        "SOUTH_INDIAN_VEG"
+      ],
+      "priceTier": "BUDGET",
+      "priceNote": "Tier is our classification.",
+      "phone": "+94 81 220 8080",
+      "websiteUrl": "https://balajidosai.com/",
+      "sources": [
+        {
+          "url": "https://balajidosai.com/",
+          "label": "Balaji Dosai",
+          "kind": "PRIMARY"
+        },
+        {
+          "url": "https://balajidosai.com/contact",
+          "label": "Balaji Dosai: contact",
+          "kind": "PRIMARY"
+        }
+      ],
+      "status": "PUBLISHED",
+      "dietary": [
+        "VEGETARIAN"
+      ],
+      "summary": "Pure-vegetarian South Indian restaurant (dosas, idlis, thalis) serving Kandy since 2008, a few minutes from the Temple of the Tooth."
+    },
+    {
+      "slug": "kandyan-muslim-hotel",
+      "name": "Kandyan Muslim Hotel",
+      "destinationSlug": "kandy",
+      "neighbourhood": "Kandy centre",
+      "addressLine": "Ward Street, central Kandy",
+      "openingHoursText": "Hours not found.",
+      "cuisines": [
+        "SRI_LANKAN"
+      ],
+      "priceTier": "BUDGET",
+      "priceNote": "Guide lists about Rs 1,000-2,000 per person.",
+      "phone": "+94 81 223 2036 / +94 81 222 9129",
+      "websiteUrl": null,
+      "sources": [
+        {
+          "url": "https://aboutceylon.com/restaurants-in-kandy/",
+          "label": "About Ceylon",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "DRAFT",
+      "dietary": [
+        "HALAL"
+      ],
+      "summary": "A busy eatery (in Sri Lanka, 'hotel' often means restaurant) known for halal kottu roti, chicken kabul and biryani.",
+      "needsVerification": "Single secondary source; address wording varies (Ward Street / Sri Dalada Veediya); hours unknown. Do not repeat the 'since 1907' claim."
+    },
+    {
+      "slug": "the-empire-cafe",
+      "name": "The Empire Cafe",
+      "destinationSlug": "kandy",
+      "neighbourhood": "Opposite the Temple of the Tooth",
+      "addressLine": "21 Temple Street, Kandy 20000",
+      "openingHoursText": "07:30-20:30 (as listed by one guide).",
+      "cuisines": [
+        "SRI_LANKAN",
+        "CAFE"
+      ],
+      "priceTier": "BUDGET",
+      "priceNote": "Guide lists about Rs 1,000-2,000 per person.",
+      "phone": "+94 81 223 9870",
+      "websiteUrl": null,
+      "sources": [
+        {
+          "url": "https://aboutceylon.com/restaurants-in-kandy/",
+          "label": "About Ceylon",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "DRAFT",
+      "summary": "Rice and curry, sandwiches, cakes and juices in a colonial-era building opposite the Temple of the Tooth.",
+      "needsVerification": "Single secondary source; verify hours and address."
+    },
+    {
+      "slug": "pedlars-inn-cafe",
+      "name": "Pedlar's Inn Cafe",
+      "destinationSlug": "galle",
+      "neighbourhood": "Galle Fort",
+      "addressLine": "92 Pedlar's Street, Galle Fort, Galle 80000",
+      "openingHoursText": "Daily 09:00-22:00; Fridays closed 12:00-13:30.",
+      "cuisines": [
+        "SRI_LANKAN",
+        "WESTERN",
+        "CAFE"
+      ],
+      "priceTier": "MID",
+      "priceNote": "Listing: LKR 2,000-6,000 per person.",
+      "phone": "0912 225 333 (as listed)",
+      "websiteUrl": null,
+      "sources": [
+        {
+          "url": "https://ceylonxo.lk/dining/galle/restaurants/pedlars-inn-cafe-and-restaurant",
+          "label": "Ceylon XO",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "DRAFT",
+      "summary": "Heritage cafe inside Galle Fort (opened 2004) serving Sri Lankan dishes, seafood, pasta and coffee.",
+      "needsVerification": "Single secondary source; verify phone format and hours."
+    },
+    {
+      "slug": "ropewalk-galle-fort-hotel",
+      "name": "Ropewalk (Galle Fort Hotel)",
+      "destinationSlug": "galle",
+      "neighbourhood": "Galle Fort",
+      "addressLine": "No. 28, Church Street, Galle Fort",
+      "openingHoursText": "Hours not on the hotel page (one search result said about 10:00-24:00).",
+      "cuisines": [
+        "SRI_LANKAN",
+        "BAR"
+      ],
+      "priceTier": "UPSCALE",
+      "priceNote": "Tier is our classification.",
+      "phone": "+94 74 237 6866 / +94 91 223 2870",
+      "websiteUrl": "https://www.galleforthotel.com/",
+      "sources": [
+        {
+          "url": "https://www.galleforthotel.com/",
+          "label": "Galle Fort Hotel",
+          "kind": "PRIMARY"
+        }
+      ],
+      "status": "DRAFT",
+      "servesAlcohol": true,
+      "summary": "Arrack-speciality bar inside the Galle Fort Hotel, with a menu inspired by modern Sri Lankan food.",
+      "needsVerification": "Hours unverified. Primarily a bar."
+    },
+    {
+      "slug": "matey-hut-ella",
+      "name": "Matey Hut",
+      "destinationSlug": "ella",
+      "neighbourhood": "Near the Ella tunnel",
+      "addressLine": "No. 91, near the tunnel, Ella 90090",
+      "openingHoursText": "Opens 11:00; closing time not found.",
+      "cuisines": [
+        "SRI_LANKAN"
+      ],
+      "priceTier": "BUDGET",
+      "priceNote": "Guide lists LKR 1,000-1,800 per person.",
+      "phone": null,
+      "websiteUrl": null,
+      "sources": [
+        {
+          "url": "https://traveltriangle.com/blog/restaurants-in-ella-sri-lanka/",
+          "label": "TravelTriangle",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "DRAFT",
+      "dietary": [
+        "VEGETARIAN",
+        "VEGAN_OPTIONS"
+      ],
+      "summary": "Small family-run spot known for a daily-changing vegetable rice and curry; also runs a cooking class.",
+      "needsVerification": "Single secondary source. Do not publish its third-party rating."
+    },
+    {
+      "slug": "cafe-chill-ella",
+      "name": "Cafe Chill",
+      "destinationSlug": "ella",
+      "neighbourhood": "Ella town",
+      "addressLine": "A23 / Wellawaya Road, Ella 90090",
+      "openingHoursText": "Daily 08:30-02:00 (kitchen about to 22:00 per the listing).",
+      "cuisines": [
+        "SRI_LANKAN",
+        "WESTERN"
+      ],
+      "priceTier": "MID",
+      "priceNote": "Listing: about LKR 3,500 per person.",
+      "phone": "077 180 4020",
+      "websiteUrl": null,
+      "sources": [
+        {
+          "url": "https://ceylonxo.lk/dining/ella/cafe/cafe-chill",
+          "label": "Ceylon XO",
+          "kind": "SECONDARY"
+        },
+        {
+          "url": "https://traveltriangle.com/blog/restaurants-in-ella-sri-lanka/",
+          "label": "TravelTriangle",
+          "kind": "SECONDARY"
+        }
+      ],
+      "status": "PUBLISHED",
+      "servesAlcohol": true,
+      "summary": "Three-floor cafe and bar with chicken lamprais, pizza and live music; vegetarian and vegan options."
+    }
+  ]
+}

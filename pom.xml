@@ -29,6 +29,7 @@
         <module>seaandtea-tour</module>
         <module>seaandtea-shop</module>
         <module>seaandtea-engagement</module>
+        <module>seaandtea-thingstodo</module>
         <module>seaandtea-application</module>
     </modules>
 

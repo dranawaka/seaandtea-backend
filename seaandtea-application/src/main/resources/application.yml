@@ -114,6 +114,11 @@ springdoc:
   swagger-ui:
     enabled: false
 
+things-to-do:
+  seed:
+    enabled: true
+  deploy-hook-url: ${THINGS_TO_DO_DEPLOY_HOOK_URL:}
+
 # Common Logging Configuration
 logging:
   pattern:

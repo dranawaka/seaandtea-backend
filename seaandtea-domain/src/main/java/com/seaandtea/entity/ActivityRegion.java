@@ -1,0 +1,6 @@
+package com.seaandtea.entity;
+
+public enum ActivityRegion {
+    SOUTH_WEST_COAST, EAST_COAST, NORTH_WEST_COAST, HILL_COUNTRY,
+    CULTURAL_TRIANGLE, SOUTH_EAST_PARKS, NORTH_WEST_PARKS, ISLAND_WIDE
+}

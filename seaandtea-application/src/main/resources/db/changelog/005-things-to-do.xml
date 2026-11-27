@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.23.xsd">
+
+    <changeSet id="005-destinations" author="seaandtea">
+        <preConditions onFail="MARK_RAN"><not><tableExists tableName="destinations"/></not></preConditions>
+        <createTable tableName="destinations">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="slug" type="VARCHAR(120)"><constraints nullable="false" unique="true" uniqueConstraintName="uk_destinations_slug"/></column>
+            <column name="name" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="region" type="VARCHAR(40)"><constraints nullable="false"/></column>
+            <column name="latitude" type="DOUBLE"/>
+            <column name="longitude" type="DOUBLE"/>
+            <column name="hero_image_url" type="VARCHAR(1000)"/>
+            <column name="active" type="BOOLEAN"><constraints nullable="false"/></column>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="005-activities" author="seaandtea">
+        <preConditions onFail="MARK_RAN"><not><tableExists tableName="activities"/></not></preConditions>
+        <createTable tableName="activities">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="slug" type="VARCHAR(120)"><constraints nullable="false" unique="true" uniqueConstraintName="uk_activities_slug"/></column>
+            <column name="status" type="VARCHAR(32)"><constraints nullable="false"/></column>
+            <column name="summary" type="VARCHAR(300)"/>
+            <column name="description" type="CLOB"/>
+            <column name="hero_image_url" type="VARCHAR(1000)"/>
+            <column name="destination_id" type="BIGINT"/>
+            <column name="latitude" type="DOUBLE"/>
+            <column name="longitude" type="DOUBLE"/>
+            <column name="last_verified_at" type="TIMESTAMP"/>
+            <column name="verified_by_user_id" type="BIGINT"/>
+            <column name="submitted_by_user_id" type="BIGINT"/>
+            <column name="needs_verification" type="CLOB"/>
+            <column name="moderation_note" type="CLOB"/>
+            <column name="seo_title" type="VARCHAR(120)"/>
+            <column name="seo_description" type="VARCHAR(300)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="title" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="category" type="VARCHAR(40)"><constraints nullable="false"/></column>
+            <column name="region" type="VARCHAR(40)"><constraints nullable="false"/></column>
+            <column name="year_round" type="BOOLEAN"><constraints nullable="false"/></column>
+            <column name="season_note" type="CLOB"/>
+            <column name="difficulty" type="VARCHAR(20)"/>
+            <column name="typical_duration_minutes" type="INT"/>
+            <column name="best_time_of_day" type="VARCHAR(200)"/>
+            <column name="seasonal_alternative_id" type="BIGINT"/>
+            <column name="guide_specialty_keywords" type="${json.type}"/>
+            <column name="responsible_travel_note" type="CLOB"/>
+            <column name="official_url" type="VARCHAR(1000)"/>
+            <column name="fees_note" type="CLOB"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="activities" baseColumnNames="destination_id" constraintName="fk_activities_destination" referencedTableName="destinations" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="activities" baseColumnNames="seasonal_alternative_id" constraintName="fk_activities_alternative" referencedTableName="activities" referencedColumnNames="id"/>
+        <createIndex tableName="activities" indexName="idx_activities_status_destination">
+            <column name="status"/><column name="destination_id"/>
+        </createIndex>
+        <createIndex tableName="activities" indexName="idx_activities_status_category">
+            <column name="status"/><column name="category"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="005-activity-children" author="seaandtea">
+        <preConditions onFail="MARK_RAN"><not><tableExists tableName="activity_season_month"/></not></preConditions>
+        <createTable tableName="activity_season_month">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="activity_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="month_number" type="INT"><constraints nullable="false"/></column>
+            <column name="in_season" type="BOOLEAN"><constraints nullable="false"/></column>
+            <column name="peak" type="BOOLEAN"><constraints nullable="false"/></column>
+        </createTable>
+        <addUniqueConstraint tableName="activity_season_month" columnNames="activity_id, month_number" constraintName="uk_activity_season_month"/>
+        <addForeignKeyConstraint baseTableName="activity_season_month" baseColumnNames="activity_id" constraintName="fk_season_activity" referencedTableName="activities" referencedColumnNames="id"/>
+
+        <createTable tableName="activity_sources">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="activity_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="url" type="VARCHAR(1000)"><constraints nullable="false"/></column>
+            <column name="label" type="VARCHAR(300)"/>
+            <column name="kind" type="VARCHAR(20)"><constraints nullable="false"/></column>
+            <column name="accessed_at" type="TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="activity_sources" baseColumnNames="activity_id" constraintName="fk_activity_sources" referencedTableName="activities" referencedColumnNames="id"/>
+
+        <createTable tableName="activity_images">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="activity_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="url" type="VARCHAR(1000)"><constraints nullable="false"/></column>
+            <column name="alt_text" type="VARCHAR(300)"/>
+            <column name="credit" type="VARCHAR(300)"/>
+            <column name="licence" type="VARCHAR(300)"/>
+            <column name="source_url" type="VARCHAR(1000)"/>
+            <column name="sort_order" type="INT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="activity_images" baseColumnNames="activity_id" constraintName="fk_activity_images" referencedTableName="activities" referencedColumnNames="id"/>
+
+        <createTable tableName="activity_tour_categories">
+            <column name="activity_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="tour_category" type="VARCHAR(40)"><constraints nullable="false"/></column>
+        </createTable>
+        <addPrimaryKey tableName="activity_tour_categories" columnNames="activity_id, tour_category" constraintName="pk_activity_tour_categories"/>
+        <addForeignKeyConstraint baseTableName="activity_tour_categories" baseColumnNames="activity_id" constraintName="fk_activity_tour_categories" referencedTableName="activities" referencedColumnNames="id"/>
+
+        <createTable tableName="activity_nearby_destinations">
+            <column name="activity_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="destination_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+        <addPrimaryKey tableName="activity_nearby_destinations" columnNames="activity_id, destination_id" constraintName="pk_activity_nearby"/>
+        <addForeignKeyConstraint baseTableName="activity_nearby_destinations" baseColumnNames="activity_id" constraintName="fk_nearby_activity" referencedTableName="activities" referencedColumnNames="id"/>
+        <addForeignKeyConstraint baseTableName="activity_nearby_destinations" baseColumnNames="destination_id" constraintName="fk_nearby_destination" referencedTableName="destinations" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="005-events" author="seaandtea">
+        <preConditions onFail="MARK_RAN"><not><tableExists tableName="events"/></not></preConditions>
+        <createTable tableName="events">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="slug" type="VARCHAR(120)"><constraints nullable="false" unique="true" uniqueConstraintName="uk_events_slug"/></column>
+            <column name="status" type="VARCHAR(32)"><constraints nullable="false"/></column>
+            <column name="summary" type="VARCHAR(300)"/>
+            <column name="description" type="CLOB"/>
+            <column name="hero_image_url" type="VARCHAR(1000)"/>
+            <column name="destination_id" type="BIGINT"/>
+            <column name="latitude" type="DOUBLE"/>
+            <column name="longitude" type="DOUBLE"/>
+            <column name="last_verified_at" type="TIMESTAMP"/>
+            <column name="verified_by_user_id" type="BIGINT"/>
+            <column name="submitted_by_user_id" type="BIGINT"/>
+            <column name="needs_verification" type="CLOB"/>
+            <column name="moderation_note" type="CLOB"/>
+            <column name="seo_title" type="VARCHAR(120)"/>
+            <column name="seo_description" type="VARCHAR(300)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="name" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="event_type" type="VARCHAR(40)"><constraints nullable="false"/></column>
+            <column name="tradition" type="VARCHAR(20)"><constraints nullable="false"/></column>
+            <column name="recurrence_type" type="VARCHAR(20)"><constraints nullable="false"/></column>
+            <column name="poya_name" type="VARCHAR(40)"/>
+            <column name="typical_start_month" type="INT"/>
+            <column name="typical_end_month" type="INT"/>
+            <column name="typical_duration_days" type="INT"/>
+            <column name="venue_name" type="VARCHAR(500)"/>
+            <column name="venue_address" type="VARCHAR(500)"/>
+            <column name="is_free" type="BOOLEAN"><constraints nullable="false"/></column>
+            <column name="official_url" type="VARCHAR(1000)"/>
+            <column name="etiquette_note" type="CLOB"/>
+            <column name="crowd_note" type="CLOB"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="events" baseColumnNames="destination_id" constraintName="fk_events_destination" referencedTableName="destinations" referencedColumnNames="id"/>
+        <createIndex tableName="events" indexName="idx_events_status_destination">
+            <column name="status"/><column name="destination_id"/>
+        </createIndex>
+
+        <createTable tableName="event_occurrences">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="event_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="year_number" type="INT"><constraints nullable="false"/></column>
+            <column name="start_date" type="DATE"/>
+            <column name="end_date" type="DATE"/>
+            <column name="start_time" type="TIME"/>
+            <column name="date_status" type="VARCHAR(20)"><constraints nullable="false"/></column>
+            <column name="status_source_url" type="VARCHAR(1000)"/>
+            <column name="source_checked_at" type="TIMESTAMP"/>
+            <column name="ticket_url" type="VARCHAR(1000)"/>
+            <column name="notes" type="CLOB"/>
+        </createTable>
+        <addUniqueConstraint tableName="event_occurrences" columnNames="event_id, year_number" constraintName="uk_event_occurrence_year"/>
+        <addForeignKeyConstraint baseTableName="event_occurrences" baseColumnNames="event_id" constraintName="fk_occurrence_event" referencedTableName="events" referencedColumnNames="id"/>
+        <createIndex tableName="event_occurrences" indexName="idx_event_occurrences_event_year">
+            <column name="event_id"/><column name="year_number"/>
+        </createIndex>
+
+        <createTable tableName="event_sources">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="event_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="url" type="VARCHAR(1000)"><constraints nullable="false"/></column>
+            <column name="label" type="VARCHAR(300)"/>
+            <column name="kind" type="VARCHAR(20)"><constraints nullable="false"/></column>
+            <column name="accessed_at" type="TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="event_sources" baseColumnNames="event_id" constraintName="fk_event_sources" referencedTableName="events" referencedColumnNames="id"/>
+
+        <createTable tableName="event_images">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="event_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="url" type="VARCHAR(1000)"><constraints nullable="false"/></column>
+            <column name="alt_text" type="VARCHAR(300)"/>
+            <column name="credit" type="VARCHAR(300)"/>
+            <column name="licence" type="VARCHAR(300)"/>
+            <column name="source_url" type="VARCHAR(1000)"/>
+            <column name="sort_order" type="INT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="event_images" baseColumnNames="event_id" constraintName="fk_event_images" referencedTableName="events" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="005-restaurants" author="seaandtea">
+        <preConditions onFail="MARK_RAN"><not><tableExists tableName="restaurants"/></not></preConditions>
+        <createTable tableName="restaurants">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="slug" type="VARCHAR(120)"><constraints nullable="false" unique="true" uniqueConstraintName="uk_restaurants_slug"/></column>
+            <column name="status" type="VARCHAR(32)"><constraints nullable="false"/></column>
+            <column name="summary" type="VARCHAR(300)"/>
+            <column name="description" type="CLOB"/>
+            <column name="hero_image_url" type="VARCHAR(1000)"/>
+            <column name="destination_id" type="BIGINT"/>
+            <column name="latitude" type="DOUBLE"/>
+            <column name="longitude" type="DOUBLE"/>
+            <column name="last_verified_at" type="TIMESTAMP"/>
+            <column name="verified_by_user_id" type="BIGINT"/>
+            <column name="submitted_by_user_id" type="BIGINT"/>
+            <column name="needs_verification" type="CLOB"/>
+            <column name="moderation_note" type="CLOB"/>
+            <column name="seo_title" type="VARCHAR(120)"/>
+            <column name="seo_description" type="VARCHAR(300)"/>
+            <column name="created_at" type="TIMESTAMP"/>
+            <column name="updated_at" type="TIMESTAMP"/>
+            <column name="name" type="VARCHAR(255)"><constraints nullable="false"/></column>
+            <column name="price_tier" type="VARCHAR(20)"/>
+            <column name="price_note" type="VARCHAR(500)"/>
+            <column name="address_line" type="VARCHAR(500)"/>
+            <column name="neighbourhood" type="VARCHAR(200)"/>
+            <column name="phone" type="VARCHAR(200)"/>
+            <column name="whatsapp" type="VARCHAR(40)"/>
+            <column name="website_url" type="VARCHAR(1000)"/>
+            <column name="reservations_url" type="VARCHAR(1000)"/>
+            <column name="reservations_email" type="VARCHAR(255)"/>
+            <column name="opening_hours_text" type="CLOB"/>
+            <column name="opening_hours_json" type="CLOB"/>
+            <column name="closed_on_poya" type="BOOLEAN"><constraints nullable="false"/></column>
+            <column name="serves_alcohol" type="BOOLEAN"/>
+            <column name="good_for" type="${json.type}"/>
+            <column name="google_place_id" type="VARCHAR(255)"/>
+            <column name="maps_url" type="VARCHAR(1000)"/>
+            <column name="guide_tip" type="CLOB"/>
+            <column name="recommended_by_guide_id" type="BIGINT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="restaurants" baseColumnNames="destination_id" constraintName="fk_restaurants_destination" referencedTableName="destinations" referencedColumnNames="id"/>
+        <createIndex tableName="restaurants" indexName="idx_restaurants_status_destination">
+            <column name="status"/><column name="destination_id"/>
+        </createIndex>
+        <createIndex tableName="restaurants" indexName="idx_restaurants_status_price_tier">
+            <column name="status"/><column name="price_tier"/>
+        </createIndex>
+
+        <createTable tableName="restaurant_cuisines">
+            <column name="restaurant_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="cuisine" type="VARCHAR(40)"><constraints nullable="false"/></column>
+        </createTable>
+        <addPrimaryKey tableName="restaurant_cuisines" columnNames="restaurant_id, cuisine" constraintName="pk_restaurant_cuisines"/>
+        <addForeignKeyConstraint baseTableName="restaurant_cuisines" baseColumnNames="restaurant_id" constraintName="fk_restaurant_cuisines" referencedTableName="restaurants" referencedColumnNames="id"/>
+
+        <createTable tableName="restaurant_dietary">
+            <column name="restaurant_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="dietary" type="VARCHAR(40)"><constraints nullable="false"/></column>
+        </createTable>
+        <addPrimaryKey tableName="restaurant_dietary" columnNames="restaurant_id, dietary" constraintName="pk_restaurant_dietary"/>
+        <addForeignKeyConstraint baseTableName="restaurant_dietary" baseColumnNames="restaurant_id" constraintName="fk_restaurant_dietary" referencedTableName="restaurants" referencedColumnNames="id"/>
+
+        <createTable tableName="restaurant_sources">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="restaurant_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="url" type="VARCHAR(1000)"><constraints nullable="false"/></column>
+            <column name="label" type="VARCHAR(300)"/>
+            <column name="kind" type="VARCHAR(20)"><constraints nullable="false"/></column>
+            <column name="accessed_at" type="TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="restaurant_sources" baseColumnNames="restaurant_id" constraintName="fk_restaurant_sources" referencedTableName="restaurants" referencedColumnNames="id"/>
+
+        <createTable tableName="restaurant_images">
+            <column name="id" type="BIGINT" autoIncrement="true"><constraints primaryKey="true" nullable="false"/></column>
+            <column name="restaurant_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="url" type="VARCHAR(1000)"><constraints nullable="false"/></column>
+            <column name="alt_text" type="VARCHAR(300)"/>
+            <column name="credit" type="VARCHAR(300)"/>
+            <column name="licence" type="VARCHAR(300)"/>
+            <column name="source_url" type="VARCHAR(1000)"/>
+            <column name="sort_order" type="INT"/>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="restaurant_images" baseColumnNames="restaurant_id" constraintName="fk_restaurant_images" referencedTableName="restaurants" referencedColumnNames="id"/>
+    </changeSet>
+
+    <changeSet id="005-tour-thing-links" author="seaandtea">
+        <preConditions onFail="MARK_RAN"><not><tableExists tableName="tour_thing_links"/></not></preConditions>
+        <createTable tableName="tour_thing_links">
+            <column name="tour_id" type="BIGINT"><constraints nullable="false"/></column>
+            <column name="thing_type" type="VARCHAR(20)"><constraints nullable="false"/></column>
+            <column name="thing_id" type="BIGINT"><constraints nullable="false"/></column>
+        </createTable>
+        <addPrimaryKey tableName="tour_thing_links" columnNames="tour_id, thing_type, thing_id" constraintName="pk_tour_thing_links"/>
+        <addForeignKeyConstraint baseTableName="tour_thing_links" baseColumnNames="tour_id" constraintName="fk_tour_thing_links_tour" referencedTableName="tours" referencedColumnNames="id"/>
+    </changeSet>
+</databaseChangeLog>
