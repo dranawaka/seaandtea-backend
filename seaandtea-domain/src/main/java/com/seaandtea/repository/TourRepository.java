@@ -125,6 +125,9 @@ public interface TourRepository extends JpaRepository<Tour, Long>, TourRepositor
     // Find active tours from verified guides with images
     @Query("SELECT DISTINCT t FROM Tour t LEFT JOIN FETCH t.images WHERE t.isActive = true AND t.guide.verificationStatus = 'VERIFIED' ORDER BY t.createdAt DESC")
     Page<Tour> findActiveToursFromVerifiedGuidesWithImages(Pageable pageable);
+
+    @Query("SELECT DISTINCT t FROM Tour t JOIN FETCH t.guide g JOIN FETCH g.user LEFT JOIN FETCH t.images WHERE t.isActive = true")
+    List<Tour> findActiveForLinking();
 }
 
 
