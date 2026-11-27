@@ -3,6 +3,7 @@ package com.seaandtea.controller;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.seaandtea.dto.ApiViews;
 import com.seaandtea.dto.GuideDashboardResponse;
+import com.seaandtea.dto.GuidePageResponse;
 import com.seaandtea.dto.GuideProfileRequest;
 import com.seaandtea.dto.GuideProfileResponse;
 import com.seaandtea.entity.Guide;
@@ -329,7 +330,7 @@ public class GuideController {
      */
     @GetMapping("/verified/paginated")
     @JsonView(ApiViews.Public.class)
-    public ResponseEntity<Page<GuideProfileResponse>> getVerifiedGuidesPaginated(
+    public ResponseEntity<GuidePageResponse> getVerifiedGuidesPaginated(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
@@ -349,9 +350,10 @@ public class GuideController {
         Page<GuideProfileResponse> verifiedGuides = guideService.getVerifiedGuidesPaginated(pageable);
         log.info("Successfully fetched {} verified guides (page {} of {})", 
                 verifiedGuides.getContent().size(), page, verifiedGuides.getTotalPages());
-        
-        ResponseEntity<Page<GuideProfileResponse>> responseEntity = ResponseEntity.ok(verifiedGuides);
-        logResponse(HttpStatus.OK, verifiedGuides);
+
+        GuidePageResponse body = GuidePageResponse.from(verifiedGuides);
+        ResponseEntity<GuidePageResponse> responseEntity = ResponseEntity.ok(body);
+        logResponse(HttpStatus.OK, body);
         return responseEntity;
     }
     
