@@ -218,6 +218,34 @@ public class FileUploadService {
         String uuid = UUID.randomUUID().toString().substring(0, 8);
         return String.format("product_%d_%s_%s", productId, timestamp, uuid);
     }
+
+    public String uploadThingImage(MultipartFile file, String type, Long id, String uploaderEmail) {
+        validateImageFile(file);
+        try {
+            String timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMdd_HHmmss"));
+            String uuid = UUID.randomUUID().toString().substring(0, 8);
+            String publicId = String.format("thing_%s_%d_%s_%s", type, id, timestamp, uuid);
+            String folder = baseFolder + "/things-to-do/" + type + "/" + id;
+            Map<String, Object> uploadParams = ObjectUtils.asMap(
+                    "public_id", publicId,
+                    "folder", folder,
+                    "resource_type", "image",
+                    "format", "webp",
+                    "quality", "auto:good",
+                    "fetch_format", "auto",
+                    "width", 1200,
+                    "height", 800,
+                    "crop", "limit"
+            );
+            Map<String, Object> uploadResult = cloudinary.uploader().upload(file.getBytes(), uploadParams);
+            String imageUrl = (String) uploadResult.get("secure_url");
+            log.info("Things to do image uploaded to Cloudinary: {} by user: {}", imageUrl, uploaderEmail);
+            return imageUrl;
+        } catch (IOException e) {
+            log.error("Error uploading things-to-do image for {} {}", type, id, e);
+            throw new RuntimeException("Failed to upload image");
+        }
+    }
     
     private String extractPublicIdFromUrl(String imageUrl) {
         // Extract Cloudinary public_id from URL

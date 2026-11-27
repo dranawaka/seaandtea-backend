@@ -1,5 +1,6 @@
 package com.seaandtea.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -81,8 +82,14 @@ public abstract class ThingBase {
     /**
      * Seed writes set this so {@link #onUpdate()} does not make a seed refresh look like an admin edit.
      */
+    @JsonIgnore
     @Transient
     private boolean preserveTimestamps;
+
+    @JsonIgnore
+    public boolean isPreserveTimestamps() {
+        return preserveTimestamps;
+    }
 
     @PrePersist
     protected void onCreate() {

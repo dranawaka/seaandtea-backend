@@ -1,5 +1,6 @@
 package com.seaandtea.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -64,4 +65,9 @@ public class EventOccurrence {
 
     @Column(columnDefinition = "TEXT")
     private String notes;
+
+    @JsonIgnore
+    public Event getEvent() {
+        return event;
+    }
 }

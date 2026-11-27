@@ -8,6 +8,7 @@ import com.seaandtea.dto.UserDto;
 import com.seaandtea.service.FileUploadService;
 import com.seaandtea.service.HomepageSliderService;
 import com.seaandtea.service.ProductService;
+import com.seaandtea.service.ThingsToDoAdminService;
 import com.seaandtea.service.TourService;
 import com.seaandtea.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -42,6 +43,7 @@ public class FileUploadController {
     private final UserService userService;
     private final ProductService productService;
     private final HomepageSliderService homepageSliderService;
+    private final ThingsToDoAdminService thingsToDoAdminService;
     
     @PostMapping("/tour/{tourId}/image")
     @PreAuthorize("hasRole('GUIDE') or hasRole('ADMIN')")
@@ -280,6 +282,22 @@ public class FileUploadController {
         Map<String, String> response = new HashMap<>();
         response.put("message", "Image deleted successfully");
         
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/things-to-do/{type}/{id}/image")
+    @PreAuthorize("hasRole('ADMIN')")
+    @Operation(summary = "Upload a Things to do image", security = @SecurityRequirement(name = "bearerAuth"))
+    public ResponseEntity<Map<String, String>> uploadThingImage(
+            @PathVariable String type,
+            @PathVariable Long id,
+            @RequestParam("file") MultipartFile file,
+            @RequestParam(required = false) String altText,
+            Authentication authentication) {
+        String imageUrl = fileUploadService.uploadThingImage(file, type, id, authentication.getName());
+        thingsToDoAdminService.attachImage(type, id, imageUrl, altText);
+        Map<String, String> response = new HashMap<>();
+        response.put("imageUrl", imageUrl);
         return ResponseEntity.ok(response);
     }
 }

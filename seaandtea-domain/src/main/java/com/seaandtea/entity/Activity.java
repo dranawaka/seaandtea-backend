@@ -1,5 +1,7 @@
 package com.seaandtea.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
@@ -75,9 +77,20 @@ public class Activity extends ThingBase {
             inverseJoinColumns = @JoinColumn(name = "destination_id"))
     private Set<Destination> nearbyDestinations = new HashSet<>();
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seasonal_alternative_id")
     private Activity seasonalAlternative;
+
+    @JsonIgnore
+    public Activity getSeasonalAlternative() {
+        return seasonalAlternative;
+    }
+
+    @JsonProperty("seasonalAlternativeSlug")
+    public String getSeasonalAlternativeSlug() {
+        return seasonalAlternative == null ? null : seasonalAlternative.getSlug();
+    }
 
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(name = "guide_specialty_keywords")

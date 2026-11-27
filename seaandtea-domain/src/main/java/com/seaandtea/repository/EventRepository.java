@@ -13,5 +13,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     boolean existsBySlug(String slug);
 
+    boolean existsBySlugAndIdNot(String slug, Long id);
+
     List<Event> findByStatus(ThingStatus status);
 }
